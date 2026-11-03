@@ -5,6 +5,7 @@ import { http } from "../lib/api";
 import { Link } from "react-router-dom";
 import { BRANDS, DOORS, STYLES, slug } from "../lib/content";
 import { QuickView } from "../components/jadori/QuickView";
+import { EDITS } from "../lib/edits";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
@@ -35,6 +36,7 @@ export default function Catalogue() {
   const [sort, setSort] = useState("recommended");
   const [f, setF] = useState({ ...EMPTY, brands: params.get("brand") ? [params.get("brand")] : [] });
   const style = params.get("style") || "";
+  const edit = EDITS.find((e) => e.slug === params.get("edit"));
   const [quick, setQuick] = useState(null);
 
   useEffect(() => { http.get("/listings").then((r) => setAll(r.data)); }, []);
@@ -45,6 +47,7 @@ export default function Catalogue() {
     const price = (l) => (mode === "buy" ? l.buy_price : l.rent_per_day);
     let r = all.filter((l) => (mode === "buy" ? l.buy_enabled : true)
       && (!style || l.style === style)
+      && (!edit || edit.ids.includes(l.id))
       && (!f.brands.length || f.brands.includes(l.brand))
       && (!f.colors.length || f.colors.includes(l.color))
       && (f.availability === "all" || l.available)
@@ -53,11 +56,11 @@ export default function Catalogue() {
     if (sort === "low") r = [...r].sort((a, b) => price(a) - price(b));
     if (sort === "high") r = [...r].sort((a, b) => price(b) - price(a));
     return r;
-  }, [all, f, sort, mode, q, style]);
+  }, [all, f, sort, mode, q, style, edit]);
 
   const setParam = (k, v) => { const p = new URLSearchParams(params); p.delete("q"); v ? p.set(k, v) : p.delete(k); setParams(p); };
   const setBrand = (b) => setParam("brand", b);
-  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all") + (style ? 1 : 0);
+  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all") + (style ? 1 : 0) + (edit ? 1 : 0);
   const styleLabel = STYLES.find(([v]) => v === style)?.[1];
 
   return (
@@ -65,8 +68,9 @@ export default function Catalogue() {
       <div className="jd-container pt-12 nav:pt-16 pb-8 jd-fade">
         <p className="jd-eyebrow mb-3">Massachusetts · Sample inventory</p>
         <h1 className="text-[32px] nav:text-[48px] leading-tight" data-testid="catalogue-title">
-          {[f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}
+          {edit ? `The edit · ${edit.title}` : [f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}
         </h1>
+        {edit && <p className="mt-3 text-[#4A423C] max-w-xl" data-testid="catalogue-edit-blurb">{edit.blurb} <button className="jd-link ml-1 text-sm" onClick={() => setParam("edit", "")} data-testid="clear-edit-button">See all bags</button></p>}
         {q && <p className="mt-2 text-[#4A423C]">Results for “{q}” <button className="jd-link ml-2 text-sm" onClick={() => setParams({})} data-testid="clear-search-button">Clear</button></p>}
         <nav className="mt-8 flex gap-5 nav:gap-8 overflow-x-auto jd-scroll border-b border-[#E2DFDA]" aria-label="Shop by style" data-testid="style-shortcuts">
           {[["", "All"], ...STYLES].map(([v, label]) => (

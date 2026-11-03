@@ -33,19 +33,22 @@ export const SectionHead = ({ eyebrow, title, children, light = false }) => (
 );
 
 export const Timeline = ({ steps, testid, light = false }) => (
-  <ol className="grid gap-10 nav:gap-0" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(170px, 1fr))` }} data-testid={testid}>
-    {steps.map(([tag, t, d], i) => (
-      <li key={t} className="relative nav:pr-8">
-        <div className="flex items-center gap-3 mb-5">
-          <span className={`w-[11px] h-[11px] rounded-full border ${light ? "border-[#F3F1ED] bg-[#1F1A17]" : "border-[#1B1714] bg-[#F8F7F5]"} ${i === steps.length - 1 ? (light ? "!bg-[#F3F1ED]" : "!bg-[#1B1714]") : ""}`} />
-          <span className={`hidden nav:block flex-1 h-px ${light ? "bg-[#F3F1ED]/25" : "bg-[#E2DFDA]"} ${i === steps.length - 1 ? "opacity-0" : ""}`} />
-        </div>
-        <p className={`text-[11px] uppercase tracking-[0.2em] ${light ? "text-[#F3F1ED]/55" : "text-[#7A716A]"}`}>{tag}</p>
-        <p className="font-serif text-[21px] mt-2">{t}</p>
-        <p className={`text-[15px] mt-2 ${light ? "text-[#F3F1ED]/70" : "text-[#4A423C]"}`}>{d}</p>
-      </li>
-    ))}
-  </ol>
+  <div>
+    <ol className="flex nav:grid overflow-x-auto nav:overflow-visible snap-x snap-mandatory jd-scroll -mx-5 px-5 scroll-pl-5 nav:mx-0 nav:px-0" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }} data-testid={testid}>
+      {steps.map(([tag, t, d], i) => (
+        <li key={t} className="relative shrink-0 w-[74vw] sm:w-[42vw] nav:w-auto snap-start pr-6 nav:pr-8" data-testid={`${testid}-step-${i + 1}`}>
+          <div className="flex items-center gap-3 mb-5">
+            <span className={`w-[11px] h-[11px] shrink-0 rounded-full border ${light ? "border-[#F3F1ED] bg-[#1F1A17]" : "border-[#1B1714] bg-[#F8F7F5]"} ${i === steps.length - 1 ? (light ? "!bg-[#F3F1ED]" : "!bg-[#1B1714]") : ""}`} />
+            <span className={`flex-1 h-px -mr-6 nav:-mr-8 ${light ? "bg-[#F3F1ED]/25" : "bg-[#E2DFDA]"} ${i === steps.length - 1 ? "opacity-0" : ""}`} />
+          </div>
+          <p className={`text-[11px] uppercase tracking-[0.2em] ${light ? "text-[#F3F1ED]/55" : "text-[#7A716A]"}`}>{String(i + 1).padStart(2, "0")} · {tag}</p>
+          <p className="font-serif text-[21px] mt-2">{t}</p>
+          <p className={`text-[15px] mt-2 ${light ? "text-[#F3F1ED]/70" : "text-[#4A423C]"}`}>{d}</p>
+        </li>
+      ))}
+    </ol>
+    <p className={`nav:hidden mt-6 text-[11px] uppercase tracking-[0.2em] ${light ? "text-[#F3F1ED]/55" : "text-[#7A716A]"}`} data-testid={`${testid}-swipe-hint`}>Swipe · {steps.length} steps →</p>
+  </div>
 );
 
 export const Pillars = ({ items, testid }) => (

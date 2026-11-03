@@ -41,7 +41,7 @@ No gold or burgundy in UI. Errors use ink + medium weight (no red). Defined as C
 
 ## 4. Navigation map
 Each of Rent, Buy and Lend now has its own landing page ("world"). They share components in `components/jadori/World.jsx`: WorldHero, SectionHead, Timeline, Pillars, FeaturedRow, WorldFAQ, CTABand.
-- `/rent`: occasions (link to `?style=`), 5-step rental timeline, 3-day price example (sample-01), inclusions, available bags, FAQ, CTA. Catalogue is at `/rent/all`.
+- `/rent`: occasions (link to `?style=`), monthly edits (`lib/edits.js`: 6 curated sample edits, 2 featured per month, rotating automatically by calendar month; "Shop the edit" opens `/rent/all?edit=<slug>`), 5-step rental timeline, 3-day price example (sample-01), inclusions, available bags, FAQ, CTA. Catalogue is at `/rent/all`.
 - `/buy`: dark hero, why buy, purchase-enabled bags, condition grading guide, purchase timeline, "rent before you buy" (proposed), FAQ. Catalogue is at `/buy/all`.
 - `/lend`: lending timeline, earnings illustration (sliders; 20% commission is proposed), what we accept, 8-view photo guide, lender protection, FAQ.
 | Route | Page |

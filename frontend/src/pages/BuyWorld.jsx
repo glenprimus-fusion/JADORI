@@ -21,10 +21,10 @@ const GRADES = [
 ];
 
 const STEPS = [
-  ["Step one", "Find it", "Look for bags whose owners have enabled a purchase price."],
-  ["Step two", "Request to buy", "Send a request. The owner confirms and the price is held for you."],
-  ["Step three", "Authentication", "The bag is inspected in person before any sale is completed."],
-  ["Step four", "Make it yours", "Local handoff, with the condition report and authentication record."],
+  ["Browse", "Find it", "Look for bags whose owners have enabled a purchase price."],
+  ["Owner confirms", "Request to buy", "Send a request. The owner confirms and the price is held for you."],
+  ["Before sale", "Authentication", "The bag is inspected in person before any sale is completed."],
+  ["Handoff", "Make it yours", "Local handoff, with the condition report and authentication record."],
 ];
 
 const FAQ = [

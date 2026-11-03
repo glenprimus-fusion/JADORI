@@ -5,6 +5,7 @@ import { http, usd } from "../lib/api";
 import { quote } from "../components/jadori/BookingCard";
 import { WorldHero, SectionHead, Timeline, Pillars, FeaturedRow, WorldFAQ, CTABand } from "../components/jadori/World";
 import { LoadingImg } from "../components/jadori/LoadingImg";
+import { MonthlyEdits } from "../components/jadori/MonthlyEdits";
 
 const U = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1100&q=80`;
 
@@ -82,7 +83,9 @@ export default function RentWorld() {
         </div>
       </section>
 
-      <section id="rent-steps" className="jd-container pb-20 nav:pb-28 scroll-mt-28">
+      <MonthlyEdits />
+
+      <section id="rent-steps" className="jd-container py-20 nav:py-28 scroll-mt-28">
         <SectionHead eyebrow="The rental, step by step" title="From request to return" />
         <Timeline steps={STEPS} testid="rent-timeline" />
       </section>
