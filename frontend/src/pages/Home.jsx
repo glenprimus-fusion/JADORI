@@ -142,11 +142,27 @@ const Trust = () => (
 const ICONS = { rent: [Search, CalendarDays, Truck, RotateCcw], lend: [Camera, Tag, ShieldCheck, Banknote], buy: [Search, KeyRound, ShoppingBag] };
 const TITLES = { rent: "How renting works", lend: "How lending works", buy: "Buying, simply" };
 
+const RentGuideCard = () => (
+  <Link to="/how-renting-works" className="group block border-t border-[#1B1714] pt-6" data-testid="journey-rent">
+    <p className="text-sm uppercase tracking-[0.18em] font-medium mb-8">How renting works</p>
+    <div className="relative aspect-[4/3] overflow-hidden jd-photo">
+      <img src="https://images.unsplash.com/photo-1746730921536-6123c87a074d?auto=format&fit=crop&w=1000&q=80" alt="Carrying a rented designer bag (stock placeholder)" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]" />
+      <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-[#1F1A17]/65 to-transparent text-[#F3F1ED]">
+        <p className="text-[11px] uppercase tracking-[0.2em] opacity-80">A visual guide · 7 steps</p>
+        <p className="font-serif text-[24px] mt-1">From choosing to returning</p>
+      </div>
+    </div>
+    <p className="text-[15px] text-[#4A423C] mt-5">See every step with photos: dates, fees, authentication, handoff and your deposit back.</p>
+    <span className="jd-link text-sm mt-5 inline-block" data-testid="journey-rent-link">See how renting works →</span>
+  </Link>
+);
+
 const HowItWorks = () => (
   <section className="jd-container py-20 nav:py-28" data-testid="home-how-it-works">
     <h2 className="text-[28px] nav:text-[40px] mb-14">How it works</h2>
     <div className="grid nav:grid-cols-3 gap-14 nav:gap-10">
-      {Object.entries(JOURNEYS).map(([k, steps]) => (
+      <RentGuideCard />
+      {Object.entries(JOURNEYS).filter(([k]) => k !== "rent").map(([k, steps]) => (
         <div key={k} data-testid={`journey-${k}`} className="border-t border-[#1B1714] pt-6">
           <p className="text-sm uppercase tracking-[0.18em] font-medium mb-8">{TITLES[k]}</p>
           <ol className="space-y-7">

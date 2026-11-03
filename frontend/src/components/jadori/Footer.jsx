@@ -3,7 +3,7 @@ import { Wordmark } from "./Wordmark";
 import { Monogram, MonogramPattern } from "./Monogram";
 
 const COLS = [
-  ["Marketplace", [["Rent", "/rent"], ["Lend", "/lend"], ["Buy", "/buy"], ["Authenticity", "/authenticity"]]],
+  ["Marketplace", [["Rent", "/rent"], ["How renting works", "/how-renting-works"], ["Lend", "/lend"], ["Buy", "/buy"], ["Authenticity", "/authenticity"]]],
   ["JADORI", [["About", "/about"], ["Press", "/press"], ["FAQ", "/faq"], ["Contact", "/support"]]],
   ["Legal", [["Privacy Policy", "/privacy"], ["Terms", "/terms"], ["Legal notices", "/legal"], ["Style guide", "/style-guide"]]],
 ];

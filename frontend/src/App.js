@@ -8,6 +8,7 @@ import Product from "./pages/Product";
 import Lend from "./pages/LendWorld";
 import RentWorld from "./pages/RentWorld";
 import BuyWorld from "./pages/BuyWorld";
+import HowRentingWorks from "./pages/HowRentingWorks";
 import CreateListing from "./pages/CreateListing";
 import Register from "./pages/Register";
 import RenterDashboard from "./pages/RenterDashboard";
@@ -27,6 +28,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/rent" element={<RentWorld />} />
+          <Route path="/how-renting-works" element={<HowRentingWorks />} />
           <Route path="/rent/all" element={<Catalogue />} />
           <Route path="/buy" element={<BuyWorld />} />
           <Route path="/buy/all" element={<Catalogue />} />
