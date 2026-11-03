@@ -28,7 +28,7 @@ const Estimator = () => {
           <SectionHead eyebrow="Earnings illustration" title="What could your bag earn?">Move the sliders to see an illustration. Your daily rate is always your choice.</SectionHead>
           <div className="space-y-10 max-w-md">
             <Slider label="Daily rental rate" value={rate} set={setRate} min={40} max={300} step={5} fmt={usd} testid="estimator-rate" />
-            <Slider label="Rental days per month" value={days} set={setDays} min={1} max={15} step={1} fmt={(v) => `${v} days`} testid="estimator-days" />
+            <Slider label="Rental days per month" value={days} set={setDays} min={1} max={15} step={1} fmt={(v) => `${v} ${v === 1 ? "day" : "days"}`} testid="estimator-days" />
           </div>
         </div>
         <div className="bg-[#1F1A17] text-[#F3F1ED] p-8 nav:p-12 relative overflow-hidden">

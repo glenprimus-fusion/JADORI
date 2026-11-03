@@ -60,7 +60,7 @@ const TryFirst = () => (
   <section className="jd-container py-20 nav:py-28 grid nav:grid-cols-2 gap-12 items-center" data-testid="buy-try-first">
     <div className="grid grid-cols-2 gap-3">
       <div className="relative aspect-[2/3] jd-photo overflow-hidden"><LoadingImg src={G("4e6bf51ac42d97729a52f948ccbfd54ba6c242963bdcaf4eb3c4d5e0bc1db5cd")} alt="Sample bag, studio" className="absolute inset-0 w-full h-full object-cover" /></div>
-      <div className="relative aspect-[2/3] jd-photo overflow-hidden mt-12"><LoadingImg src={U("1746730921536-6123c87a074d")} alt="Sample bag, worn (stock placeholder)" className="absolute inset-0 w-full h-full object-cover" /></div>
+      <div className="relative aspect-[2/3] jd-photo overflow-hidden mt-12"><LoadingImg src={U("1683921470299-b8f0f3331657")} alt="Sample bag, worn (stock placeholder)" className="absolute inset-0 w-full h-full object-cover" /></div>
     </div>
     <div className="max-w-md">
       <SectionHead eyebrow="Proposed · to be confirmed" title="Carry it first. Keep it if it's the one.">Many bags can be both rented and bought. Rent it for an occasion, live with it for a few days, then request to buy from its owner.</SectionHead>
@@ -74,7 +74,7 @@ export default function BuyWorld() {
     <div data-testid="buy-world">
       <WorldHero dark world="BUY" testid="buy-hero" eyebrow="Buy on JADORI" title="Pre-loved, authenticated, ready to keep."
         copy="Some owners choose to part with their bags. Each one is inspected before the sale, documented honestly, and handed over locally with its records."
-        img={U("1588190437916-425872ddf591")} imgAlt="Woman with a pre-owned handbag in the city (stock placeholder)"
+        img={U("1649544145000-46fb54c2a331")} imgAlt="Woman with a pre-owned handbag (stock placeholder)"
         ctas={<><Link to="/buy/all" className="jd-btn-light" data-testid="buy-hero-shop">Shop bags to buy</Link><a href="#buy-steps" className="jd-btn border border-[#F3F1ED] text-[#F3F1ED] hover:bg-[#F3F1ED] hover:text-[#1F1A17]" data-testid="buy-hero-how">How buying works</a></>} />
 
       <section className="jd-container py-20 nav:py-28">

@@ -65,7 +65,7 @@ export default function RentWorld() {
     <div data-testid="rent-world">
       <WorldHero world="RENT" testid="rent-hero" eyebrow="Rent with JADORI" title="Carry it for the occasion. Return it after."
         copy="Why pay full price when you can rent it for a few days? Choose an authenticated designer bag from owners near you, for exactly the dates you need."
-        img={U("1746730921536-6123c87a074d")} imgAlt="Model carrying a handbag to an occasion (stock placeholder)"
+        img={U("1605813810260-1330807535bb")} imgAlt="Model carrying a handbag to an occasion (stock placeholder)"
         ctas={<><Link to="/rent/all" className="jd-btn-solid" data-testid="rent-hero-browse">Browse bags to rent</Link><a href="#rent-steps" className="jd-btn-outline" data-testid="rent-hero-how">How renting works</a></>} />
 
       <section className="jd-container py-20 nav:py-28" data-testid="rent-occasions">
