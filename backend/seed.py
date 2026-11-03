@@ -30,6 +30,8 @@ DETAIL = {
     "leather": U.format("1647960514922-052047430407"),
     "stitch": U.format("1741086154510-522e68f76933"),
 }
+STYLE = {1: "Shoulder", 2: "Tote", 3: "Crossbody", 4: "Crossbody", 5: "Tote", 6: "Mini", 7: "Crossbody",
+         8: "Mini", 9: "Shoulder", 10: "Mini", 11: "Shoulder", 12: "Tote"}
 
 
 def gallery(i):
@@ -48,7 +50,7 @@ def gallery(i):
 
 def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender, rating, city, condition, available=True):
     return {
-        "id": f"sample-{i:02d}", "is_sample": True, "brand": brand, "name": name, "color": color,
+        "id": f"sample-{i:02d}", "is_sample": True, "brand": brand, "name": name, "color": color, "style": STYLE[i],
         "retail_price": retail, "retail_verified": verified_retail, "rent_per_day": rent,
         "buy_enabled": buy is not None, "buy_price": buy, "auth_status": auth,
         "lender": {"name": lender, "rating": rating, "city": city},

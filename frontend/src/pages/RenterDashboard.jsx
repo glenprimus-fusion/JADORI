@@ -27,7 +27,7 @@ export const DashShell = ({ title, tabs, active, children }) => {
   );
 };
 
-export const TABS = [["Renting", "/account/renter"], ["Lending", "/account/lender"]];
+export const TABS = [["Renting", "/account/renter"], ["Lending", "/account/lender"], ["Saved", "/account/saved"]];
 
 const ReqRow = ({ r, kind }) => (
   <div className="grid grid-cols-[72px_1fr_auto] gap-5 items-center py-5 border-b border-[#E2DFDA]" data-testid={`${kind}-request-${r.id}`}>

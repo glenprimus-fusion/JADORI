@@ -10,6 +10,7 @@ import CreateListing from "./pages/CreateListing";
 import Register from "./pages/Register";
 import RenterDashboard from "./pages/RenterDashboard";
 import LenderDashboard from "./pages/LenderDashboard";
+import Saved from "./pages/Saved";
 import Support from "./pages/Support";
 import Authenticity from "./pages/Authenticity";
 import StyleGuide from "./pages/StyleGuide";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/account/renter" element={<RenterDashboard />} />
           <Route path="/account/lender" element={<LenderDashboard />} />
+          <Route path="/account/saved" element={<Saved />} />
           <Route path="/support" element={<Support />} />
           <Route path="/authenticity" element={<Authenticity />} />
           <Route path="/style-guide" element={<StyleGuide />} />

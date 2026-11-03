@@ -3,7 +3,8 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { SlidersHorizontal } from "lucide-react";
 import { http } from "../lib/api";
 import { Link } from "react-router-dom";
-import { BRANDS, DOORS, slug } from "../lib/content";
+import { BRANDS, DOORS, STYLES, slug } from "../lib/content";
+import { QuickView } from "../components/jadori/QuickView";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
 
@@ -32,6 +33,8 @@ export default function Catalogue() {
   const [open, setOpen] = useState(false);
   const [sort, setSort] = useState("recommended");
   const [f, setF] = useState({ ...EMPTY, brands: params.get("brand") ? [params.get("brand")] : [] });
+  const style = params.get("style") || "";
+  const [quick, setQuick] = useState(null);
 
   useEffect(() => { http.get("/listings").then((r) => setAll(r.data)); }, []);
   useEffect(() => { const b = params.get("brand"); setF((x) => ({ ...x, brands: b ? [b] : [] })); }, [params]);
@@ -40,27 +43,36 @@ export default function Catalogue() {
     if (!all) return null;
     const price = (l) => (mode === "buy" ? l.buy_price : l.rent_per_day);
     let r = all.filter((l) => (mode === "buy" ? l.buy_enabled : true)
+      && (!style || l.style === style)
       && (!f.brands.length || f.brands.includes(l.brand))
       && (!f.colors.length || f.colors.includes(l.color))
       && (f.availability === "all" || l.available)
       && (f.auth === "all" || l.auth_status === f.auth)
-      && (!q || `${l.brand} ${l.name} ${l.color}`.toLowerCase().includes(q.toLowerCase())));
+      && (!q || `${l.brand} ${l.name} ${l.color} ${l.style}`.toLowerCase().includes(q.toLowerCase())));
     if (sort === "low") r = [...r].sort((a, b) => price(a) - price(b));
     if (sort === "high") r = [...r].sort((a, b) => price(b) - price(a));
     return r;
-  }, [all, f, sort, mode, q]);
+  }, [all, f, sort, mode, q, style]);
 
-  const setBrand = (b) => setParams(b ? { brand: b } : {});
-  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all");
+  const setParam = (k, v) => { const p = new URLSearchParams(params); p.delete("q"); v ? p.set(k, v) : p.delete(k); setParams(p); };
+  const setBrand = (b) => setParam("brand", b);
+  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all") + (style ? 1 : 0);
+  const styleLabel = STYLES.find(([v]) => v === style)?.[1];
 
   return (
     <div data-testid="catalogue-page">
       <div className="jd-container pt-12 nav:pt-16 pb-8 jd-fade">
         <p className="jd-eyebrow mb-3">Massachusetts · Sample inventory</p>
         <h1 className="text-[32px] nav:text-[48px] leading-tight" data-testid="catalogue-title">
-          {f.brands.length === 1 ? f.brands[0] : mode === "buy" ? "Handbags to buy" : "Handbags to rent"}
+          {[f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}
         </h1>
         {q && <p className="mt-2 text-[#4A423C]">Results for “{q}” <button className="jd-link ml-2 text-sm" onClick={() => setParams({})} data-testid="clear-search-button">Clear</button></p>}
+        <nav className="mt-8 flex gap-6 nav:gap-8 overflow-x-auto jd-scroll border-b border-[#E2DFDA]" aria-label="Shop by style" data-testid="style-shortcuts">
+          {[["", "All styles"], ...STYLES].map(([v, label]) => (
+            <button key={v || "all"} onClick={() => setParam("style", v)} data-testid={`style-shortcut-${v ? v.toLowerCase() : "all"}`} aria-current={style === v}
+              className={`shrink-0 pb-3 -mb-px text-[12px] uppercase tracking-[0.18em] border-b transition-colors ${style === v ? "border-[#1B1714] text-[#1B1714] font-medium" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{label}</button>
+          ))}
+        </nav>
       </div>
 
       <div className="jd-container pb-8 flex gap-3 nav:gap-4 overflow-x-auto jd-scroll" data-testid="brand-shortcuts">
@@ -102,12 +114,13 @@ export default function Catalogue() {
         ) : (
           <div className="grid grid-flow-row-dense grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
             {(items || Array.from({ length: 8 })).flatMap((l, k) => {
-              const card = l ? <ListingCard key={l.id} l={l} mode={mode} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />;
+              const card = l ? <ListingCard key={l.id} l={l} mode={mode} onQuickView={setQuick} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />;
               return k === 5 && items && items.length >= 8 && !activeCount && !q && sort === "recommended" ? [<EditorialTile key="editorial" />, card] : [card];
             })}
           </div>
         )}
       </div>
+      <QuickView l={quick} onClose={() => setQuick(null)} />
       <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setSort("recommended"); setParams({}); }} />
     </div>
   );

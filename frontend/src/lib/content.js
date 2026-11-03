@@ -18,6 +18,8 @@ export const BRANDS = [
 
 export const slug = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, "-");
 
+export const STYLES = [["Tote", "Totes"], ["Shoulder", "Shoulder"], ["Crossbody", "Crossbody"], ["Mini", "Mini"]];
+
 export const COLORS = ["Black", "Beige", "Ivory", "Dove", "Grey", "Tan", "Cognac", "Red", "Green", "Navy"];
 export const CITIES = ["Boston", "Brookline", "Cambridge", "Newton", "Somerville"];
 export const CONDITIONS = ["Excellent", "Very good", "Good"];

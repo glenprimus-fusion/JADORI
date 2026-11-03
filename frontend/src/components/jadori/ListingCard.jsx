@@ -1,39 +1,29 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Heart, Star } from "lucide-react";
+import { Eye, Star } from "lucide-react";
 import { AuthBadge } from "./AuthBadge";
+import { SaveButton } from "./SaveButton";
 import { usd } from "../../lib/api";
 
-const WKEY = "jadori_wishlist";
-const readW = () => { try { return JSON.parse(localStorage.getItem(WKEY)) || []; } catch { return []; } };
-
-const Wish = ({ id }) => {
-  const [on, setOn] = useState(() => readW().includes(id));
-  const toggle = (e) => {
-    e.preventDefault();
-    const w = readW();
-    const next = w.includes(id) ? w.filter((x) => x !== id) : [...w, id];
-    localStorage.setItem(WKEY, JSON.stringify(next));
-    setOn(next.includes(id));
-  };
-  return (
-    <button onClick={toggle} aria-label={on ? "Remove from wishlist" : "Add to wishlist"} aria-pressed={on} data-testid={`wishlist-button-${id}`} className="absolute top-3 right-3 z-10 p-1.5 hover:opacity-60 transition-opacity">
-      <Heart size={18} strokeWidth={1.1} className={on ? "fill-[#1B1714] text-[#1B1714]" : "text-[#1B1714]"} />
-    </button>
-  );
-};
-
-export const ListingCard = ({ l, mode = "rent" }) => {
+export const ListingCard = ({ l, mode = "rent", onQuickView }) => {
   const worn = l.images.find((im) => im.view.startsWith("Worn"));
+  const qv = (e) => { e.preventDefault(); e.stopPropagation(); onQuickView(l); };
   return (
     <Link to={`/bag/${l.id}`} className="group block" data-testid={`listing-card-${l.id}`}>
       <div className="relative aspect-[2/3] jd-photo overflow-hidden">
         <img src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]" />
         {worn && <img src={worn.url} alt="" aria-hidden loading="lazy" className="hidden nav:block absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500" />}
         <div className="hidden nav:block absolute top-3 left-3 z-10 bg-[#EFEEEC]/80 px-2 py-0.5"><AuthBadge status={l.auth_status} testid={`listing-auth-${l.id}`} /></div>
-        <Wish id={l.id} />
+        <SaveButton id={l.id} />
+        {onQuickView && (
+          <>
+            <button onClick={qv} data-testid={`quick-view-button-${l.id}`} className="hidden nav:flex absolute inset-x-3 bottom-3 z-10 h-[44px] items-center justify-center gap-2 bg-[#FFFFFF]/95 text-[11px] uppercase tracking-[0.18em] font-medium opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 transition-[opacity,transform] duration-300 hover:bg-[#1B1714] hover:text-[#F3F1ED]">
+              <Eye size={14} strokeWidth={1.25} /> Quick view
+            </button>
+            <button onClick={qv} aria-label="Quick view" data-testid={`quick-view-button-mobile-${l.id}`} className="nav:hidden absolute top-12 right-3 z-10 p-1.5"><Eye size={18} strokeWidth={1.1} /></button>
+          </>
+        )}
         <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.18em] text-[#7A716A] group-hover:opacity-0 transition-opacity">Sample</span>
-        {!l.available && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-[0.18em] bg-[#1B1714] text-[#F3F1ED] px-2 py-1">Currently rented</span>}
+        {!l.available && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-[0.18em] bg-[#1B1714] text-[#F3F1ED] px-2 py-1 nav:group-hover:opacity-0 transition-opacity">Currently rented</span>}
       </div>
       <div className="pt-4 pb-2 px-0.5">
         <div className="nav:hidden mb-1.5"><AuthBadge status={l.auth_status} testid={`listing-auth-mobile-${l.id}`} /></div>

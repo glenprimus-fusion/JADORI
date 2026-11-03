@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Search, CalendarDays, ShoppingBag, Camera, T
 import { http } from "../lib/api";
 import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
+import { QuickView } from "../components/jadori/QuickView";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { Newsletter } from "../components/jadori/Newsletter";
 
@@ -53,6 +54,7 @@ const Doors = () => (
 
 const Listings = () => {
   const [items, setItems] = useState(null);
+  const [quick, setQuick] = useState(null);
   useEffect(() => { http.get("/listings").then((r) => setItems(r.data)); }, []);
   return (
     <section className="jd-container py-20 nav:py-28" data-testid="home-listings">
@@ -64,8 +66,9 @@ const Listings = () => {
         <Link to="/rent" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">View all</Link>
       </div>
       <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10">
-        {(items || Array.from({ length: 8 })).slice(0, 8).map((l, k) => l ? <ListingCard key={l.id} l={l} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
+        {(items || Array.from({ length: 8 })).slice(0, 8).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
       </div>
+      <QuickView l={quick} onClose={() => setQuick(null)} />
       <Link to="/rent" className="jd-btn-outline w-full mt-12 sm:hidden">View all</Link>
     </section>
   );

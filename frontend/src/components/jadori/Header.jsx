@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Search, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, Heart } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle } from "../ui/sheet";
 import { Wordmark } from "./Wordmark";
 import { getUser } from "../../lib/api";
+import { useSaved } from "../../lib/wishlist";
 
 const NAV = [["Lend", "/lend"], ["Rent", "/rent"], ["Buy", "/buy"], ["Authenticity", "/authenticity"], ["Support", "/support"]];
 
@@ -23,6 +24,7 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState(false);
   const user = getUser();
+  const saved = useSaved();
   const account = user ? (user.role === "lend" ? "/account/lender" : "/account/renter") : "/register";
   return (
     <header className="sticky top-0 z-40 bg-[#F8F7F5]/95 backdrop-blur border-b border-[#E2DFDA]" data-testid="site-header">
@@ -39,6 +41,10 @@ export const Header = () => {
         <div className="flex items-center justify-end gap-6 text-[12px] uppercase tracking-[0.18em]">
           <NavLink to="/authenticity" className="hidden wide:inline hover:opacity-70" data-testid="nav-authenticity">Authenticity</NavLink>
           <button onClick={() => setSearch((s) => !s)} aria-label="Search" data-testid="header-search-toggle" className="hover:opacity-70"><Search size={19} strokeWidth={1.25} /></button>
+          <Link to="/account/saved" aria-label={`Saved bags (${saved.length})`} data-testid="header-saved-link" className="relative hover:opacity-70">
+            <Heart size={19} strokeWidth={1.25} />
+            {saved.length > 0 && <span className="absolute -top-1.5 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-[#1B1714] text-[#F3F1ED] text-[9px] leading-[16px] text-center tracking-normal" data-testid="header-saved-count">{saved.length}</span>}
+          </Link>
           <Link to={account} aria-label="Account" data-testid="header-account-link" className="flex items-center gap-2 hover:opacity-70">
             <User size={19} strokeWidth={1.25} /><span className="hidden nav:inline">{user ? user.full_name.split(" ")[0] : "Account"}</span>
           </Link>
