@@ -17,3 +17,4 @@ P0: real sign-in, payments, authentication workflow (developer). P1: photo uploa
 - Nov 2026: bag availability calendar (booked + inspection-buffer days, next-available on cards, overlap validation).
 - Nov 2026: catalogue date search hides bags booked for those dates, with a hidden-count note.
 - Nov 2026: JADORI Creators page (/creators) with AI editorial images, phone mock-ups, application form (saved; team email MOCKED), menu + footer links.
+- Nov 2026: pill-shaped buttons & chips site-wide with lift, fill sweep (outline) and shimmer (solid/light) animations (iteration_5 pass).

@@ -17,7 +17,7 @@ const Hero = () => (
         <p className="mt-5 max-w-xl text-[#F3F1ED]/80">A partnership for creators who love beautiful bags. Borrow pieces for your shoots, share your code, and earn from every rental you inspire.</p>
         <div className="flex flex-wrap gap-3 mt-8">
           <a href="#apply" className="jd-btn-light" data-testid="creators-hero-apply">Apply to join</a>
-          <a href={`mailto:${CREATOR_EMAIL}`} className="jd-btn border border-[#F3F1ED]/60 text-[#F3F1ED] hover:bg-[#F3F1ED] hover:text-[#1F1A17] transition-colors gap-2" data-testid="creators-hero-email"><Mail size={14} strokeWidth={1.2} />Contact the team</a>
+          <a href={`mailto:${CREATOR_EMAIL}`} className="jd-btn border border-[#F3F1ED]/60 text-[#F3F1ED] hover:bg-[#F3F1ED] hover:text-[#1F1A17] gap-2" data-testid="creators-hero-email"><Mail size={14} strokeWidth={1.2} />Contact the team</a>
         </div>
       </div>
     </div>

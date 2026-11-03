@@ -65,7 +65,8 @@ body {
         transform: translateX(-120%); transition: transform 900ms cubic-bezier(.2,.7,.2,1); }
     .jd-btn-light::after { background: linear-gradient(110deg, transparent 30%, rgba(201,184,160,0.45) 48%, rgba(201,184,160,0.1) 56%, transparent 70%); }
     .jd-btn-solid:not(:disabled):hover::after, .jd-btn-light:not(:disabled):hover::after { transform: translateX(120%); }
-    .jd-btn-outline { @apply jd-btn border border-[#1B1714] text-[#1B1714] bg-transparent hover:text-[#F3F1ED]; }
+    .jd-btn-outline { @apply jd-btn border border-[#1B1714] text-[#1B1714] bg-transparent; }
+    .jd-btn-outline:not(:disabled):hover { color: #F3F1ED; }
     .jd-btn-outline::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #1B1714; border-radius: inherit;
         transform: scaleY(0); transform-origin: bottom; transition: transform 420ms cubic-bezier(.2,.7,.2,1); }
     .jd-btn-outline:not(:disabled):hover::before { transform: scaleY(1); }
