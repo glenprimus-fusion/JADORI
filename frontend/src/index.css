@@ -54,10 +54,24 @@ body {
 }
 
 @layer components {
-    .jd-btn { @apply inline-flex items-center justify-center gap-2 h-[52px] px-8 rounded-none uppercase font-medium text-xs tracking-[0.16em] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed; }
-    .jd-btn-solid { @apply jd-btn bg-[#1B1714] text-[#F3F1ED] hover:bg-[#4A423C]; }
-    .jd-btn-outline { @apply jd-btn border border-[#1B1714] text-[#1B1714] bg-transparent hover:bg-[#1B1714] hover:text-[#F3F1ED]; }
-    .jd-btn-light { @apply jd-btn bg-[#F3F1ED] text-[#1F1A17] hover:bg-[#E2DFDA]; }
+    .jd-btn { @apply relative isolate overflow-hidden inline-flex items-center justify-center gap-2 h-[52px] px-8 rounded-full uppercase font-medium text-xs tracking-[0.16em] disabled:opacity-40 disabled:cursor-not-allowed;
+        transition: transform 380ms cubic-bezier(.2,.7,.2,1), box-shadow 380ms cubic-bezier(.2,.7,.2,1), background-color 300ms ease, color 300ms ease, border-color 300ms ease; }
+    .jd-btn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 14px 28px -16px rgba(27,23,20,0.55); }
+    .jd-btn:not(:disabled):active { transform: translateY(0) scale(0.98); box-shadow: 0 4px 10px -6px rgba(27,23,20,0.4); transition-duration: 120ms; }
+    .jd-btn-solid { @apply jd-btn bg-[#1B1714] text-[#F3F1ED]; }
+    .jd-btn-light { @apply jd-btn bg-[#F3F1ED] text-[#1F1A17]; }
+    .jd-btn-solid::after, .jd-btn-light::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+        background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.22) 48%, rgba(255,255,255,0.05) 56%, transparent 70%);
+        transform: translateX(-120%); transition: transform 900ms cubic-bezier(.2,.7,.2,1); }
+    .jd-btn-light::after { background: linear-gradient(110deg, transparent 30%, rgba(201,184,160,0.45) 48%, rgba(201,184,160,0.1) 56%, transparent 70%); }
+    .jd-btn-solid:not(:disabled):hover::after, .jd-btn-light:not(:disabled):hover::after { transform: translateX(120%); }
+    .jd-btn-outline { @apply jd-btn border border-[#1B1714] text-[#1B1714] bg-transparent hover:text-[#F3F1ED]; }
+    .jd-btn-outline::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #1B1714; border-radius: inherit;
+        transform: scaleY(0); transform-origin: bottom; transition: transform 420ms cubic-bezier(.2,.7,.2,1); }
+    .jd-btn-outline:not(:disabled):hover::before { transform: scaleY(1); }
+    .jd-chip { @apply rounded-full; transition: transform 300ms cubic-bezier(.2,.7,.2,1), background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 300ms ease; }
+    .jd-chip:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 8px 18px -12px rgba(27,23,20,0.45); }
+    .jd-chip:not(:disabled):active { transform: scale(0.97); }
     .jd-input { @apply w-full border-0 border-b border-[#E2DFDA] focus:border-[#1B1714] bg-transparent rounded-none px-0 py-3 text-base text-[#1B1714] placeholder:text-[#7A716A] outline-none transition-colors; }
     .jd-label { @apply text-[11px] uppercase tracking-[0.16em] text-[#4A423C] font-medium block; }
     .jd-eyebrow { @apply text-[11px] uppercase tracking-[0.22em] text-[#7A716A] font-medium; }
@@ -90,6 +104,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
     .jd-zoom:hover img { transform: none; }
+    .jd-btn:hover, .jd-chip:hover { transform: none !important; }
 }
 
 [data-debug-wrapper="true"] { display: contents !important; }

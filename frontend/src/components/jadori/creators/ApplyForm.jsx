@@ -44,7 +44,7 @@ export const ApplyForm = () => {
         <div className="flex flex-wrap gap-2">
           {INTERESTS.map((i) => (
             <button type="button" key={i} onClick={() => toggle(i)} aria-pressed={f.interests.includes(i)} data-testid={`creator-interest-${i.toLowerCase().replace(/ /g, "-")}`}
-              className={`h-[40px] px-5 border text-[11px] uppercase tracking-[0.16em] transition-colors ${f.interests.includes(i) ? "bg-[#1B1714] text-[#F3F1ED] border-[#1B1714]" : "border-[#E2DFDA] hover:border-[#1B1714]"}`}>{i}</button>
+              className={`jd-chip h-[40px] px-5 border text-[11px] uppercase tracking-[0.16em] ${f.interests.includes(i) ? "bg-[#1B1714] text-[#F3F1ED] border-[#1B1714]" : "border-[#E2DFDA] hover:border-[#1B1714]"}`}>{i}</button>
           ))}
         </div>
       </fieldset>

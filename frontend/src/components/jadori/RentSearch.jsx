@@ -29,7 +29,7 @@ export const RentSearch = ({ testid = "rent-search", className = "" }) => {
   };
   const label = range.from ? `${format(range.from, "EEE, MMM d")}${range.to ? ` – ${format(range.to, "MMM d")}` : ""}` : "Add dates";
   return (
-    <div className={`bg-[#FFFFFF] border border-[#E2DFDA] flex flex-col nav:flex-row shadow-[0_24px_48px_-32px_rgba(27,23,20,0.35)] ${className}`} data-testid={testid}>
+    <div className={`bg-[#FFFFFF] border border-[#E2DFDA] rounded-[28px] nav:rounded-full overflow-hidden nav:overflow-visible nav:p-1.5 flex flex-col nav:flex-row shadow-[0_24px_48px_-32px_rgba(27,23,20,0.35)] ${className}`} data-testid={testid}>
       <Cell icon={MapPin} label="Where">
         <select value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-transparent text-[15px] outline-none cursor-pointer appearance-none" data-testid={`${testid}-city`}>
           <option value="">All of Massachusetts</option>

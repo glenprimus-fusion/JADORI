@@ -18,7 +18,7 @@ export const TopLenderBadge = ({ testid = "top-lender-badge" }) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <span role="button" tabIndex={0} onClick={toggle} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggle(e)} data-testid={testid}
-          className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-medium border border-[#1B1714] px-2 py-1 cursor-pointer hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors group">
+          className="jd-chip inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-medium border border-[#1B1714] px-2.5 py-1 cursor-pointer hover:bg-[#1B1714] hover:text-[#F3F1ED] group">
           <TopMark size={12} /> Top Lender
         </span>
       </PopoverTrigger>

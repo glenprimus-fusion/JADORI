@@ -122,7 +122,7 @@ export default function Catalogue() {
             ))}
           </div>
           <span className="text-[12px] text-[#7A716A] tracking-[0.06em]" data-testid="results-count">{items ? `${items.length} ${items.length === 1 ? "bag" : "bags"}` : ""}</span>
-          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="ml-auto flex items-center gap-2.5 h-[40px] px-4 sm:px-5 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors">
+          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="jd-chip ml-auto flex items-center gap-2.5 h-[40px] px-4 sm:px-5 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED]">
             <SlidersHorizontal size={14} strokeWidth={1.25} /><span className="hidden sm:inline">Filters & Sort</span><span className="sm:hidden">Filters</span>{activeCount ? ` (${activeCount})` : ""}
           </button>
         </div>

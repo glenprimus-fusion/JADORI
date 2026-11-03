@@ -33,7 +33,7 @@ const RequestVisual = () => (
     <div className="flex items-center gap-2 jd-label mb-4"><Bell size={13} strokeWidth={1.25} />New rental request</div>
     <div className="flex gap-4 items-center mb-4"><div className="relative w-14 aspect-[2/3]"><img src={BAG} alt="" className="absolute inset-0 w-full h-full object-cover" /></div><div><p className="font-serif">Quilted Flap</p><p className="text-[12px] text-[#7A716A]">Requested by Olivia R. · Cambridge</p></div></div>
     <MockRow k="Dates" v="Thu 12 → Sat 14" /><MockRow k="Duration" v="3 days" /><MockRow k="Deposit held" v="$1,350" />
-    <div className="grid grid-cols-2 gap-2"><div className="h-[44px] border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5">Decline</div><MockButton>Approve</MockButton></div>
+    <div className="grid grid-cols-2 gap-2"><div className="h-[44px] rounded-full border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5">Decline</div><MockButton>Approve</MockButton></div>
     <p className="text-[11px] text-[#7A716A] mt-3">Sample request for illustration</p>
   </Mock>
 );

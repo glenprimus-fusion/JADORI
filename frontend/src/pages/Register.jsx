@@ -33,9 +33,9 @@ export default function Register() {
         <label className="block"><span className="jd-label">Email</span><input required type="email" className="jd-input" value={f.email} onChange={set("email")} data-testid="register-email-input" /></label>
         <fieldset>
           <legend className="jd-label mb-3">I want to</legend>
-          <div className="grid grid-cols-3 border border-[#1B1714]">
+          <div className="grid grid-cols-3 border border-[#1B1714] rounded-full p-1">
             {[["rent", "Rent"], ["lend", "Lend"], ["both", "Both"]].map(([v, l]) => (
-              <button type="button" key={v} onClick={() => setF({ ...f, role: v })} data-testid={`register-role-${v}`} className={`h-[44px] text-[11px] uppercase tracking-[0.18em] font-medium transition-colors ${f.role === v ? "bg-[#1B1714] text-[#F3F1ED]" : "hover:bg-[#EFEEEC]"}`}>{l}</button>
+              <button type="button" key={v} onClick={() => setF({ ...f, role: v })} data-testid={`register-role-${v}`} className={`jd-chip h-[44px] text-[11px] uppercase tracking-[0.18em] font-medium ${f.role === v ? "bg-[#1B1714] text-[#F3F1ED]" : "hover:bg-[#EFEEEC]"}`}>{l}</button>
             ))}
           </div>
         </fieldset>

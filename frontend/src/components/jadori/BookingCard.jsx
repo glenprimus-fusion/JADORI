@@ -29,7 +29,7 @@ const Choice = ({ label, items, value, set, price, testid }) => (
     <div className="space-y-2">
       {items.map((it) => (
         <button type="button" key={it.key} onClick={() => set(it.key)} aria-pressed={value === it.key} data-testid={`${testid}-${it.key}`}
-          className={`w-full text-left p-4 border flex gap-4 items-start transition-colors ${value === it.key ? "border-[#1B1714] bg-[#F8F7F5]" : "border-[#E2DFDA] hover:border-[#7A716A]"}`}>
+          className={`w-full text-left p-4 border rounded-[22px] flex gap-4 items-start transition-[border-color,background-color,transform] duration-300 hover:-translate-y-px ${value === it.key ? "border-[#1B1714] bg-[#F8F7F5]" : "border-[#E2DFDA] hover:border-[#7A716A]"}`}>
           <span className={`mt-1 w-[11px] h-[11px] shrink-0 rounded-full border border-[#1B1714] ${value === it.key ? "bg-[#1B1714]" : ""}`} />
           <span className="flex-1 min-w-0">
             <span className="flex justify-between gap-3 text-[13px] uppercase tracking-[0.14em] font-medium"><span>{it.name}</span><span className="normal-case tracking-normal font-normal text-[#4A423C]">{price(it)}</span></span>

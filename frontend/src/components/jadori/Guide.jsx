@@ -33,7 +33,7 @@ export const MockRow = ({ k, v, light }) => (
 );
 
 export const MockButton = ({ children, light }) => (
-  <div className={`h-[44px] text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5 ${light ? "bg-[#F3F1ED] text-[#1F1A17]" : "bg-[#1B1714] text-[#F3F1ED]"}`}>{children}</div>
+  <div className={`h-[44px] rounded-full text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5 ${light ? "bg-[#F3F1ED] text-[#1F1A17]" : "bg-[#1B1714] text-[#F3F1ED]"}`}>{children}</div>
 );
 
 export const GuidePage = ({ testid, eyebrow = "A visual guide", title, intro, steps, essentials, note, cta }) => (

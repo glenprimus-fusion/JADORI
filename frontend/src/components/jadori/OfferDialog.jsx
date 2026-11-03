@@ -63,7 +63,7 @@ export const OfferDialog = ({ open, onClose, l }) => {
             <div className="flex gap-2" data-testid="offer-suggestions">
               {[0.95, 0.9, 0.85].map((p) => (
                 <button type="button" key={p} onClick={() => setF({ ...f, amount: round10(l.buy_price * p) })} data-testid={`offer-suggest-${Math.round((1 - p) * 100)}`}
-                  className={`flex-1 h-[40px] border text-[11px] tracking-[0.1em] transition-colors ${Number(f.amount) === round10(l.buy_price * p) ? "border-[#1B1714] bg-[#1B1714] text-[#F3F1ED]" : "border-[#E2DFDA] hover:border-[#1B1714]"}`}>
+                  className={`jd-chip flex-1 h-[40px] border text-[11px] tracking-[0.1em] ${Number(f.amount) === round10(l.buy_price * p) ? "border-[#1B1714] bg-[#1B1714] text-[#F3F1ED]" : "border-[#E2DFDA] hover:border-[#1B1714]"}`}>
                   {usd(round10(l.buy_price * p))}<span className="opacity-60"> · −{Math.round((1 - p) * 100)}%</span>
                 </button>
               ))}

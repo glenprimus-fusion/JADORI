@@ -46,7 +46,7 @@ const FeesVisual = () => (
       <div className="flex gap-4 items-center mb-5"><div className="relative w-14 aspect-[2/3]"><LoadingImg src={BAG1} alt="" className="absolute inset-0 w-full h-full object-cover" /></div><div><p className="jd-eyebrow !text-[#1B1714]">Chanel · sample</p><p className="font-serif">Quilted Flap</p></div></div>
       {[["$145 × 3 days", "$435"], ["Service fee (10%)", "$44"], ["Authentication & handling", "$25"], ["Damage protection", "$12"], ["Refundable deposit", "$1,350"]].map(([k, v]) => <div key={k} className="flex justify-between py-2 border-b border-[#E2DFDA]"><span className="text-[#4A423C]">{k}</span><span>{v}</span></div>)}
       <div className="flex justify-between pt-3 font-medium"><span>Total due</span><span>$1,866</span></div>
-      <div className="h-[44px] bg-[#1B1714] text-[#F3F1ED] text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5">Request to rent</div>
+      <div className="h-[44px] rounded-full bg-[#1B1714] text-[#F3F1ED] text-[11px] uppercase tracking-[0.18em] flex items-center justify-center mt-5">Request to rent</div>
     </div>
   </div>
 );
