@@ -1,4 +1,5 @@
 import { ShieldCheck, Clock } from "lucide-react";
+import { MarkPaths } from "./Monogram";
 
 export const AuthBadge = ({ status, testid }) =>
   status === "verified" ? (
@@ -19,7 +20,7 @@ export const AuthSeal = ({ size = 92, light = false }) => {
       <circle cx="50" cy="50" r="36" fill="none" stroke={c} strokeWidth="0.5" />
       <defs><path id="ring" d="M50,50 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" /></defs>
       <text fill={c} fontSize="6.4" letterSpacing="2.4" fontFamily="Jost"><textPath href="#ring">AUTHENTICATED · INDEPENDENTLY VERIFIED ·</textPath></text>
-      <text x="50" y="54" textAnchor="middle" fill={c} fontFamily="Prata" fontSize="11" letterSpacing="2">J</text>
+      <g transform="translate(37 37) scale(0.26)"><MarkPaths color={c} knock={light ? "#1F1A17" : "#F8F7F5"} /></g>
     </svg>
   );
 };

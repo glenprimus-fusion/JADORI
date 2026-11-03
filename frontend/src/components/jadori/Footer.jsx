@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Wordmark } from "./Wordmark";
+import { Monogram, MonogramPattern } from "./Monogram";
 
 const COLS = [
   ["Marketplace", [["Rent", "/rent"], ["Lend", "/lend"], ["Buy", "/buy"], ["Authenticity", "/authenticity"]]],
@@ -9,9 +10,10 @@ const COLS = [
 
 export const Footer = () => (
   <footer className="bg-[#1F1A17] text-[#F3F1ED]" data-testid="site-footer">
+    <div className="h-[96px] border-b border-[#F3F1ED]/10" data-testid="footer-monogram-band"><MonogramPattern color="#F3F1ED" bg="#1F1A17" opacity={0.16} tile={96} testid="footer-monogram-pattern" /></div>
     <div className="jd-container py-20 grid gap-14 nav:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div className="space-y-6">
-        <Wordmark light testid="footer-wordmark" />
+        <div className="flex items-center gap-4"><Monogram size={44} color="#F3F1ED" knock="#1F1A17" testid="footer-monogram" /><Wordmark light testid="footer-wordmark" /></div>
         <p className="text-sm text-[#F3F1ED]/70 max-w-xs">A peer-to-peer marketplace for authenticated designer handbags. Beginning in Massachusetts.</p>
         <div className="flex gap-6 text-xs uppercase tracking-[0.18em]">
           <span data-testid="footer-instagram" title="Placeholder — approved URL pending" className="opacity-80">Instagram <em className="not-italic text-[10px] opacity-60">(link pending)</em></span>

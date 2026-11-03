@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageHead } from "../components/jadori/Layout";
 import { AuthBadge, AuthSeal, SampleTag } from "../components/jadori/AuthBadge";
+import { Monogram, MonogramPattern } from "../components/jadori/Monogram";
 
 const TOKENS = [
   ["Main background", "#F8F7F5"], ["White panels", "#FFFFFF"], ["Photo background", "#EFEEEC"], ["Dividers", "#E2DFDA"],
@@ -31,6 +32,31 @@ export default function StyleGuide() {
           <p className="font-serif text-[32px] mt-4">Product title 28–40px</p>
           <p className="mt-4 max-w-xl">Body — Jost Regular 16px / 1.6. Clean, legible interface text for navigation, forms and descriptions.</p>
           <p className="jd-eyebrow mt-4">Eyebrow — Jost Medium 11px · 0.22em</p>
+        </Sec>
+        <Sec t="Monogram · provisional">
+          <div className="grid sm:grid-cols-3 gap-4" data-testid="monogram-showcase">
+            <div className="aspect-square bg-[#F8F7F5] border border-[#E2DFDA] flex items-center justify-center"><Monogram size={180} /></div>
+            <div className="aspect-square bg-[#1F1A17] flex items-center justify-center"><Monogram size={180} color="#F3F1ED" knock="#1F1A17" testid="monogram-dark" /></div>
+            <div className="aspect-square bg-[#EFEEEC] flex flex-col items-center justify-center gap-5"><Monogram size={96} knock="#EFEEEC" testid="monogram-lockup" /><span className="font-serif uppercase tracking-[0.42em] pl-[0.42em] text-[22px]">Jadori</span></div>
+          </div>
+          <p className="text-sm text-[#4A423C] mt-5 max-w-2xl">An original interlocked J and D. The J's stem passes through the D's bowl and crosses under its base, ending in a ball terminal. It has thick stems, hairline bowls and bracket serifs to echo Prata. It's used in single espresso or light-on-dark only, with no gold. Minimum size 16px (favicon).</p>
+          <div className="grid sm:grid-cols-2 gap-4 mt-10">
+            <div><div className="h-[220px] border border-[#E2DFDA]"><MonogramPattern opacity={0.85} testid="monogram-pattern-light" /></div><p className="text-xs text-[#7A716A] mt-2">JADORI canvas: espresso on #EFEEEC, 120px tile</p></div>
+            <div><div className="h-[220px]"><MonogramPattern color="#F3F1ED" bg="#1F1A17" opacity={0.22} testid="monogram-pattern-dark" /></div><p className="text-xs text-[#7A716A] mt-2">Tone-on-tone: light at 22% on #1F1A17 (footer band)</p></div>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4 mt-10" data-testid="monogram-applications">
+            <div className="aspect-[4/5] bg-[#EFEEEC] flex items-center justify-center p-10">
+              <div className="relative w-full h-full shadow-[0_18px_40px_-20px_rgba(27,23,20,0.45)] overflow-hidden"><MonogramPattern opacity={0.9} tile={90} testid="mockup-dust-bag" />
+                <div className="absolute top-4 inset-x-0 h-2 border-y border-[#1B1714]/30" /></div>
+            </div>
+            <div className="aspect-[4/5] bg-[#EFEEEC] flex items-center justify-center">
+              <div className="w-[150px] h-[230px] bg-[#1F1A17] flex flex-col items-center justify-center gap-4 shadow-[0_18px_40px_-20px_rgba(27,23,20,0.6)]">
+                <span className="w-3 h-3 rounded-full border border-[#F3F1ED]/50 -mt-6 mb-6" /><Monogram size={64} color="#F3F1ED" knock="#1F1A17" testid="mockup-tag" /><span className="text-[9px] uppercase tracking-[0.3em] text-[#F3F1ED]/70">Authenticated</span>
+              </div>
+            </div>
+            <div className="aspect-[4/5] bg-[#EFEEEC] flex items-center justify-center"><AuthSeal size={180} /></div>
+          </div>
+          <p className="text-xs text-[#7A716A] mt-2">Concept applications: dust bag, authentication hang tag, and the circular seal with the monogram at its centre.</p>
         </Sec>
         <Sec t="Buttons · 52px · square">
           <div className="flex flex-wrap gap-4 items-center"><button className="jd-btn-solid">Solid espresso</button><button className="jd-btn-outline">Espresso outline</button><span className="bg-[#1F1A17] p-4"><button className="jd-btn-light">Light on dark</button></span><button className="jd-btn-solid" disabled>Disabled</button></div>
