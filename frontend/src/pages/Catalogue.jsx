@@ -67,10 +67,10 @@ export default function Catalogue() {
           {[f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}
         </h1>
         {q && <p className="mt-2 text-[#4A423C]">Results for “{q}” <button className="jd-link ml-2 text-sm" onClick={() => setParams({})} data-testid="clear-search-button">Clear</button></p>}
-        <nav className="mt-8 flex gap-6 nav:gap-8 overflow-x-auto jd-scroll border-b border-[#E2DFDA]" aria-label="Shop by style" data-testid="style-shortcuts">
-          {[["", "All styles"], ...STYLES].map(([v, label]) => (
+        <nav className="mt-8 flex gap-5 nav:gap-8 overflow-x-auto jd-scroll border-b border-[#E2DFDA]" aria-label="Shop by style" data-testid="style-shortcuts">
+          {[["", "All"], ...STYLES].map(([v, label]) => (
             <button key={v || "all"} onClick={() => setParam("style", v)} data-testid={`style-shortcut-${v ? v.toLowerCase() : "all"}`} aria-current={style === v}
-              className={`shrink-0 pb-3 -mb-px text-[12px] uppercase tracking-[0.18em] border-b transition-colors ${style === v ? "border-[#1B1714] text-[#1B1714] font-medium" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{label}</button>
+              className={`shrink-0 pb-3 -mb-px text-[11px] nav:text-[12px] uppercase tracking-[0.12em] nav:tracking-[0.18em] border-b transition-colors ${style === v ? "border-[#1B1714] text-[#1B1714] font-medium" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{label}</button>
           ))}
         </nav>
       </div>
@@ -121,7 +121,7 @@ export default function Catalogue() {
         )}
       </div>
       <QuickView l={quick} onClose={() => setQuick(null)} />
-      <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setSort("recommended"); setParams({}); }} />
+      <FilterSheet open={open} onOpenChange={setOpen} style={style} setStyle={(v) => setParam("style", v)} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setSort("recommended"); setParams({}); }} />
     </div>
   );
 }

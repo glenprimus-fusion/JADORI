@@ -11,9 +11,9 @@ const Row = ({ k, v, testid }) => (
 
 export const QuickView = ({ l, onClose }) => (
   <Dialog open={!!l} onOpenChange={(o) => !o && onClose()}>
-    <DialogContent className="rounded-none bg-[#F8F7F5] border-[#E2DFDA] max-w-[920px] w-[94vw] p-0 gap-0 max-h-[92vh] overflow-y-auto" data-testid="quick-view-dialog">
+    <DialogContent className="rounded-none bg-[#F8F7F5] border-[#E2DFDA] max-w-[920px] w-[94vw] p-0 gap-0 [&>button]:z-20 [&>button]:bg-[#F8F7F5]/90 [&>button]:p-1" data-testid="quick-view-dialog">
       {l && (
-        <div className="grid sm:grid-cols-[1.1fr_1fr]">
+        <div className="grid sm:grid-cols-[1.1fr_1fr] max-h-[92vh] overflow-y-auto">
           <div className="relative aspect-[4/5] sm:aspect-auto sm:min-h-[560px] jd-photo">
             <img src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} className="absolute inset-0 w-full h-full object-cover" data-testid="quick-view-image" />
             <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.18em] text-[#7A716A]">Sample image</span>

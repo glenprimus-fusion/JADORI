@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetTitle } from "../ui/sheet";
 import { X } from "lucide-react";
-import { BRANDS, COLORS, slug } from "../../lib/content";
+import { BRANDS, COLORS, STYLES, slug } from "../../lib/content";
 
 const Check = ({ label, checked, onChange, testid }) => (
   <label className="flex items-center gap-3 py-2 cursor-pointer text-[15px]">
@@ -23,7 +23,7 @@ const Group = ({ title, children }) => (
   </fieldset>
 );
 
-export const FilterSheet = ({ open, onOpenChange, f, setF, sort, setSort, count, reset }) => {
+export const FilterSheet = ({ open, onOpenChange, f, setF, sort, setSort, style, setStyle, count, reset }) => {
   const toggle = (key, v) => setF({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] });
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -39,6 +39,12 @@ export const FilterSheet = ({ open, onOpenChange, f, setF, sort, setSort, count,
               <option value="low">Price: low to high</option>
               <option value="high">Price: high to low</option>
             </select>
+          </Group>
+          <Group title="Style">
+            <div className="grid grid-cols-2">
+              <Radio name="style" value="" current={style} label="All styles" onChange={setStyle} />
+              {STYLES.map(([v, label]) => <Radio key={v} name="style" value={v} current={style} label={label} onChange={setStyle} />)}
+            </div>
           </Group>
           <Group title="Brand">
             <div className="grid grid-cols-2">{BRANDS.map((b) => <Check key={b.name} label={b.name} checked={f.brands.includes(b.name)} onChange={() => toggle("brands", b.name)} testid={`filter-brand-${slug(b.name)}`} />)}</div>

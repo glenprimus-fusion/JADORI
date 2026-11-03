@@ -38,9 +38,9 @@ export const Header = () => {
           <Menu size={20} strokeWidth={1.25} /> Menu
         </button>
         <Wordmark />
-        <div className="flex items-center justify-end gap-6 text-[12px] uppercase tracking-[0.18em]">
+        <div className="flex items-center justify-end gap-4 nav:gap-6 text-[12px] uppercase tracking-[0.18em]">
           <NavLink to="/authenticity" className="hidden wide:inline hover:opacity-70" data-testid="nav-authenticity">Authenticity</NavLink>
-          <button onClick={() => setSearch((s) => !s)} aria-label="Search" data-testid="header-search-toggle" className="hover:opacity-70"><Search size={19} strokeWidth={1.25} /></button>
+          <button onClick={() => setSearch((s) => !s)} aria-label="Search" data-testid="header-search-toggle" className="hidden nav:block hover:opacity-70"><Search size={19} strokeWidth={1.25} /></button>
           <Link to="/account/saved" aria-label={`Saved bags (${saved.length})`} data-testid="header-saved-link" className="relative hover:opacity-70">
             <Heart size={19} strokeWidth={1.25} />
             {saved.length > 0 && <span className="absolute -top-1.5 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-[#1B1714] text-[#F3F1ED] text-[9px] leading-[16px] text-center tracking-normal" data-testid="header-saved-count">{saved.length}</span>}

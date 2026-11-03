@@ -1,0 +1,33 @@
+{
+  "summary": "Frontend-only Playwright test at 1920 and 390 of Quick View, style shortcuts, Saved bags and per-account wishlists, plus regression checks. PASS: Hovering a card fades in quick-view-button (opacity 0 to 1). Clicking it opens quick-view-dialog and stays on /rent. The dialog shows name, brand, rent price ($145/day) and auth. Buy price ($8,900) shows for sample-01 and is absent for sample-02. The save button toggles and syncs with the card heart and the header badge. ESC and the X button both close it. The details link goes to /bag/sample-02. Quick view also works on homepage cards and on the Saved page. Mobile 390: the eye button opens the dialog, the dialog is 350px wide, there is no horizontal overflow and the content scrolls. Style shortcuts return Tote 02/05/12, Shoulder 01/09/11, Crossbody 03/04/07 and Mini 06/08/10, and update ?style=. 'All styles' resets. Hermès + Tote returns 2 bags with the title 'Hermès · Totes'. Buy mode respects style (Hermès Tote = 1, Shoulder = 01/09). Clear in the filter sheet resets style, brand and sort. Saved: the guest empty state, the instant badge updates, saved-grid with '3 saved bags', and un-hearting on /account/saved removes the card. Registering merges guest saves into jadori_wishlist_<email> and deletes the guest key. dash-tab-saved works. After sign out the guest list is empty. A second account has its own separate list. Booking price breakdown works (sample-04, 4 days, $827). ONE BUG: the header saved badge goes stale after sign out (and on any login change).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Header saved badge after sign out / account switch", "issue": "Header's useSaved() only re-reads on 'jadori-wishlist' or 'storage' events. clearUser() and setUser() dispatch neither. After dash-sign-out, the header keeps showing the previous account's count (e.g. '2') while /account/saved shows the guest empty state. The stale count persists across SPA navigation until a heart is toggled or the page reloads. The same happens when a returning account with saved bags registers or signs in with an empty guest list: the badge shows 0 or a stale number. Fix: dispatch window.dispatchEvent(new Event('jadori-wishlist')) inside setUser and clearUser (or call it in Register submit and dash-sign-out).", "selector": "[data-testid='header-saved-count']", "priority": "MEDIUM"},
+      {"component": "QuickView close button on mobile", "issue": "At 390 the dialog scrolls internally (scrollHeight 1015 vs clientHeight 774). The X close button is absolutely positioned inside the scroll container, so it scrolls out of view once the user scrolls to the CTA. ESC and the backdrop still work. Consider making the close button sticky or fixed.", "selector": "[data-testid='quick-view-dialog'] > button", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Catalogue mobile style shortcuts", "issues": ["At 390 the style row is cut off at 'CROSSBO' and 'Mini' is off-screen. There is no fade or scroll hint. Consider a smaller gap or tracking, or a right-edge fade."]},
+      {"screen": "Filters & Sort button", "issues": ["The active count includes the style, e.g. '(2)' for Hermès + Tote, but the filter sheet has no Style section. Users cannot see or remove the style from the sheet except via Clear. Consider adding a Style group to the sheet."]},
+      {"screen": "PDP", "issues": ["The product page has no heart or save button, so saving is only possible from cards or quick view. Optional."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fire the 'jadori-wishlist' event when the user changes (setUser/clearUser) so header-saved-count refreshes after sign out and registration",
+    "Optional: sticky quick-view close button on mobile; a scroll hint for the style shortcuts on mobile; a Style group in the filter sheet"
+  ],
+  "critical_code_review_comments": [
+    "wishlist.js getSaved() has a side effect: it writes localStorage and removes the guest key on every read, including during render via the useState initializer. It works, but the merge belongs in setUser.",
+    "ListingCard renders <button> elements (save and quick view) nested inside a <Link>/<a>. This is invalid interactive nesting; preventDefault makes it work, but it is an accessibility concern.",
+    "Header and Saved call getUser() non-reactively. Auth changes rely on route re-renders, the same root cause as the stale badge."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "skipped (frontend only)", "frontend": "~95% (all requested flows pass; 1 medium stale-badge bug)"},
+  "test_credentials": "None needed. Concept registration with emails test_saved_a/b/c_<ts>@example.com",
+  "seed_data_creation": "Registrations TEST Saver A/B/C via /api/registrations",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Server date is Nov 2026. To reproduce the stale badge: register, heart 2 bags, open header-saved-link, click dash-sign-out, then check header-saved-count (still 2). Hermès shortcut testid is brand-shortcut-hermes; style testids are lowercase (style-shortcut-tote). The Clear button in the sheet is get_by_role('button', name='Clear')."
+}

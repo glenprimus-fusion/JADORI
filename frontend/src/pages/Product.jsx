@@ -6,6 +6,7 @@ import { http, usd } from "../lib/api";
 import { Gallery } from "../components/jadori/Gallery";
 import { BookingCard } from "../components/jadori/BookingCard";
 import { AuthBadge, AuthSeal, SampleTag } from "../components/jadori/AuthBadge";
+import { SaveButton } from "../components/jadori/SaveButton";
 
 const AuthCard = ({ l }) => (
   <div className={`p-6 flex gap-5 items-start ${l.auth_status === "verified" ? "bg-[#1F1A17] text-[#F3F1ED]" : "border border-[#E2DFDA]"}`} data-testid="authenticity-card">
@@ -60,7 +61,10 @@ export default function Product() {
           <div className="jd-fade">
             <div className="flex items-center gap-3 mb-3"><AuthBadge status={l.auth_status} testid="product-auth-badge" /><SampleTag className="!bg-[#EFEEEC]" /></div>
             <p className="jd-eyebrow !text-[#1B1714]" data-testid="product-brand">{l.brand}</p>
-            <h1 className="text-[28px] nav:text-[38px] leading-tight mt-1" data-testid="product-name">{l.name}</h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-[28px] nav:text-[38px] leading-tight mt-1" data-testid="product-name">{l.name}</h1>
+              <span className="relative w-[44px] h-[44px] border border-[#E2DFDA] shrink-0 mt-2"><SaveButton id={l.id} className="absolute inset-0 flex items-center justify-center" testid="product-save-button" /></span>
+            </div>
             <p className="text-sm text-[#4A423C] mt-2">Condition: <span data-testid="product-condition">{l.condition}</span>{l.buy_enabled && <> · Also available to buy at {usd(l.buy_price)}</>}</p>
           </div>
           <Lender l={l} />

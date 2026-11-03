@@ -16,5 +16,6 @@ const KEY = "jadori_concept_user";
 export const getUser = () => {
   try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; }
 };
-export const setUser = (u) => localStorage.setItem(KEY, JSON.stringify(u));
-export const clearUser = () => localStorage.removeItem(KEY);
+const EVT = () => window.dispatchEvent(new Event("jadori-wishlist"));
+export const setUser = (u) => { localStorage.setItem(KEY, JSON.stringify(u)); EVT(); };
+export const clearUser = () => { localStorage.removeItem(KEY); EVT(); };
