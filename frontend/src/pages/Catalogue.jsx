@@ -5,6 +5,7 @@ import { http } from "../lib/api";
 import { Link } from "react-router-dom";
 import { BRANDS, DOORS, STYLES, slug } from "../lib/content";
 import { QuickView } from "../components/jadori/QuickView";
+import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
 
@@ -114,7 +115,7 @@ export default function Catalogue() {
         ) : (
           <div className="grid grid-flow-row-dense grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
             {(items || Array.from({ length: 8 })).flatMap((l, k) => {
-              const card = l ? <ListingCard key={l.id} l={l} mode={mode} onQuickView={setQuick} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />;
+              const card = l ? <ListingCard key={l.id} l={l} mode={mode} onQuickView={setQuick} /> : <PlaceholderTile key={k} />;
               return k === 5 && items && items.length >= 8 && !activeCount && !q && sort === "recommended" ? [<EditorialTile key="editorial" />, card] : [card];
             })}
           </div>

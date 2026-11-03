@@ -7,6 +7,7 @@ import { Gallery } from "../components/jadori/Gallery";
 import { BookingCard } from "../components/jadori/BookingCard";
 import { AuthBadge, AuthSeal, SampleTag } from "../components/jadori/AuthBadge";
 import { SaveButton } from "../components/jadori/SaveButton";
+import { PlaceholderTile } from "../components/jadori/LoadingImg";
 
 const AuthCard = ({ l }) => (
   <div className={`p-6 flex gap-5 items-start ${l.auth_status === "verified" ? "bg-[#1F1A17] text-[#F3F1ED]" : "border border-[#E2DFDA]"}`} data-testid="authenticity-card">
@@ -47,7 +48,7 @@ export default function Product() {
   const [err, setErr] = useState(false);
   useEffect(() => { http.get(`/listings/${id}`).then((r) => setL(r.data)).catch(() => setErr(true)); }, [id]);
   if (err) return <div className="jd-container py-32 text-center"><p className="font-serif text-3xl">This bag could not be found.</p><Link to="/rent" className="jd-btn-outline mt-8">Back to catalogue</Link></div>;
-  if (!l) return <div className="jd-container py-10"><div className="aspect-[4/5] max-w-3xl jd-photo animate-pulse" /></div>;
+  if (!l) return <div className="jd-container py-10"><PlaceholderTile className="aspect-[4/5] max-w-3xl" /></div>;
 
   return (
     <div data-testid="product-page" className="pb-28 nav:pb-24">

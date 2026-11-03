@@ -4,6 +4,7 @@ import { http, getUser } from "../lib/api";
 import { useSaved } from "../lib/wishlist";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { QuickView } from "../components/jadori/QuickView";
+import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { DashShell, TABS } from "./RenterDashboard";
 
 const Grid = () => {
@@ -23,7 +24,7 @@ const Grid = () => {
     <>
       <p className="text-sm text-[#7A716A] mb-6" data-testid="saved-count">{items ? `${items.length} saved ${items.length === 1 ? "bag" : "bags"}` : ""}</p>
       <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="saved-grid">
-        {(items || Array.from({ length: 4 })).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
+        {(items || Array.from({ length: 4 })).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <PlaceholderTile key={k} />)}
       </div>
       <QuickView l={quick} onClose={() => setQuick(null)} />
     </>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Eye, Star } from "lucide-react";
 import { AuthBadge } from "./AuthBadge";
 import { SaveButton } from "./SaveButton";
+import { LoadingImg } from "./LoadingImg";
 import { usd } from "../../lib/api";
 
 export const ListingCard = ({ l, mode = "rent", onQuickView }) => {
@@ -10,7 +11,7 @@ export const ListingCard = ({ l, mode = "rent", onQuickView }) => {
   return (
     <Link to={`/bag/${l.id}`} className="group block" data-testid={`listing-card-${l.id}`}>
       <div className="relative aspect-[2/3] jd-photo overflow-hidden">
-        <img src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]" />
+        <LoadingImg src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loading="lazy" loaderTestid={`card-loader-${l.id}`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]" />
         {worn && <img src={worn.url} alt="" aria-hidden loading="lazy" className="hidden nav:block absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500" />}
         <div className="hidden nav:block absolute top-3 left-3 z-10 bg-[#EFEEEC]/80 px-2 py-0.5"><AuthBadge status={l.auth_status} testid={`listing-auth-${l.id}`} /></div>
         <SaveButton id={l.id} />

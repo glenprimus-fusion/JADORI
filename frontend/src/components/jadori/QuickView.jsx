@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dialog";
 import { AuthBadge } from "./AuthBadge";
 import { SaveButton } from "./SaveButton";
+import { LoadingImg } from "./LoadingImg";
 import { usd } from "../../lib/api";
 
 const Row = ({ k, v, testid }) => (
@@ -15,7 +16,7 @@ export const QuickView = ({ l, onClose }) => (
       {l && (
         <div className="grid sm:grid-cols-[1.1fr_1fr] max-h-[92vh] overflow-y-auto">
           <div className="relative aspect-[4/5] sm:aspect-auto sm:min-h-[560px] jd-photo">
-            <img src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} className="absolute inset-0 w-full h-full object-cover" data-testid="quick-view-image" />
+            <LoadingImg src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loaderTestid="quick-view-loader" className="absolute inset-0 w-full h-full object-cover" data-testid="quick-view-image" />
             <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.18em] text-[#7A716A]">Sample image</span>
           </div>
           <div className="p-6 sm:p-8 flex flex-col">

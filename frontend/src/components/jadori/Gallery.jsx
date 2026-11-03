@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { LoadingImg } from "./LoadingImg";
 
 export const Gallery = ({ images, title }) => {
   const [i, setI] = useState(0);
@@ -19,7 +20,7 @@ export const Gallery = ({ images, title }) => {
           ))}
         </div>
         <div className="relative aspect-[4/5] max-h-[760px] jd-photo overflow-hidden group">
-          <img key={i} src={images[i].url} alt={`${title} — ${images[i].view} (sample image)`} className={`absolute inset-0 w-full h-full object-cover jd-fade ${images[i].cleaned ? "jd-cleaned" : ""}`} data-testid="gallery-main-image" />
+          <LoadingImg key={i} src={images[i].url} alt={`${title} — ${images[i].view} (sample image)`} loaderTestid="gallery-loader" className={`absolute inset-0 w-full h-full object-cover ${images[i].cleaned ? "jd-cleaned" : ""}`} data-testid="gallery-main-image" />
           <button onClick={() => go(-1)} aria-label="Previous image" data-testid="gallery-prev-button" className="absolute left-4 top-1/2 -translate-y-1/2 w-[48px] h-[48px] bg-[#FFFFFF]/90 flex items-center justify-center hover:bg-[#FFFFFF]"><ChevronLeft size={20} strokeWidth={1} /></button>
           <button onClick={() => go(1)} aria-label="Next image" data-testid="gallery-next-button" className="absolute right-4 top-1/2 -translate-y-1/2 w-[48px] h-[48px] bg-[#FFFFFF]/90 flex items-center justify-center hover:bg-[#FFFFFF]"><ChevronRight size={20} strokeWidth={1} /></button>
           <p className="absolute bottom-4 left-4 text-[11px] uppercase tracking-[0.16em] bg-[#FFFFFF]/90 px-3 py-1.5" data-testid="gallery-view-label">
@@ -32,7 +33,7 @@ export const Gallery = ({ images, title }) => {
         <div className="flex overflow-x-auto snap-x snap-mandatory jd-scroll" onScroll={onSwipe} data-testid="gallery-swipe">
           {images.map((im, k) => (
             <div key={k} className="relative shrink-0 w-full snap-center aspect-[4/5] jd-photo">
-              <img src={im.url} alt={`${title} — ${im.view}`} className={`absolute inset-0 w-full h-full object-cover ${im.cleaned ? "jd-cleaned" : ""}`} />
+              <LoadingImg src={im.url} alt={`${title} — ${im.view}`} loading="lazy" className={`absolute inset-0 w-full h-full object-cover ${im.cleaned ? "jd-cleaned" : ""}`} />
               <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.16em] bg-[#FFFFFF]/90 px-2 py-1">{im.view}</span>
             </div>
           ))}

@@ -55,6 +55,7 @@ No gold or burgundy in UI. Errors use ink + medium weight (no red). Defined as C
 | `/style-guide` | Live design system |
 
 ## 5. Interactions & motion
+- Photo loading: `LoadingImg` / `PlaceholderTile` (`components/jadori/LoadingImg.jsx`) show the monogram in muted #7A716A on #EFEEEC. It softly fades between 25% and 70% opacity over 1.8s, and the photo fades in when it has loaded. This is used on cards, Quick View, the product gallery and the loading grids. With reduced motion, the mark stays still.
 - RENT door crossfades three images: 1.4s fade, ~5.2s hold (6.6s cycle). Not a carousel.
 - Entrance fade 700ms / 8px rise; photo hover zoom 1.03 over 900ms.
 - No bounce, spin or parallax. `prefers-reduced-motion` disables animation and stops the crossfade.
