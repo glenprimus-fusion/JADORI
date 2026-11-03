@@ -56,7 +56,7 @@ export const HeroBanner = () => {
       <a href="#doors" aria-label="Scroll to Lend, Rent and Buy" className={`hidden nav:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] opacity-70 hover:opacity-100 ${dark ? "text-[#F3F1ED]" : "text-[#1B1714]"}`} data-testid="home-hero-scroll">
         Lend · Rent · Buy<ChevronDown size={16} strokeWidth={1} />
       </a>
-      <div className={`absolute top-4 right-5 flex items-center gap-3 text-[9px] uppercase tracking-[0.2em] text-[#F3F1ED]/80 ${dark ? "" : "nav:text-[#1B1714]/60"}`} data-testid="home-hero-season-preview">
+      <div className={`absolute top-4 right-5 left-5 nav:left-auto flex items-center justify-end gap-3 text-[9px] uppercase tracking-[0.14em] nav:tracking-[0.2em] text-[#F3F1ED]/80 ${dark ? "" : "nav:text-[#1B1714]/60"}`} data-testid="home-hero-season-preview">
         <span className="hidden nav:inline">Placeholder · preview season:</span>
         {Object.entries(SEASONS).map(([k, s]) => (
           <button key={k} onClick={() => setParams({ season: k }, { replace: true })} data-testid={`hero-season-${k}`} className={`hover:opacity-100 ${k === h.key ? "underline underline-offset-4 opacity-100" : "opacity-60"}`}>{s.name}</button>

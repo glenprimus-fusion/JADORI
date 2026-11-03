@@ -42,15 +42,17 @@ export const OfferDialog = ({ open, onClose, l }) => {
     } catch (er) { setSt({ busy: false, err: errMsg(er), offer: null }); }
   };
   const acceptCounter = async () => {
-    setSt((s) => ({ ...s, busy: true }));
-    const r = await http.post(`/offers/${st.offer.id}/accept-counter`);
-    setSt({ busy: false, err: "", offer: r.data });
+    setSt((s) => ({ ...s, busy: true, err: "" }));
+    try {
+      const r = await http.post(`/offers/${st.offer.id}/accept-counter`);
+      setSt({ busy: false, err: "", offer: r.data });
+    } catch (er) { setSt((s) => ({ ...s, busy: false, err: errMsg(er) })); }
   };
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="rounded-none bg-[#F8F7F5] border-[#E2DFDA] max-w-md p-8" data-testid="offer-dialog">
-        {st.offer ? <Result o={st.offer} l={l} onAccept={acceptCounter} busy={st.busy} /> : (
+        {st.offer ? <><Result o={st.offer} l={l} onAccept={acceptCounter} busy={st.busy} />{st.err && <p className="text-sm font-medium mt-4" data-testid="offer-error">{st.err}</p>}</> : (
           <form onSubmit={submit} className="space-y-5">
             <DialogTitle className="font-serif font-normal text-[26px]">Make an offer</DialogTitle>
             <DialogDescription className="text-sm text-[#4A423C]">{l.brand} {l.name} · asking {usd(l.buy_price)}</DialogDescription>

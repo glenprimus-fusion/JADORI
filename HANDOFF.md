@@ -106,3 +106,13 @@ Illustrative fees: service 10% of rental, $25 authentication & handling, $4/day 
 - Photo upload/storage and background removal for main thumbnail.
 - Availability calendar per bag; lender accept/decline of requests; messaging.
 - Final brands (Louis Vuitton & Prada are provisional), social URLs, legal copy, launch service areas in Massachusetts.
+
+## Marketplace additions (Poshmark / Turo inspired)
+- **Seasonal hero videos**: `/public/hero/{winter,spring,summer,autumn}.mp4` (5s seamless loops, desktop ≥860px only; still image on mobile). Config in `src/lib/seasons.js`. Generator script: `/app/scripts/gen_season_videos.py`.
+- **Edit Spotlight** (`EditSpotlight.jsx`): homepage tile for this month's first edit (`lib/edits.js`), photo + 3 bags.
+- **Rent search** (`RentSearch.jsx`): town + dates → `/rent/all?city=&from=&to=`; cards show the rental total for those dates; dates carry into the product booking card.
+- **Protection plans & handoff** (`lib/plans.js`, mirrored in `server.py fees_for`): Essential $4/day full deposit, Signature $9/day half deposit, Complete $16/day quarter deposit; Meet the owner (free) or Courier $45. Sample pricing.
+- **Make an Offer** (`OfferDialog.jsx`, `POST /api/offers`, `POST /api/offers/{id}/accept-counter`, `GET /api/offers?email=`): owner replies are SIMULATED (≥90% accept, 75–90% counter at midpoint, <75% decline, <60% rejected).
+- **Closets** (`/closet/:slug`, `GET /api/lenders/{slug}`): lender profile, stats, bags, Follow (localStorage `jadori_following`). Lenders defined in `backend/seed.py LENDERS`.
+- **Top Lender** (`TopLender.jsx`): badge + criteria popover; `lender.top` flag. **Lender protection** explainer on `/lend` (`LendExtras.jsx`).
+

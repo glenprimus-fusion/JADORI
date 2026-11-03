@@ -9,5 +9,8 @@ React (CRA+Tailwind, custom screens nav 860/wide 1100) + FastAPI + MongoDB. Samp
 - All pages/routes listed in /app/HANDOFF.md; newsletter, registration (concept, no password), rental/purchase requests, listing submissions, contact stored in Mongo.
 - Auth status rules: verified → seal; pending → "Authenticated before handoff".
 - Responsive desktop/mobile; reduced-motion support. Tested (iteration_1) and fixes applied.
+- Later sessions: Rent/Buy/Lend worlds, edits, authenticity experience, how-it-works guides, minimal homepage.
+- Nov 2026 (iteration_4, all pass): seasonal hero videos for all 4 seasons (desktop only), homepage Edit Spotlight, Rent where+dates search with per-date totals, protection plans + pickup/courier at booking, Make an Offer (simulated owner replies), lender closet pages with Follow, Top Lender badge, lender protection explainer. See HANDOFF.md "Marketplace additions".
+
 ## Backlog
 P0: real sign-in, payments, authentication workflow (developer). P1: photo upload + thumbnail background removal, availability calendar, lender accept/decline. P2: messaging, reviews, final brand/social/legal content.

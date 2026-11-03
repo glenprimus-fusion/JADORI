@@ -90,7 +90,7 @@ export default function Product() {
       </div>
       <div className="nav:hidden fixed bottom-0 inset-x-0 z-30 bg-[#FFFFFF] border-t border-[#E2DFDA] px-5 py-3 flex items-center justify-between gap-4" data-testid="mobile-booking-bar">
         <p className="font-serif text-xl">{usd(l.rent_per_day)}<span className="font-sans text-xs text-[#7A716A]"> / day</span></p>
-        <a href="#booking" className="jd-btn-solid !px-6" data-testid="mobile-book-button">Select dates</a>
+        <a href="#booking" className="jd-btn-solid !px-6" data-testid="mobile-book-button">{new URLSearchParams(window.location.search).get("from") ? "Review booking" : "Select dates"}</a>
       </div>
     </div>
   );

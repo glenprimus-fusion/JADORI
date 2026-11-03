@@ -234,7 +234,7 @@ def owner_reply(price, amount):
     if amount >= price * 0.9:
         return "accepted", amount
     if amount >= price * 0.75:
-        return "countered", int(round((amount + price) / 2 / 10) * 10)
+        return "countered", int((amount + price) / 2 / 10 + 0.5) * 10
     return "declined", None
 
 

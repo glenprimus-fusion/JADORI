@@ -35,7 +35,7 @@ const ReqRow = ({ r, kind }) => (
     <div>
       <p className="jd-eyebrow !text-[#1B1714]">{r.listing.brand}</p>
       <p className="font-serif text-lg">{r.listing.name}</p>
-      <p className="text-sm text-[#7A716A]">{kind === "rental" ? `${r.start_date} → ${r.end_date} · ${r.quote.days} days` : "Purchase request"}</p>
+      <p className="text-sm text-[#7A716A]">{kind === "rental" ? `${r.start_date} → ${r.end_date} · ${r.quote.days} days${r.quote.plan ? ` · ${r.quote.plan} protection · ${r.quote.fulfilment === "delivery" ? "courier" : "meet the owner"}` : ""}` : "Purchase request"}</p>
     </div>
     <div className="text-right">
       <p className="font-medium">{usd(kind === "rental" ? r.quote.total : r.price)}</p>

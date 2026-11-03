@@ -37,9 +37,9 @@ export default function Closet() {
           <div>
             <p className="jd-eyebrow">The closet of</p>
             <h1 className="text-[38px] nav:text-[56px] leading-none mt-3" data-testid="closet-name">{c?.name || "\u00a0"}</h1>
-            <div className="flex flex-wrap items-center gap-3 mt-4 text-[14px] text-[#4A423C]">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 text-[14px] text-[#4A423C]">
               {c?.top && <TopLenderBadge testid="closet-top-lender" />}
-              <span>{c?.city}, MA</span><span className="text-[#E2DFDA]">|</span><span>Lending since {c?.since}</span><span className="text-[#E2DFDA]">|</span><span>Replies {c?.response}</span>
+              <span>{c?.city}, MA</span><span>Lending since {c?.since}</span><span>Replies {c?.response}</span>
             </div>
             <p className="mt-5 max-w-xl text-[#4A423C]" data-testid="closet-bio">{c?.bio}</p>
           </div>

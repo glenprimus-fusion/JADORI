@@ -20,7 +20,7 @@ export const EditSpotlight = () => {
   const e = edits[0];
   const [bags, setBags] = useState([]);
   useEffect(() => {
-    http.get("/listings").then((r) => setBags(e.ids.map((id) => r.data.find((l) => l.id === id)).filter(Boolean)));
+    http.get("/listings").then((r) => setBags(e.ids.map((id) => r.data.find((l) => l.id === id)).filter(Boolean))).catch(() => setBags(null));
   }, [e.slug]); // eslint-disable-line react-hooks/exhaustive-deps
   const to = `/rent/all?edit=${e.slug}`;
   return (
@@ -36,9 +36,9 @@ export const EditSpotlight = () => {
           <p className="jd-eyebrow hidden nav:block" data-testid="spotlight-eyebrow">The {month} Edit</p>
           <h2 className="font-serif text-[34px] nav:text-[52px] leading-[1.05] nav:mt-5" data-testid="spotlight-title">{e.title}</h2>
           <p className="mt-5 text-[15px] leading-relaxed text-[#4A423C] max-w-md" data-testid="spotlight-blurb">{e.blurb}</p>
-          <div className="mt-10 grid grid-cols-3 gap-3 nav:gap-4" data-testid="spotlight-bags">
+          {bags && <div className="mt-10 grid grid-cols-3 gap-3 nav:gap-4" data-testid="spotlight-bags">
             {(bags.length ? bags : e.ids.map(() => null)).map((l, k) => l ? <Thumb key={l.id} l={l} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
-          </div>
+          </div>}
           <Link to={to} className="jd-btn-outline mt-10 w-full sm:w-auto gap-3 group" data-testid="spotlight-discover">
             Discover the edit <ArrowRight size={15} strokeWidth={1.25} className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>

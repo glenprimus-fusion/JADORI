@@ -1,0 +1,42 @@
+{
+  "summary": "Iteration 4: tested seasonal hero videos, Edit Spotlight, Rent where+dates search, per-bag totals, protection plans + pickup/delivery in booking card & quote, Make an Offer (accept/counter/decline/422 rules), owner closet pages + follow, Top Lender badges, lender protection on /lend, plus regressions (catalogue, quick view closet link, buy catalogue, 390px mobile). Backend 36/36 pytest pass (13 existing + 23 new). All requested frontend flows work; only minor UX/design nits found.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/offers", "issue": "Counter uses Python round() (banker's rounding): e.g. 7030 on 8900 asking -> (7965/10=796.5) rounds to 7960 instead of 7970. Use int(x/10+0.5)*10 for consistent half-up rounding (frontend round10 uses Math.round half-up)."},
+      {"endpoint": "GET /api/lenders/{slug}", "issue": "Review request mentioned GET /api/lenders/jadori-marketplace--0yaojot9 (likely template typo). Tested /api/lenders/eleanor-v (200, 3 listings) and /api/lenders/unknown (404) instead."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Product mobile sticky bar", "issue": "Sticky bottom CTA always reads 'Select dates' even when dates are prefilled from ?from&to (and booking total is already shown). Consider 'Request to rent · $1,231' when dates exist.", "selector": "[data-testid=mobile-book-button]", "priority": "LOW"},
+      {"component": "OfferDialog acceptCounter", "issue": "acceptCounter has no try/catch; a failed POST /offers/{id}/accept-counter leaves busy=true forever and throws unhandled rejection with no error shown.", "selector": "[data-testid=offer-accept-counter-button]", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Home hero mobile 390px", "issues": ["Season preview switcher at top-right is clipped: 'Autumn' runs off the right edge."]},
+      {"screen": "Closet page mobile 390px", "issues": ["Meta row wraps so the '|' separator is orphaned at the start of the second line ('| Replies within an hour')."]},
+      {"screen": "Rent page /rent desktop", "issues": ["rent-search bar sits below the fold (~y=830 at 1080px) under the large hero; consider pulling it up/overlapping hero so where+dates search is immediately visible."]},
+      {"screen": "Renter dashboard", "issues": ["Rental request rows don't show chosen protection plan / handoff (stored in backend) - only total; nice-to-have."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_jadori_iter4.py", "/app/backend/tests/test_jadori_api.py", "/app/test_reports/pytest/pytest_iter4.xml"],
+  "action_items": [
+    "(Low) Add try/catch + error display to OfferDialog.acceptCounter",
+    "(Low) Use half-up rounding for counter offer in owner_reply",
+    "(Low) Fix mobile hero season switcher overflow and closet meta separator wrapping",
+    "(Low) Mobile sticky booking CTA label when dates prefilled"
+  ],
+  "critical_code_review_comments": [
+    "EditSpotlight http.get('/listings') has no .catch -> skeleton tiles forever on API failure",
+    "Each EditSpotlight mount fetches all listings to pick 3; acceptable for 12 sample items",
+    "Deposit rounding consistent between backend (int(x/50+0.5)) and frontend (Math.floor(x/50+0.5)) - verified totals match (1231/947/1866)"
+  ],
+  "updated_files": ["/app/backend/tests/test_jadori_iter4.py"],
+  "success_rate": {"backend": "100% (36/36)", "frontend": "100% of requested flows (minor UX nits only)"},
+  "seed_data_creation": "Created test records (no delete endpoints exist): rental_requests and offers with emails test_iter4@example.com, test_iter4_offer@example.com, test_ui_iter4@example.com; names prefixed TEST_.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Pod date Nov 2026 -> November edit = 'Weekend on the Cape' (sample-02,05,12). Rent search city select option values are plain city names (labels 'Boston, MA'); calendar uses button[name=next-month] and button[name=day]. Follows stored in localStorage key jadori_following. Hero videos /hero/{season}.mp4 (~5s loop) play at >=860px only.",
+  "rca of the issue": ""
+}
