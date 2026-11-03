@@ -5,7 +5,7 @@ import { http } from "../lib/api";
 import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { QuickView } from "../components/jadori/QuickView";
-import { HeroBanner } from "../components/jadori/HeroBanner";
+import { HeroBanner } from "../components/jadori/HeroSeasonal";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { Newsletter } from "../components/jadori/Newsletter";
