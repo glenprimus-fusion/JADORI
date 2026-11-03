@@ -71,6 +71,7 @@ No gold or burgundy in UI. Errors use ink + medium weight (no red). Defined as C
 - `pending` (all new listings) → "Authenticated before handoff". New lender submissions are always `pending`.
 
 ## 8. Photography
+- Catalogue (v2, after client reference): each card shows an unbranded AI-generated studio sample shot on #EFEEEC (`backend/seed.py` STUDIO), a second "worn" editorial image appears on desktop hover, there's a wishlist heart, and the authentication status sits top-left. The catalogue header has a row of brand image shortcuts, a sticky Rent/Buy + count + "Filters & Sort" bar, and a 2-column editorial tile inside the grid (hidden when filtering or sorting). The presentation is inspired by luxury-house catalogues without copying any brand identity.
 - Editorial images are licensed Unsplash/Pexels stock placeholders (URLs in `frontend/src/lib/content.js`, `backend/seed.py`). Replace with original JADORI photography.
 - Product thumbnails sit on #EFEEEC with `mix-blend-mode: multiply`. **Automatic background removal is NOT implemented** — developer to add for the main thumbnail only. Condition photos (front, back, sides, bottom, interior, hardware, wear & damage) must remain unretouched.
 

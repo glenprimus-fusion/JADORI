@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetTitle } from "../ui/sheet";
 import { X } from "lucide-react";
-import { BRANDS, COLORS } from "../../lib/content";
+import { BRANDS, COLORS, slug } from "../../lib/content";
 
 const Check = ({ label, checked, onChange, testid }) => (
   <label className="flex items-center gap-3 py-2 cursor-pointer text-[15px]">
@@ -41,7 +41,7 @@ export const FilterSheet = ({ open, onOpenChange, f, setF, sort, setSort, count,
             </select>
           </Group>
           <Group title="Brand">
-            <div className="grid grid-cols-2">{BRANDS.map((b) => <Check key={b.name} label={b.name} checked={f.brands.includes(b.name)} onChange={() => toggle("brands", b.name)} testid={`filter-brand-${b.name.toLowerCase().replace(/\s+/g, "-")}`} />)}</div>
+            <div className="grid grid-cols-2">{BRANDS.map((b) => <Check key={b.name} label={b.name} checked={f.brands.includes(b.name)} onChange={() => toggle("brands", b.name)} testid={`filter-brand-${slug(b.name)}`} />)}</div>
           </Group>
           <Group title="Color">
             <div className="grid grid-cols-2">{COLORS.map((c) => <Check key={c} label={c} checked={f.colors.includes(c)} onChange={() => toggle("colors", c)} testid={`filter-color-${c.toLowerCase()}`} />)}</div>

@@ -1,0 +1,33 @@
+{
+  "summary": "Frontend-only test of the catalogue and card restyle (Playwright at 1920, 1100, 1099, 860, 859 and 390). Working: the brand shortcut row filters the grid and updates the title and URL; the sticky bar has switch-rent/switch-buy (buy shows 6 bags), results-count and open-filters-button; the 'Filters & Sort' sheet; sort-select low/high orders prices correctly (50..240 and the reverse); brand, color, availability and auth filters plus Clear work; Beige returns only sample-08; the editorial tile spans 2 columns, links to /lend, and hides when a filter, brand or search is active; the hover crossfade to the worn image works on desktop; the desktop badge shows at >=860 and the mobile badge below 860; wishlist aria-pressed toggles, persists after reload and does not navigate; columns are 4/3/2 at 1100/1099/860/859; no horizontal overflow at 390 (scrollWidth 390, so the iteration-1 overflow is fixed); the home grid uses the new cards; the PDP gallery shows Front then 'Worn (editorial)'; booking works end to end (sample-03, 3 days, $1,101, Request sent). One real layout bug: the editorial tile leaves an empty grid cell at 3 and 2 columns.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Catalogue grid editorial tile (860-1099px and <860px)", "issue": "The tile (col-span-2) is always inserted before item index 5. At 3 columns, row 2 holds sample-04 and sample-05, the 2-wide tile cannot fit in the last cell, so it wraps to the next row and leaves an empty cell at row 2 col 3 (seen at 1099 and 860). At 2 columns, sample-05 sits alone with an empty right cell. Only 4 columns is clean. Fix: add `grid-flow-row-dense` to the grid, or pick the insert index per column count so the tile starts at column 1 (e.g. index 6 for 3 or 2 columns).", "selector": "[data-testid='catalogue-grid'] [data-testid='catalogue-editorial-tile']", "priority": "MEDIUM"},
+      {"component": "Brand shortcut 'View all'", "issue": "The testid is `brand-shortcut-all`, not `brand-shortcut-view-all` as listed in the review request. It works; just a naming mismatch. The Hermès testid contains an accent (`brand-shortcut-hermès`, `filter-brand-hermès`). Consider normalizing it to ASCII.", "selector": "[data-testid='brand-shortcut-all']", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Brand shortcut row", "issues": ["'View all' and 'Chanel' show the exact same thumbnail (both use sample-01's first image), so the first two tiles look duplicated. Use a different image for View all, or the second Chanel bag."]},
+      {"screen": "Listing card hover / PDP gallery", "issues": ["The sample-01 (black Quilted Flap) hover/'Worn (editorial)' image is a woman in a burgundy dress holding a small black wallet-clutch, not the bag. Other worn images vary too. The editorial tile image (woman in a leather jacket) shows no handbag.", "On the PDP, the Back/Side/Bottom/Hardware thumbnails reuse the same front studio shot, so the view labels promise different angles that are not shown."]},
+      {"screen": "Filter sheet", "issues": ["Clear resets the filters but not sort. After choosing 'Price: high to low', Clear leaves the sort applied. Expected for 'Filters & Sort': reset sort to Featured as well (or label the button 'Clear filters').", "When a sort is active with no filters, the editorial tile still appears at position 6 of the sorted list, which breaks the price sequence visually. Consider hiding the tile when sort is not 'recommended'."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fix the editorial tile leaving an empty grid cell at 3-column and 2-column widths (grid-flow-row-dense, or choose the insert index so the tile starts at column 1)",
+    "Optional: a distinct 'View all' shortcut image; make Clear in the sheet also reset sort; hide the editorial tile when sorted; worn and editorial images that show the actual bag"
+  ],
+  "critical_code_review_comments": [
+    "Catalogue.jsx: the editorial insert at the hard-coded k===5 does not account for the responsive column count, which causes the grid holes",
+    "Catalogue.jsx: FilterSheet's reset prop does not call setSort('recommended')",
+    "ListingCard Wish: localStorage state is per card instance. Two cards for the same id on one page (home plus another grid) would not sync without a reload. This is minor."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "skipped (frontend only)", "frontend": "~93% (all requested flows pass; 1 medium layout bug)"},
+  "test_credentials": "None needed",
+  "seed_data_creation": "One rental request for sample-03 from test_iter2@example.com (name 'TEST Iter2')",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Server date is Nov 3 2026. Calendar: click booking-dates-trigger, then use role=gridcell enabled buttons. The filter sheet needs about 1s to animate. The SheetTitle is CSS-uppercased, so inner_text returns 'FILTERS & SORT'. The View all shortcut testid is brand-shortcut-all. Check grid holes by reading the bounding rects of catalogue-grid children at 1099 and 859."
+}

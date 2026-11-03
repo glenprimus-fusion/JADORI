@@ -3,14 +3,14 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { SlidersHorizontal } from "lucide-react";
 import { http } from "../lib/api";
 import { Link } from "react-router-dom";
-import { BRANDS, DOORS } from "../lib/content";
+import { BRANDS, DOORS, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
 
 const EditorialTile = () => (
   <Link to="/lend" className="col-span-2 group block" data-testid="catalogue-editorial-tile">
     <div className="relative aspect-[4/3] overflow-hidden jd-photo">
-      <img src={DOORS.rent[1]} alt="Editorial placeholder" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.02]" />
+      <img src={DOORS.rent[0]} alt="Editorial placeholder" className="absolute inset-0 w-full h-full object-cover object-[center_75%] transition-transform duration-[900ms] group-hover:scale-[1.02]" />
       <div className="absolute inset-x-0 bottom-0 p-6 nav:p-8 bg-gradient-to-t from-[#1F1A17]/55 to-transparent text-[#F3F1ED]">
         <p className="text-[11px] uppercase tracking-[0.22em] opacity-90">Lend with JADORI</p>
         <p className="font-serif text-[22px] nav:text-[32px] leading-tight mt-2 max-w-md">Make money from a bag sitting in your closet.</p>
@@ -66,9 +66,9 @@ export default function Catalogue() {
       <div className="jd-container pb-8 flex gap-3 nav:gap-4 overflow-x-auto jd-scroll" data-testid="brand-shortcuts">
         {[null, ...BRANDS.map((b) => b.name)].map((b) => {
           const on = b ? f.brands.length === 1 && f.brands[0] === b : !f.brands.length;
-          const img = all?.find((l) => !b || l.brand === b)?.images[0].url;
+          const img = (b ? all?.find((l) => l.brand === b) : all?.[11])?.images[0].url;
           return (
-            <button key={b || "all"} onClick={() => setBrand(b)} data-testid={`brand-shortcut-${(b || "all").toLowerCase().replace(/\s+/g, "-")}`} className="shrink-0 w-[96px] nav:w-[124px] text-left group">
+            <button key={b || "all"} onClick={() => setBrand(b)} data-testid={`brand-shortcut-${slug(b || "all")}`} className="shrink-0 w-[96px] nav:w-[124px] text-left group">
               <span className={`block aspect-[4/5] jd-photo overflow-hidden border-b-2 transition-colors ${on ? "border-[#1B1714]" : "border-transparent"}`}>
                 {img && <img src={img} alt="" className="w-full h-full object-cover scale-[1.3] group-hover:scale-[1.36] transition-transform duration-700" />}
               </span>
@@ -100,15 +100,15 @@ export default function Catalogue() {
             <button className="jd-btn-outline mt-8" onClick={() => { setF(EMPTY); setParams({}); }}>Clear filters</button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
+          <div className="grid grid-flow-row-dense grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
             {(items || Array.from({ length: 8 })).flatMap((l, k) => {
               const card = l ? <ListingCard key={l.id} l={l} mode={mode} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />;
-              return k === 5 && items && items.length >= 8 && !activeCount && !q ? [<EditorialTile key="editorial" />, card] : [card];
+              return k === 5 && items && items.length >= 8 && !activeCount && !q && sort === "recommended" ? [<EditorialTile key="editorial" />, card] : [card];
             })}
           </div>
         )}
       </div>
-      <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setParams({}); }} />
+      <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setSort("recommended"); setParams({}); }} />
     </div>
   );
 }

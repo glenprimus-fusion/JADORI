@@ -37,11 +37,11 @@ def gallery(i):
     return [
         {"url": main, "view": "Front", "cleaned": True},
         {"url": WORN[i], "view": "Worn (editorial)"},
-        {"url": main, "view": "Back"},
-        {"url": main, "view": "Side"},
-        {"url": main, "view": "Bottom"},
+        {"url": main, "view": "Back (photo pending)"},
+        {"url": main, "view": "Side (photo pending)"},
+        {"url": main, "view": "Bottom (photo pending)"},
         {"url": DETAIL["leather"], "view": "Interior"},
-        {"url": main, "view": "Hardware"},
+        {"url": main, "view": "Hardware (photo pending)"},
         {"url": DETAIL["stitch"], "view": "Wear & damage"},
     ]
 

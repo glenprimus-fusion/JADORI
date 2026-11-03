@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Search, CalendarDays, ShoppingBag, Camera, Tag, ShieldCheck, Banknote, KeyRound, Truck, RotateCcw } from "lucide-react";
 import { http } from "../lib/api";
-import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN } from "../lib/content";
+import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { Newsletter } from "../components/jadori/Newsletter";
@@ -85,7 +85,7 @@ const Brands = () => {
       </div>
       <div ref={ref} className="jd-container flex gap-4 overflow-x-auto scroll-pl-5 nav:scroll-pl-10 wide:scroll-pl-14 snap-x snap-mandatory jd-scroll">
         {BRANDS.map((b) => (
-          <Link key={b.name} to={`/rent?brand=${encodeURIComponent(b.name)}`} data-testid={`brand-tile-${b.name.toLowerCase().replace(/\s+/g, "-")}`} className="relative shrink-0 snap-start w-[62vw] sm:w-[300px] aspect-[2/3] overflow-hidden jd-photo jd-zoom">
+          <Link key={b.name} to={`/rent?brand=${encodeURIComponent(b.name)}`} data-testid={`brand-tile-${slug(b.name)}`} className="relative shrink-0 snap-start w-[62vw] sm:w-[300px] aspect-[2/3] overflow-hidden jd-photo jd-zoom">
             <img src={b.img} alt={`${b.name} (stock placeholder image)`} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-[#1F1A17]/60 to-transparent text-[#F3F1ED]">
               <p className="font-serif text-[24px]">{b.name}</p>
