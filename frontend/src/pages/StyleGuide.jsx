@@ -9,7 +9,7 @@ const TOKENS = [
 ];
 const NAVMAP = [
   ["/", "Home — doors, listings, brands, trust, how it works, newsletter"], ["/lend", "Lend landing"], ["/lend/new", "Listing creation (3 steps)"],
-  ["/rent", "Catalogue · rent mode (?brand=, ?q=)"], ["/buy", "Catalogue · buy mode (purchase-enabled only)"], ["/bag/sample-01", "Product page + booking"],
+  ["/rent", "Rent world: occasions, timeline, pricing example, inclusions, FAQ"], ["/rent/all", "Catalogue · rent mode (?brand=, ?style=, ?q=)"], ["/buy", "Buy world: why buy, condition guide, purchase steps"], ["/buy/all", "Catalogue · buy mode (purchase-enabled only)"], ["/lend", "Lend world: journey, earnings illustration, acceptance, photo guide"], ["/bag/sample-01", "Product page + booking"],
   ["/authenticity", "Authentication explainer"], ["/register", "Account registration (concept)"], ["/account/renter", "Renter dashboard"],
   ["/account/lender", "Lender dashboard"], ["/support", "Support, FAQ & contact"], ["/about · /press · /faq · /privacy · /terms · /legal", "Placeholder info pages"],
 ];

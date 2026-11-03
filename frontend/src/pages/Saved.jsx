@@ -17,7 +17,7 @@ const Grid = () => {
     <div className="py-16 border-t border-[#E2DFDA]" data-testid="saved-empty">
       <p className="font-serif text-[26px]">Nothing saved yet.</p>
       <p className="text-[#4A423C] mt-2">Tap the heart on any bag to keep it here.</p>
-      <Link to="/rent" className="jd-btn-solid mt-8" data-testid="saved-browse-button">Browse handbags</Link>
+      <Link to="/rent/all" className="jd-btn-solid mt-8" data-testid="saved-browse-button">Browse handbags</Link>
     </div>
   );
   return (

@@ -31,7 +31,7 @@ export default function Authenticity() {
       </section>
       <section className="jd-container py-20 flex flex-col sm:flex-row gap-6 sm:items-center justify-between">
         <div className="flex gap-8"><AuthBadge status="verified" /><AuthBadge status="pending" /></div>
-        <Link to="/rent" className="jd-btn-solid" data-testid="authenticity-browse-button">Browse bags</Link>
+        <Link to="/rent/all" className="jd-btn-solid" data-testid="authenticity-browse-button">Browse bags</Link>
       </section>
     </div>
   );

@@ -53,8 +53,8 @@ export default function Product() {
   return (
     <div data-testid="product-page" className="pb-28 nav:pb-24">
       <div className="jd-container pt-6 pb-4 text-xs text-[#7A716A] flex gap-2">
-        <Link to="/rent" className="hover:text-[#1B1714]">Rent</Link><span>/</span>
-        <Link to={`/rent?brand=${encodeURIComponent(l.brand)}`} className="hover:text-[#1B1714]">{l.brand}</Link><span>/</span><span>{l.name}</span>
+        <Link to="/rent/all" className="hover:text-[#1B1714]">Rent</Link><span>/</span>
+        <Link to={`/rent/all?brand=${encodeURIComponent(l.brand)}`} className="hover:text-[#1B1714]">{l.brand}</Link><span>/</span><span>{l.name}</span>
       </div>
       <div className="jd-container grid nav:grid-cols-[minmax(0,1.35fr)_minmax(340px,1fr)] gap-8 wide:gap-14 items-start">
         <Gallery images={l.images} title={`${l.brand} ${l.name}`} />

@@ -11,7 +11,7 @@ const NAV = [["Lend", "/lend"], ["Rent", "/rent"], ["Buy", "/buy"], ["Authentici
 const SearchBox = ({ onDone }) => {
   const nav = useNavigate();
   const [q, setQ] = useState("");
-  const go = (e) => { e.preventDefault(); nav(`/rent?q=${encodeURIComponent(q)}`); onDone?.(); };
+  const go = (e) => { e.preventDefault(); nav(`/rent/all?q=${encodeURIComponent(q)}`); onDone?.(); };
   return (
     <form onSubmit={go} className="flex items-center gap-2 border-b border-[#E2DFDA] focus-within:border-[#1B1714]">
       <Search size={16} strokeWidth={1.25} />

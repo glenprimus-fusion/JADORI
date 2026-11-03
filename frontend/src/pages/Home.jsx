@@ -64,13 +64,13 @@ const Listings = () => {
           <p className="jd-eyebrow mb-3">Available near Boston · Sample listings</p>
           <h2 className="text-[28px] nav:text-[40px] leading-tight">Bags to rent this week</h2>
         </div>
-        <Link to="/rent" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">View all</Link>
+        <Link to="/rent/all" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">View all</Link>
       </div>
       <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10">
         {(items || Array.from({ length: 8 })).slice(0, 8).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <PlaceholderTile key={k} />)}
       </div>
       <QuickView l={quick} onClose={() => setQuick(null)} />
-      <Link to="/rent" className="jd-btn-outline w-full mt-12 sm:hidden">View all</Link>
+      <Link to="/rent/all" className="jd-btn-outline w-full mt-12 sm:hidden">View all</Link>
     </section>
   );
 };
@@ -89,7 +89,7 @@ const Brands = () => {
       </div>
       <div ref={ref} className="jd-container flex gap-4 overflow-x-auto scroll-pl-5 nav:scroll-pl-10 wide:scroll-pl-14 snap-x snap-mandatory jd-scroll">
         {BRANDS.map((b) => (
-          <Link key={b.name} to={`/rent?brand=${encodeURIComponent(b.name)}`} data-testid={`brand-tile-${slug(b.name)}`} className="relative shrink-0 snap-start w-[62vw] sm:w-[300px] aspect-[2/3] overflow-hidden jd-photo jd-zoom">
+          <Link key={b.name} to={`/rent/all?brand=${encodeURIComponent(b.name)}`} data-testid={`brand-tile-${slug(b.name)}`} className="relative shrink-0 snap-start w-[62vw] sm:w-[300px] aspect-[2/3] overflow-hidden jd-photo jd-zoom">
             <img src={b.img} alt={`${b.name} (stock placeholder image)`} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-[#1F1A17]/60 to-transparent text-[#F3F1ED]">
               <p className="font-serif text-[24px]">{b.name}</p>

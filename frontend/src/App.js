@@ -5,7 +5,9 @@ import { Layout } from "./components/jadori/Layout";
 import Home from "./pages/Home";
 import Catalogue from "./pages/Catalogue";
 import Product from "./pages/Product";
-import Lend from "./pages/Lend";
+import Lend from "./pages/LendWorld";
+import RentWorld from "./pages/RentWorld";
+import BuyWorld from "./pages/BuyWorld";
 import CreateListing from "./pages/CreateListing";
 import Register from "./pages/Register";
 import RenterDashboard from "./pages/RenterDashboard";
@@ -24,8 +26,10 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/rent" element={<Catalogue />} />
-          <Route path="/buy" element={<Catalogue />} />
+          <Route path="/rent" element={<RentWorld />} />
+          <Route path="/rent/all" element={<Catalogue />} />
+          <Route path="/buy" element={<BuyWorld />} />
+          <Route path="/buy/all" element={<Catalogue />} />
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/bag/:id" element={<Product />} />
           <Route path="/lend" element={<Lend />} />

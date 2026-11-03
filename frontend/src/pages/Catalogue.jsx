@@ -95,7 +95,7 @@ export default function Catalogue() {
         <div className="jd-container flex items-center gap-3 sm:gap-6 h-[60px]">
           <div className="flex" role="tablist" data-testid="rent-buy-switch">
             {["rent", "buy"].map((m) => (
-              <button key={m} role="tab" aria-selected={mode === m} onClick={() => nav(`/${m}${params.toString() ? `?${params}` : ""}`)} data-testid={`switch-${m}`}
+              <button key={m} role="tab" aria-selected={mode === m} onClick={() => nav(`/${m}/all${params.toString() ? `?${params}` : ""}`)} data-testid={`switch-${m}`}
                 className={`px-3 sm:px-4 h-[59px] text-[11px] uppercase tracking-[0.2em] font-medium border-b transition-colors ${mode === m ? "border-[#1B1714] text-[#1B1714]" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{m}</button>
             ))}
           </div>
