@@ -67,6 +67,8 @@ body {
 }
 
 .jd-photo { background: var(--jd-photo); }
+.jd-day-booked { background: #EFEEEC !important; color: #7A716A !important; text-decoration: line-through; opacity: 1 !important; border-radius: 0; }
+.jd-day-buffer { outline: 1px dashed #7A716A; outline-offset: -3px; color: #7A716A !important; opacity: 1 !important; border-radius: 0; }
 .jd-zoom img { transition: transform 900ms cubic-bezier(.2,.6,.2,1); }
 .jd-zoom:hover img { transform: scale(1.03); }
 .jd-cleaned { mix-blend-mode: multiply; }

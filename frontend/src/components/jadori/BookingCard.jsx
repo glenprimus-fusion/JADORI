@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { addDays, format, startOfToday } from "date-fns";
-import { Calendar } from "../ui/calendar";
+import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { usd } from "../../lib/api";
+import { http, usd } from "../../lib/api";
 import { PLANS, FULFILMENT, quote, rangeFrom, daysOf } from "../../lib/plans";
+import { AvailabilityCalendar, clashes, nextLabel } from "./AvailabilityCalendar";
 import { RequestDialog } from "./RequestDialog";
 import { OfferDialog } from "./OfferDialog";
 
@@ -48,8 +48,17 @@ export const BookingCard = ({ l }) => {
   const [fulfil, setFulfil] = useState("pickup");
   const [open, setOpen] = useState(false);
   const [dialog, setDialog] = useState(null);
+  const [avail, setAvail] = useState(null);
+  useEffect(() => { http.get(`/listings/${l.id}/availability`).then((r) => setAvail(r.data)); }, [l.id, dialog]);
+  const blocked = avail?.blocked || [];
+  const pick = (r, day) => {
+    if (r?.from && r?.to && clashes(r, blocked)) { setRange({ from: day, to: undefined }); return; }
+    setRange(r || {});
+    if (r?.from && r?.to && r.from.getTime() !== r.to.getTime()) setOpen(false);
+  };
+  const clash = clashes(range, blocked);
   const days = daysOf(range);
-  const q = days ? quote(l, days, plan, fulfil) : null;
+  const q = days && !clash ? quote(l, days, plan, fulfil) : null;
   const tooShort = days === 1;
 
   return (
@@ -66,11 +75,11 @@ export const BookingCard = ({ l }) => {
           </button>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-auto p-0 rounded-none border-[#E2DFDA]" data-testid="booking-calendar">
-          <Calendar mode="range" numberOfMonths={1} selected={range} defaultMonth={range.from} onSelect={(r) => { setRange(r || {}); if (r?.from && r?.to) setOpen(false); }}
-            disabled={[{ before: addDays(startOfToday(), 1) }]} />
+          <AvailabilityCalendar blocked={blocked} range={range} onSelect={pick} />
         </PopoverContent>
       </Popover>
-      <p className="text-xs text-[#7A716A] mt-3">Minimum rental 2 days. Availability shown is sample data.</p>
+      <p className="text-xs text-[#7A716A] mt-3">Minimum rental 2 days. Booked days are crossed out; one inspection day follows every rental. Sample availability.</p>
+      {avail && <p className="text-[12px] uppercase tracking-[0.14em] mt-3" data-testid="booking-next-available">{l.available ? "Next free from" : "Currently rented · available from"} {nextLabel(avail.next_available)}</p>}
 
       <Choice label="Protection plan" items={PLANS} value={plan} set={setPlan} testid="plan-choice"
         price={(p) => `${usd(p.perDay)}/day · ${usd(Math.floor((l.deposit * p.share) / 50 + 0.5) * 50)} deposit`} />
@@ -90,9 +99,10 @@ export const BookingCard = ({ l }) => {
         </div>
       )}
       {tooShort && <p className="text-sm mt-4" data-testid="booking-min-error">Please choose at least 2 days.</p>}
+      {clash && <p className="text-sm mt-4" data-testid="booking-clash-error">Some of these days are already booked. Please choose free days.</p>}
 
-      <button disabled={!q || tooShort || !l.available} onClick={() => setDialog("rent")} className="jd-btn-solid w-full mt-6" data-testid="request-to-rent-button">
-        {l.available ? "Request to rent" : "Currently rented"}
+      <button disabled={!q || tooShort} onClick={() => setDialog("rent")} className="jd-btn-solid w-full mt-6" data-testid="request-to-rent-button">
+        Request to rent
       </button>
       {l.buy_enabled && (
         <div className="mt-6 pt-6 border-t border-[#E2DFDA]" data-testid="buy-option">

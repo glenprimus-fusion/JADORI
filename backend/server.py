@@ -8,7 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
 from typing import List, Optional
 import uuid
-from datetime import datetime, timezone, date
+from datetime import datetime, timezone, date, timedelta
 
 from seed import SAMPLE_LISTINGS, LENDERS
 
@@ -112,6 +112,35 @@ def fees_for(listing, days, plan="essential", fulfilment="pickup"):
     }
 
 
+def sample_bookings(listing):
+    i = int(listing["id"].split("-")[1]) if listing.get("is_sample") else 0
+    t = date.today()
+    spans = [] if not i else [(3 + i % 5, 2 + i % 3), (12 + i % 7, 3), (24 + i % 4, 4)]
+    out = [(t + timedelta(days=a), t + timedelta(days=a + n - 1)) for a, n in spans]
+    if i and not listing.get("available"):
+        out.append((t - timedelta(days=2), t + timedelta(days=4)))
+    return out
+
+
+async def blocked_ranges(listing):
+    ranges = [(s, e, "booked") for s, e in sample_bookings(listing)]
+    async for r in db.rental_requests.find({"listing_id": listing["id"]}, {"_id": 0, "start_date": 1, "end_date": 1}):
+        ranges.append((date.fromisoformat(r["start_date"]), date.fromisoformat(r["end_date"]), "booked"))
+    ranges += [(e + timedelta(days=1), e + timedelta(days=1), "buffer") for s, e, _ in list(ranges)]
+    return sorted(ranges)
+
+
+def is_free(ranges, d):
+    return all(not (s <= d <= e) for s, e, _ in ranges)
+
+
+def next_available(ranges):
+    d = date.today() + timedelta(days=1)
+    while not (is_free(ranges, d) and is_free(ranges, d + timedelta(days=1))):
+        d += timedelta(days=1)
+    return d.isoformat()
+
+
 @api.get("/")
 async def root():
     return {"message": "JADORI concept API"}
@@ -124,7 +153,18 @@ async def get_listings(mode: Optional[str] = None, brand: Optional[str] = None):
         q["buy_enabled"] = True
     if brand:
         q["brand"] = brand
-    return await db.listings.find(q, {"_id": 0}).to_list(500)
+    docs = await db.listings.find(q, {"_id": 0}).to_list(500)
+    for d in docs:
+        d["next_available"] = next_available(await blocked_ranges(d))
+    return docs
+
+
+@api.get("/listings/{listing_id}/availability")
+async def availability(listing_id: str):
+    listing = await get_listing(listing_id)
+    ranges = await blocked_ranges(listing)
+    return {"blocked": [{"start": s.isoformat(), "end": e.isoformat(), "kind": k} for s, e, k in ranges],
+            "next_available": next_available(ranges)}
 
 
 @api.get("/listings/{listing_id}")
@@ -192,10 +232,11 @@ async def rental_request(body: RentalRequestIn):
     days = (body.end_date - body.start_date).days + 1
     if days < 2:
         raise HTTPException(422, "Minimum rental is 2 days")
-    if not listing.get("available"):
-        raise HTTPException(422, "This bag is currently rented")
     if body.start_date < date.today():
         raise HTTPException(422, "Start date cannot be in the past")
+    ranges = await blocked_ranges(listing)
+    if any(s <= body.end_date and body.start_date <= e for s, e, _ in ranges):
+        raise HTTPException(422, "Those dates are not available. Please choose free days on the calendar.")
     doc = body.model_dump()
     doc.update({
         "id": new_id(), "start_date": body.start_date.isoformat(), "end_date": body.end_date.isoformat(),

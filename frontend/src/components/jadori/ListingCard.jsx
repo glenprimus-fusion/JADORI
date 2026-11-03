@@ -4,6 +4,7 @@ import { AuthBadge } from "./AuthBadge";
 import { SaveButton } from "./SaveButton";
 import { LoadingImg } from "./LoadingImg";
 import { TopMark } from "./TopLender";
+import { nextLabel } from "./AvailabilityCalendar";
 import { usd } from "../../lib/api";
 
 export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false, days = 0, search = "" }) => {
@@ -25,7 +26,7 @@ export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false, da
           </>
         )}
         <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.18em] text-[#7A716A] group-hover:opacity-0 transition-opacity">Sample</span>
-        {!l.available && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-[0.18em] bg-[#1B1714] text-[#F3F1ED] px-2 py-1 nav:group-hover:opacity-0 transition-opacity">Currently rented</span>}
+        {!l.available && l.next_available && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-[0.18em] bg-[#1B1714] text-[#F3F1ED] px-2 py-1 nav:group-hover:opacity-0 transition-opacity" data-testid={`listing-next-available-${l.id}`}>Available {nextLabel(l.next_available)}</span>}
       </div>
       <div className="pt-4 pb-2 px-0.5">
         <div className={`${compact ? "" : "nav:hidden"} mb-1.5`}><AuthBadge status={l.auth_status} id={l.id} testid={`listing-auth-mobile-${l.id}`} /></div>

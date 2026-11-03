@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dia
 import { AuthBadge } from "./AuthBadge";
 import { SaveButton } from "./SaveButton";
 import { LoadingImg } from "./LoadingImg";
+import { nextLabel } from "./AvailabilityCalendar";
 import { usd } from "../../lib/api";
 
 const Row = ({ k, v, testid }) => (
@@ -35,10 +36,10 @@ export const QuickView = ({ l, onClose }) => (
               <Row k="Style · Color" v={`${l.style} · ${l.color}`} />
               <Row k="Lender" v={<Link to={`/closet/${l.lender.slug}`} className="jd-link inline-flex items-center gap-1.5" data-testid="quick-view-closet-link">{l.lender.name}{l.lender.rating ? <><Star size={11} strokeWidth={1.25} className="fill-[#1B1714]" />{l.lender.rating.toFixed(1)} (sample)</> : " · New lender"}</Link>} />
               <Row k="Location" v={`${l.lender.city}, MA`} />
-              <Row k="Availability" v={l.available ? "Available" : "Currently rented"} />
+              <Row k="Availability" v={l.available ? "Available" : `Rented · free from ${nextLabel(l.next_available)}`} testid="quick-view-availability" />
             </div>
             <div className="mt-auto pt-8 flex gap-3">
-              <Link to={`/bag/${l.id}`} className="jd-btn-solid flex-1 !px-4" data-testid="quick-view-details-link">{l.available ? "Choose dates" : "View details"}</Link>
+              <Link to={`/bag/${l.id}`} className="jd-btn-solid flex-1 !px-4" data-testid="quick-view-details-link">Choose dates</Link>
               <span className="border border-[#1B1714] w-[52px] h-[52px] relative shrink-0"><SaveButton id={l.id} className="absolute inset-0 flex items-center justify-center" testid="quick-view-save-button" /></span>
             </div>
             <p className="text-[11px] text-[#7A716A] mt-4">Concept prototype · sample listing.</p>
