@@ -40,6 +40,7 @@ No gold or burgundy in UI. Errors use ink + medium weight (no red). Defined as C
 - `Newsletter` (inline validation, success / already-subscribed / error states).
 
 ## 4. Navigation map
+**Layout change, documented (latest client request):** the homepage now opens with a full-bleed campaign hero banner (`components/jadori/HeroBanner.jsx`) between the header and the LEND/RENT/BUY doors. The original brief listed the doors as the first element. The hero was added at the client's request for a top-tier fashion-house first impression. Its text is minimal ("Carry the icon.") and a scroll cue points to the doors. Images are AI-generated placeholders: wide for ≥860px, tall for mobile. Replace them with original JADORI campaign photography.
 Each of Rent, Buy and Lend now has its own landing page ("world"). They share components in `components/jadori/World.jsx`: WorldHero, SectionHead, Timeline, Pillars, FeaturedRow, WorldFAQ, CTABand.
 - `/rent`: occasions (link to `?style=`), monthly edits (`lib/edits.js`: 6 curated sample edits, 2 featured per month, rotating automatically by calendar month; "Shop the edit" opens `/rent/all?edit=<slug>`), 5-step rental timeline, 3-day price example (sample-01), inclusions, available bags, FAQ, CTA. Catalogue is at `/rent/all`.
 - `/buy`: dark hero, why buy, purchase-enabled bags, condition grading guide, purchase timeline, "rent before you buy" (proposed), FAQ. Catalogue is at `/buy/all`.

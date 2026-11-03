@@ -5,6 +5,7 @@ import { http } from "../lib/api";
 import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { QuickView } from "../components/jadori/QuickView";
+import { HeroBanner } from "../components/jadori/HeroBanner";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { Newsletter } from "../components/jadori/Newsletter";
@@ -39,7 +40,7 @@ const Door = ({ to, word, line, children, testid }) => (
 );
 
 const Doors = () => (
-  <section className="jd-container pt-6 nav:pt-8" data-testid="home-doors">
+  <section id="doors" className="jd-container pt-6 nav:pt-8 scroll-mt-24" data-testid="home-doors">
     <div className="flex nav:grid nav:grid-cols-3 gap-3 nav:gap-4 overflow-x-auto snap-x snap-mandatory jd-scroll -mx-5 px-5 scroll-pl-5 nav:mx-0 nav:px-0">
       <Door to="/lend" word="LEND" line="List the bag in your closet" testid="door-lend">
         <img src={DOORS.lend} alt="Handbag owner presenting her bag (stock placeholder)" className="absolute inset-0 w-full h-full object-cover" />
@@ -169,6 +170,7 @@ const HowItWorks = () => (
 export default function Home() {
   return (
     <div data-testid="home-page">
+      <HeroBanner />
       <Doors />
       <Listings />
       <Brands />
