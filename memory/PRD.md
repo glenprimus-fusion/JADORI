@@ -16,3 +16,4 @@ React (CRA+Tailwind, custom screens nav 860/wide 1100) + FastAPI + MongoDB. Samp
 P0: real sign-in, payments, authentication workflow (developer). P1: photo upload + thumbnail background removal, availability calendar, lender accept/decline. P2: messaging, reviews, final brand/social/legal content.
 - Nov 2026: bag availability calendar (booked + inspection-buffer days, next-available on cards, overlap validation).
 - Nov 2026: catalogue date search hides bags booked for those dates, with a hidden-count note.
+- Nov 2026: JADORI Creators page (/creators) with AI editorial images, phone mock-ups, application form (saved; team email MOCKED), menu + footer links.

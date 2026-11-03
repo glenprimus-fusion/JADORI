@@ -7,6 +7,7 @@ import Catalogue from "./pages/Catalogue";
 import Product from "./pages/Product";
 import Lend from "./pages/LendWorld";
 import Closet from "./pages/Closet";
+import Creators from "./pages/Creators";
 import RentWorld from "./pages/RentWorld";
 import BuyWorld from "./pages/BuyWorld";
 import HowRentingWorks from "./pages/HowRentingWorks";
@@ -39,6 +40,7 @@ function App() {
           <Route path="/buy/all" element={<Catalogue />} />
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/bag/:id" element={<Product />} />
+          <Route path="/creators" element={<Creators />} />
           <Route path="/closet/:slug" element={<Closet />} />
           <Route path="/lend" element={<Lend />} />
           <Route path="/lend/new" element={<CreateListing />} />

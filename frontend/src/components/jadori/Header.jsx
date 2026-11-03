@@ -6,7 +6,7 @@ import { Wordmark } from "./Wordmark";
 import { getUser } from "../../lib/api";
 import { useSaved } from "../../lib/wishlist";
 
-const NAV = [["Lend", "/lend"], ["Rent", "/rent"], ["Buy", "/buy"], ["How it works", "/how-renting-works"], ["Authenticity", "/authenticity"], ["Support", "/support"]];
+const NAV = [["Lend", "/lend"], ["Rent", "/rent"], ["Buy", "/buy"], ["How it works", "/how-renting-works"], ["Authenticity", "/authenticity"], ["Creators", "/creators"], ["Support", "/support"]];
 
 const SearchBox = ({ onDone }) => {
   const nav = useNavigate();

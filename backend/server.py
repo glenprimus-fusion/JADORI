@@ -92,6 +92,17 @@ class ContactIn(BaseModel):
     message: str = Field(min_length=5)
 
 
+class CreatorIn(BaseModel):
+    full_name: str = Field(min_length=2)
+    email: EmailStr
+    handle: str = Field(min_length=2)
+    platform: str
+    audience: str
+    city: Optional[str] = ""
+    interests: list[str] = []
+    message: Optional[str] = ""
+
+
 PLANS = {"essential": (4, 1.0), "signature": (9, 0.5), "complete": (16, 0.25)}
 DELIVERY_FEE = 45
 
@@ -331,6 +342,15 @@ async def contact(body: ContactIn):
     doc.update({"id": new_id(), "created_at": now_iso()})
     await db.contact_messages.insert_one(doc.copy())
     return {"status": "received", "id": doc["id"]}
+
+
+@api.post("/creator-applications")
+async def creator_application(body: CreatorIn):
+    doc = body.model_dump()
+    doc["handle"] = "@" + doc["handle"].lstrip("@")
+    doc.update({"id": new_id(), "status": "received", "created_at": now_iso(), "team_email": "mocked"})
+    await db.creator_applications.insert_one(doc.copy())
+    return {"status": "received", "id": doc["id"], "handle": doc["handle"], "team_email": "mocked"}
 
 
 app.include_router(api)

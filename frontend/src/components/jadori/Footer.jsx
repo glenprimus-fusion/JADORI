@@ -4,7 +4,7 @@ import { Monogram, MonogramPattern } from "./Monogram";
 
 const COLS = [
   ["Marketplace", [["Rent", "/rent"], ["Lend", "/lend"], ["Buy", "/buy"], ["How renting works", "/how-renting-works"], ["How lending works", "/how-lending-works"], ["How buying works", "/how-buying-works"], ["Authenticity", "/authenticity"]]],
-  ["JADORI", [["About", "/about"], ["Press", "/press"], ["FAQ", "/faq"], ["Contact", "/support"]]],
+  ["JADORI", [["About", "/about"], ["Creators", "/creators"], ["Press", "/press"], ["FAQ", "/faq"], ["Contact", "/support"]]],
   ["Legal", [["Privacy Policy", "/privacy"], ["Terms", "/terms"], ["Legal notices", "/legal"], ["Style guide", "/style-guide"]]],
 ];
 
