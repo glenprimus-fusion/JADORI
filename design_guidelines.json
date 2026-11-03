@@ -1,0 +1,250 @@
+{
+  "project_name": "JADORI - Peer-to-Peer Luxury Handbag Marketplace",
+  "app_type": "luxury_e_commerce_marketplace",
+  "archetype": "LUXURY_MINIMALIST_EDITORIAL",
+  "design_tokens": {
+    "colors": {
+      "bg_main": "#F8F7F5",
+      "panels": "#FFFFFF",
+      "photo_bg": "#EFEEEC",
+      "dividers": "#E2DFDA",
+      "primary_text_buttons": "#1B1714",
+      "secondary_text": "#4A423C",
+      "muted_text": "#7A716A",
+      "dark_sections_bg": "#1F1A17",
+      "light_text": "#F3F1ED",
+      "strict_prohibitions": ["gold", "burgundy", "teal", "#7351B7", "pure #000000"]
+    },
+    "typography": {
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&family=Prata&display=swap",
+      "headline_font": "Prata, serif",
+      "wordmark_font": "Prata, serif",
+      "body_font": "Jost, sans-serif",
+      "button_font": "Jost, sans-serif",
+      "wordmark_styling": "font-serif tracking-[0.35em] uppercase text-xl sm:text-2xl text-[#1B1714]"
+    },
+    "buttons": {
+      "height": "52px (h-[52px])",
+      "border_radius": "0px (rounded-none, sharp square)",
+      "text_transform": "uppercase",
+      "font_weight": "500 (Jost Medium)",
+      "letter_spacing": "tracking-widest (0.15em)",
+      "font_size": "text-xs sm:text-sm",
+      "variants": {
+        "solid_espresso": "bg-[#1B1714] text-[#F3F1ED] hover:bg-[#4A423C] transition-colors duration-200 h-[52px] px-8 rounded-none uppercase font-medium tracking-widest text-xs",
+        "outline_espresso": "border border-[#1B1714] text-[#1B1714] bg-transparent hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors duration-200 h-[52px] px-8 rounded-none uppercase font-medium tracking-widest text-xs",
+        "light_on_dark": "bg-[#F3F1ED] text-[#1F1A17] hover:bg-[#E2DFDA] transition-colors duration-200 h-[52px] px-8 rounded-none uppercase font-medium tracking-widest text-xs"
+      }
+    },
+    "form_fields": {
+      "input_style": "border-b border-[#E2DFDA] focus:border-[#1B1714] bg-transparent rounded-none px-0 py-3 text-sm text-[#1B1714] placeholder-[#7A716A] focus:outline-none transition-colors",
+      "label_style": "text-xs uppercase tracking-wider text-[#4A423C] font-medium block mb-1",
+      "icon_style": "stroke-1 text-[#4A423C] (thin chevrons & linear icons)"
+    }
+  },
+  "images": {
+    "hero_doors": [
+      {
+        "category": "rent_crossfade_1",
+        "url": "https://images.unsplash.com/photo-1590739225287-bd31519780c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85",
+        "description": "Editorial model holding iconic black & silver designer handbag"
+      },
+      {
+        "category": "rent_crossfade_2",
+        "url": "https://images.unsplash.com/photo-1682031215004-161c99d5b225?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85",
+        "description": "Close-up hand holding luxury green leather top-handle purse"
+      },
+      {
+        "category": "rent_crossfade_3",
+        "url": "https://images.unsplash.com/photo-1766193232687-31b1aa32a1a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwyfHxmYXNoaW9uJTIwbW9kZWwlMjBoYW5kYmFnJTIwdXJiYW58ZW58MHx8fHwxNzkzNjczMDQwfDA&ixlib=rb-4.1.0&q=85",
+        "description": "High-fashion model posing outdoors with luxury silver micro bag"
+      },
+      {
+        "category": "lend_door",
+        "url": "https://images.unsplash.com/flagged/photo-1553802922-e345434156e6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85",
+        "description": "Stylish woman with grey leather shoulder bag"
+      },
+      {
+        "category": "buy_door",
+        "url": "https://images.pexels.com/photos/34121562/pexels-photo-34121562.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Luxury fashion model in coat on city steps with designer bag"
+      }
+    ],
+    "brand_tiles": [
+      {
+        "brand": "Chanel",
+        "url": "https://images.unsplash.com/photo-1591348278900-019a8a2a8b1d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Gucci",
+        "url": "https://images.unsplash.com/photo-1705909237050-7a7625b47fac?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Dior",
+        "url": "https://images.unsplash.com/photo-1682745230951-8a5aa9a474a0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Hermès",
+        "url": "https://images.unsplash.com/photo-1575202332411-b01fe9ace7a8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Burberry",
+        "url": "https://images.unsplash.com/photo-1788641818707-dc8abccf1e94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwbW9kZWwlMjBoYW5kYmFnJTIwdXJiYW58ZW58MHx8fHwxNzkzNjczMDQwfDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Louis Vuitton",
+        "url": "https://images.unsplash.com/photo-1683921470299-b8f0f3331657?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "brand": "Prada",
+        "url": "https://images.pexels.com/photos/10296778/pexels-photo-10296778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      }
+    ],
+    "listings": [
+      {
+        "id": "item-1",
+        "brand": "Chanel",
+        "name": "Classic Double Flap Medium Lambskin",
+        "retail_price": 10800,
+        "rent_price": 145,
+        "buy_price": 9200,
+        "auth_status": "Verified Authentic",
+        "lender": "Eleanor V.",
+        "lender_rating": "4.98",
+        "city": "Boston, MA",
+        "image": "https://images.unsplash.com/photo-1590739225287-bd31519780c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-2",
+        "brand": "Hermès",
+        "name": "Birkin 25 Gold Togo Gold Hardware",
+        "retail_price": 28500,
+        "rent_price": 290,
+        "buy_price": null,
+        "auth_status": "White-Glove Inspected",
+        "lender": "Sophia M.",
+        "lender_rating": "5.0",
+        "city": "Cambridge, MA",
+        "image": "https://images.unsplash.com/photo-1682031215004-161c99d5b225?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-3",
+        "brand": "Dior",
+        "name": "Lady Dior Medium Cannage Calfskin",
+        "retail_price": 6500,
+        "rent_price": 95,
+        "buy_price": 5100,
+        "auth_status": "Verified Authentic",
+        "lender": "Camilla K.",
+        "lender_rating": "4.92",
+        "city": "Newton, MA",
+        "image": "https://images.unsplash.com/photo-1682745230951-8a5aa9a474a0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-4",
+        "brand": "Gucci",
+        "name": "Jackie 1961 Small Shoulder Bag",
+        "retail_price": 3400,
+        "rent_price": 65,
+        "buy_price": 2750,
+        "auth_status": "Verified Authentic",
+        "lender": "Isabelle T.",
+        "lender_rating": "4.96",
+        "city": "Brookline, MA",
+        "image": "https://images.unsplash.com/photo-1591348278900-019a8a2a8b1d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-5",
+        "brand": "Burberry",
+        "name": "Frances Small Grained Leather Tote",
+        "retail_price": 2750,
+        "rent_price": 55,
+        "buy_price": 2100,
+        "auth_status": "Verified Authentic",
+        "lender": "Charlotte R.",
+        "lender_rating": "4.89",
+        "city": "Boston, MA",
+        "image": "https://images.unsplash.com/photo-1788641818707-dc8abccf1e94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwbW9kZWwlMjBoYW5kYmFnJTIwdXJiYW58ZW58MHx8fHwxNzkzNjczMDQwfDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-6",
+        "brand": "Louis Vuitton",
+        "name": "Capucines MM Taurillon Leather",
+        "retail_price": 7900,
+        "rent_price": 120,
+        "buy_price": null,
+        "auth_status": "White-Glove Inspected",
+        "lender": "Victoria B.",
+        "lender_rating": "5.0",
+        "city": "Wellesley, MA",
+        "image": "https://images.unsplash.com/photo-1683921470299-b8f0f3331657?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBoYW5kYmFnJTIwbW9kZWwlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc5MzY3MzAzNnww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "item-7",
+        "brand": "Prada",
+        "name": "Galleria Saffiano Leather Medium",
+        "retail_price": 4600,
+        "rent_price": 80,
+        "buy_price": 3600,
+        "auth_status": "Verified Authentic",
+        "lender": "Helena H.",
+        "lender_rating": "4.94",
+        "city": "Boston, MA",
+        "image": "https://images.pexels.com/photos/10296778/pexels-photo-10296778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "id": "item-8",
+        "brand": "Chanel",
+        "name": "Boy Bag Large Quilted Calfskin",
+        "retail_price": 7200,
+        "rent_price": 110,
+        "buy_price": 5900,
+        "auth_status": "Verified Authentic",
+        "lender": "Genevieve L.",
+        "lender_rating": "4.97",
+        "city": "Somerville, MA",
+        "image": "https://images.unsplash.com/photo-1575202332411-b01fe9ace7a8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBoYW5kYmFnJTIwcHJvZHVjdCUyMHN0dWRpb3xlbnwwfHx8fDE3OTM2NzMwNDB8MA&ixlib=rb-4.1.0&q=85"
+      }
+    ]
+  },
+  "page_layouts": {
+    "header": {
+      "bg": "bg-[#F8F7F5] border-b border-[#E2DFDA]",
+      "logo": "J A D O R I (Prata font, letter-spacing tracking-[0.35em])",
+      "navigation": ["Rent", "Lend", "Buy", "Catalogue", "Authenticity", "Style Guide"],
+      "utility_icons": ["Search", "Saved / Favorites", "User Account / Login", "Cart / Rentals Bag"]
+    },
+    "homepage": {
+      "section_1_doors": "3 Editorial Doors (LEND / RENT / BUY). Rent tile features crossfade carousel: 1.4s fade animation, 5.2s hold. Converts to swipeable horizontal row below 860px breakpoint.",
+      "section_2_curated_grid": "Product listing grid (4 columns desktop, 2 columns mobile). 2:3 aspect ratio photo container with bg #EFEEEC. Shows verified auth badge, brand, item name, strikethrough retail, $/day rent rate, buy price if available, lender name/rating, Boston MA location.",
+      "section_3_brand_strip": "THE BRANDS strip featuring 7 portrait tiles (Chanel, Gucci, Dior, Hermès, Burberry, LV, Prada) with left/right navigation arrows.",
+      "section_4_authenticity": "BUILT ON AUTHENTICITY 3-step value proposition (50-point physical authentication, $10,000 lender guarantee, white-glove climate delivery).",
+      "section_5_how_it_works": "Interactive How It Works module for Renters and Lenders.",
+      "section_6_newsletter": "Minimalist newsletter subscription with underline input and 52px JOIN CTA.",
+      "section_7_footer": "Editorial footer with dark section background #1F1A17 and light text #F3F1ED."
+    },
+    "catalogue": {
+      "controls": "Grid layout switcher (4 cols, 3 cols, 2 cols), FILTERS drawer toggle button, Rent/Buy toggle switch, Sort dropdown, Brand shortcut pills.",
+      "filter_drawer": "Slide-out panel: Brand multi-select, Color swatch filter, Availability date range, Authenticity tier filter, Price slider."
+    },
+    "product_detail": {
+      "gallery": "Primary image preview with prev/next arrows + side thumbnail strip showcasing handbag condition, corners, serial stamp, and lining.",
+      "booking_card": "Sticky sidebar panel on white #FFFFFF. Select rental dates, duration counter, daily rate calculation, $35 insurance fee, refundable security deposit, total price, and 52px REQUEST TO RENT button.",
+      "purchase_card": "Optional Buy Now option if listing supports outright sale.",
+      "accordions": ["Product Details & Specifications", "Lender Protection & Insurance", "White-Glove Shipping & Returns"],
+      "authenticity_card": "Verified 50-Point Authenticity Certificate badge with hologram seal representation."
+    },
+    "additional_pages": {
+      "renter_dashboard": "Active Rentals, Upcoming Booking Calendar, Saved Handbags, Rental History, Security Deposit Status.",
+      "lender_dashboard": "My Wardrobe Listings, Earnings Overview ($ value), Rental Requests (Approve/Decline), Payout Account Settings.",
+      "listing_creation": "4-Step Listing Flow: Basic Info & Brand, Photo Upload (2:3 aspect ratio), Authentication Proof & Serial No., Pricing ($/day & Buy Outright option).",
+      "auth_modal": "Login / Sign Up modal with underline form inputs and tab switcher.",
+      "support_contact": "Concierge FAQ accordions + Underline Contact Form.",
+      "style_guide": "Interactive UI Spec page showing Typography (Prata & Jost), Color Tokens, 52px Button States, Underline Form Fields, Badges, and Grid Systems."
+    }
+  },
+  "testing_and_accessibility": {
+    "data_testid_convention": "All interactive buttons, links, inputs, tiles, tabs, and filters MUST include kebab-case data-testid attributes (e.g. data-testid='rent-door-cta', data-testid='filter-drawer-toggle', data-testid='request-to-rent-button').",
+    "motion": "Respect prefers-reduced-motion media query. Minimal, weighted transitions only (1.4s crossfade, subtle hover lift)."
+  }
+}
