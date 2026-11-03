@@ -117,3 +117,4 @@ Illustrative fees: service 10% of rental, $25 authentication & handling, $4/day 
 - **Top Lender** (`TopLender.jsx`): badge + criteria popover; `lender.top` flag. **Lender protection** explainer on `/lend` (`LendExtras.jsx`).
 
 - **Availability calendar** (`AvailabilityCalendar.jsx`, `GET /api/listings/{id}/availability`): sample bookings generated relative to today + every rental request; one inspection buffer day after each booking; booked/buffer days crossed out and unselectable; server rejects overlapping requests; `next_available` returned on `GET /api/listings` and shown on cards for rented bags.
+- **Date search hides booked bags**: `GET /api/listings?start=&end=` adds `free_for_dates`; the catalogue hides bags booked on the searched dates and shows a quiet count of how many were hidden.

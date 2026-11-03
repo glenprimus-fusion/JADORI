@@ -44,13 +44,16 @@ export default function Catalogue() {
   const range = rangeFrom(params);
   const days = mode === "rent" ? daysOf(range) : 0;
   const dateSearch = days > 0 ? `?from=${params.get("from")}&to=${params.get("to")}` : "";
-  useEffect(() => { http.get("/listings").then((r) => setAll(r.data)); }, []);
+  useEffect(() => {
+    const p = days > 0 ? { start: params.get("from"), end: params.get("to") } : {};
+    http.get("/listings", { params: p }).then((r) => setAll(r.data));
+  }, [dateSearch]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const b = params.get("brand"); setF((x) => ({ ...x, brands: b ? [b] : [] })); }, [params]);
 
-  const items = useMemo(() => {
-    if (!all) return null;
+  const [items, hidden] = useMemo(() => {
+    if (!all) return [null, 0];
     const price = (l) => (mode === "buy" ? l.buy_price : l.rent_per_day);
-    let r = all.filter((l) => (mode === "buy" ? l.buy_enabled : true)
+    const matches = all.filter((l) => (mode === "buy" ? l.buy_enabled : true)
       && (!style || l.style === style)
       && (!edit || edit.ids.includes(l.id))
       && (!city || l.lender.city === city)
@@ -59,10 +62,11 @@ export default function Catalogue() {
       && (f.availability === "all" || l.available)
       && (f.auth === "all" || l.auth_status === f.auth)
       && (!q || `${l.brand} ${l.name} ${l.color} ${l.style}`.toLowerCase().includes(q.toLowerCase())));
+    let r = days > 0 ? matches.filter((l) => l.free_for_dates !== false) : matches;
     if (sort === "low") r = [...r].sort((a, b) => price(a) - price(b));
     if (sort === "high") r = [...r].sort((a, b) => price(b) - price(a));
-    return r;
-  }, [all, f, sort, mode, q, style, edit, city]);
+    return [r, matches.length - r.length];
+  }, [all, f, sort, mode, q, style, edit, city, days]);
 
   const setParam = (k, v) => { const p = new URLSearchParams(params); p.delete("q"); v ? p.set(k, v) : p.delete(k); setParams(p); };
   const setBrand = (b) => setParam("brand", b);
@@ -80,6 +84,7 @@ export default function Catalogue() {
         {mode === "rent" && (city || days > 0) && (
           <p className="mt-4 text-[12px] uppercase tracking-[0.16em] text-[#4A423C]" data-testid="catalogue-search-summary">
             {[city ? `${city}, MA` : "All of Massachusetts", days > 0 ? `${rangeLabel(range)} · ${days} days` : null].filter(Boolean).join(" · ")}
+            {days > 0 && hidden > 0 && <span className="normal-case tracking-normal text-[13px] text-[#7A716A] ml-3" data-testid="catalogue-hidden-booked">{hidden} {hidden === 1 ? "bag is" : "bags are"} booked for your dates and not shown</span>}
             <button className="jd-link ml-3 normal-case tracking-normal text-[13px]" onClick={() => { const p = new URLSearchParams(params); ["city", "from", "to"].forEach((k) => p.delete(k)); setParams(p); }} data-testid="clear-rent-search">Clear</button>
           </p>
         )}
@@ -126,7 +131,8 @@ export default function Catalogue() {
       <div className="jd-container pt-8 pb-24">
         {items && !items.length ? (
           <div className="py-24 text-center" data-testid="catalogue-empty">
-            <p className="font-serif text-2xl">No bags match these filters.</p>
+            <p className="font-serif text-2xl">{days > 0 && hidden ? "Every matching bag is booked for these dates." : "No bags match these filters."}</p>
+            {days > 0 && hidden > 0 && <p className="text-[#4A423C] mt-3">Try moving your dates by a day or two.</p>}
             <button className="jd-btn-outline mt-8" onClick={() => { setF(EMPTY); setParams({}); }}>Clear filters</button>
           </div>
         ) : (

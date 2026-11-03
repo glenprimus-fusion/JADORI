@@ -147,7 +147,7 @@ async def root():
 
 
 @api.get("/listings")
-async def get_listings(mode: Optional[str] = None, brand: Optional[str] = None):
+async def get_listings(mode: Optional[str] = None, brand: Optional[str] = None, start: Optional[date] = None, end: Optional[date] = None):
     q = {}
     if mode == "buy":
         q["buy_enabled"] = True
@@ -155,7 +155,10 @@ async def get_listings(mode: Optional[str] = None, brand: Optional[str] = None):
         q["brand"] = brand
     docs = await db.listings.find(q, {"_id": 0}).to_list(500)
     for d in docs:
-        d["next_available"] = next_available(await blocked_ranges(d))
+        ranges = await blocked_ranges(d)
+        d["next_available"] = next_available(ranges)
+        if start and end:
+            d["free_for_dates"] = not any(s <= end and start <= e for s, e, _ in ranges)
     return docs
 
 
