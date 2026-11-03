@@ -103,7 +103,7 @@ export default function LendWorld() {
       <WorldHero world="LEND" testid="lend-hero" eyebrow="Lend with JADORI" title="Make money from a bag sitting in your closet."
         copy="List your designer handbag, set your daily rate, and choose whether to offer it for sale. Every bag is independently authenticated before its first handoff."
         img={DOORS.lend} imgAlt="Handbag owner presenting her bag (stock placeholder)"
-        ctas={<><Link to="/lend/new" className="jd-btn-solid" data-testid="lend-start-listing-button">Start a listing</Link><Link to="/account/lender" className="jd-btn-outline" data-testid="lend-dashboard-link">Lender dashboard</Link></>} />
+        ctas={<><Link to="/lend/new" className="jd-btn-solid" data-testid="lend-start-listing-button">Start a listing</Link><Link to="/how-lending-works" className="jd-btn-outline" data-testid="lend-how-page">How lending works</Link></>} />
       <section className="jd-container py-20 nav:py-28">
         <SectionHead eyebrow="The lending journey" title="From closet to first rental" />
         <Timeline steps={STEPS} testid="lend-timeline" />

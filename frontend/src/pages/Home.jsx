@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, CalendarDays, ShoppingBag, Camera, Tag, ShieldCheck, Banknote, KeyRound, Truck, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { http } from "../lib/api";
-import { DOORS, BRANDS, AUTH_STEPS, JOURNEYS, SUSTAIN, slug } from "../lib/content";
+import { DOORS, BRANDS, slug } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { QuickView } from "../components/jadori/QuickView";
 import { HeroBanner } from "../components/jadori/HeroSeasonal";
@@ -62,13 +62,13 @@ const Listings = () => {
     <section className="jd-container py-20 nav:py-28" data-testid="home-listings">
       <div className="flex items-end justify-between mb-10 gap-6">
         <div>
-          <p className="jd-eyebrow mb-3">Available near Boston · Sample listings</p>
-          <h2 className="text-[28px] nav:text-[40px] leading-tight">Bags to rent this week</h2>
+          <p className="jd-eyebrow mb-3">New arrivals · sample listings</p>
+          <h2 className="text-[28px] nav:text-[40px] leading-tight">The latest from Massachusetts closets</h2>
         </div>
-        <Link to="/rent/all" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">View all</Link>
+        <Link to="/rent/all" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">Discover all</Link>
       </div>
-      <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10">
-        {(items || Array.from({ length: 8 })).slice(0, 8).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <PlaceholderTile key={k} />)}
+      <div className="grid grid-cols-2 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10">
+        {(items || Array.from({ length: 4 })).slice(0, 4).map((l, k) => l ? <ListingCard key={l.id} l={l} onQuickView={setQuick} /> : <PlaceholderTile key={k} />)}
       </div>
       <QuickView l={quick} onClose={() => setQuick(null)} />
       <Link to="/rent/all" className="jd-btn-outline w-full mt-12 sm:hidden">View all</Link>
@@ -103,82 +103,17 @@ const Brands = () => {
   );
 };
 
-const Trust = () => (
-  <section className="bg-[#FFFFFF] border-y border-[#E2DFDA]" data-testid="home-trust">
-    <div className="jd-container py-20 nav:py-28">
-      <div className="grid nav:grid-cols-2 gap-10 nav:gap-20 mb-20">
-        <p className="font-serif text-[30px] nav:text-[44px] leading-[1.15]">Why pay full price when you can rent it for a few days?</p>
-        <div className="nav:pt-24">
-          <p className="font-serif text-[30px] nav:text-[44px] leading-[1.15]">Make money from a bag sitting in your closet.</p>
-          <Link to="/lend" className="jd-btn-solid mt-10" data-testid="trust-lend-button">Start lending</Link>
-        </div>
+const TrustLine = () => (
+  <section className="bg-[#1F1A17] text-[#F3F1ED]" data-testid="home-trust">
+    <div className="jd-container py-14 nav:py-16 grid nav:grid-cols-[auto_1fr_auto] gap-8 nav:gap-12 items-center">
+      <AuthSeal size={88} light />
+      <div>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-[#F3F1ED]/60">Built on authenticity</p>
+        <p className="font-serif text-[24px] nav:text-[32px] leading-tight mt-2 max-w-2xl">Every bag is independently authenticated before it reaches you.</p>
       </div>
-      <div className="grid nav:grid-cols-[260px_1fr] gap-12 border-t border-[#E2DFDA] pt-16">
-        <div className="space-y-6">
-          <h2 className="text-[28px] nav:text-[34px] tracking-[0.08em] leading-tight">BUILT ON AUTHENTICITY</h2>
-          <AuthSeal size={96} />
-          <Link to="/authenticity" className="jd-link text-sm block" data-testid="trust-authenticity-link">How verification works</Link>
-        </div>
-        <ol className="grid sm:grid-cols-3 gap-10">
-          {AUTH_STEPS.map((s, i) => (
-            <li key={s.t} data-testid={`auth-step-${i + 1}`}>
-              <p className="font-serif text-[40px] leading-none text-[#7A716A]">0{i + 1}</p>
-              <p className="mt-5 text-sm uppercase tracking-[0.16em] font-medium">{s.t}</p>
-              <p className="mt-3 text-[15px] text-[#4A423C]">{s.d}</p>
-            </li>
-          ))}
-        </ol>
+      <div className="flex flex-wrap gap-3">
+        <Link to="/authenticity" className="jd-btn-light" data-testid="trust-authenticity-link">Discover authenticity</Link>
       </div>
-      <div className="mt-20 pt-10 border-t border-[#E2DFDA] grid nav:grid-cols-[260px_1fr] gap-8" data-testid="home-sustainability">
-        <p className="jd-eyebrow">A longer life for beautiful things</p>
-        <ul className="flex flex-wrap gap-x-10 gap-y-3 text-[15px] text-[#4A423C]">
-          {SUSTAIN.map((s) => <li key={s} className="before:content-['—'] before:mr-3 before:text-[#7A716A]">{s}</li>)}
-        </ul>
-      </div>
-    </div>
-  </section>
-);
-
-const ICONS = { rent: [Search, CalendarDays, Truck, RotateCcw], lend: [Camera, Tag, ShieldCheck, Banknote], buy: [Search, KeyRound, ShoppingBag] };
-const TITLES = { rent: "How renting works", lend: "How lending works", buy: "Buying, simply" };
-
-const RentGuideCard = () => (
-  <Link to="/how-renting-works" className="group block border-t border-[#1B1714] pt-6" data-testid="journey-rent">
-    <p className="text-sm uppercase tracking-[0.18em] font-medium mb-8">How renting works</p>
-    <div className="relative aspect-[4/3] overflow-hidden jd-photo">
-      <img src="https://images.unsplash.com/photo-1746730921536-6123c87a074d?auto=format&fit=crop&w=1000&q=80" alt="Carrying a rented designer bag (stock placeholder)" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]" />
-      <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-[#1F1A17]/65 to-transparent text-[#F3F1ED]">
-        <p className="text-[11px] uppercase tracking-[0.2em] opacity-80">A visual guide · 7 steps</p>
-        <p className="font-serif text-[24px] mt-1">From choosing to returning</p>
-      </div>
-    </div>
-    <p className="text-[15px] text-[#4A423C] mt-5">See every step with photos: dates, fees, authentication, handoff and your deposit back.</p>
-    <span className="jd-link text-sm mt-5 inline-block" data-testid="journey-rent-link">See how renting works →</span>
-  </Link>
-);
-
-const HowItWorks = () => (
-  <section className="jd-container py-20 nav:py-28" data-testid="home-how-it-works">
-    <h2 className="text-[28px] nav:text-[40px] mb-14">How it works</h2>
-    <div className="grid nav:grid-cols-3 gap-14 nav:gap-10">
-      <RentGuideCard />
-      {Object.entries(JOURNEYS).filter(([k]) => k !== "rent").map(([k, steps]) => (
-        <div key={k} data-testid={`journey-${k}`} className="border-t border-[#1B1714] pt-6">
-          <p className="text-sm uppercase tracking-[0.18em] font-medium mb-8">{TITLES[k]}</p>
-          <ol className="space-y-7">
-            {steps.map(([t, d], i) => {
-              const Ico = ICONS[k][i];
-              return (
-                <li key={t} className="grid grid-cols-[28px_1fr] gap-4">
-                  <Ico size={22} strokeWidth={1} className="mt-0.5 text-[#4A423C]" />
-                  <div><p className="font-medium">{i + 1}. {t}</p><p className="text-[15px] text-[#4A423C]">{d}</p></div>
-                </li>
-              );
-            })}
-          </ol>
-          <Link to={`/${k}`} className="jd-link text-sm mt-8 inline-block" data-testid={`journey-${k}-link`}>{k === "lend" ? "Start a listing" : k === "rent" ? "Browse to rent" : "Shop to buy"}</Link>
-        </div>
-      ))}
     </div>
   </section>
 );
@@ -190,8 +125,7 @@ export default function Home() {
       <Doors />
       <Listings />
       <Brands />
-      <Trust />
-      <HowItWorks />
+      <TrustLine />
       <Newsletter />
     </div>
   );

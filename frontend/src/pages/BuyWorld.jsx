@@ -75,7 +75,7 @@ export default function BuyWorld() {
       <WorldHero dark world="BUY" testid="buy-hero" eyebrow="Buy on JADORI" title="Pre-loved, authenticated, ready to keep."
         copy="Some owners choose to part with their bags. Each one is inspected before the sale, documented honestly, and handed over locally with its records."
         img={U("1649544145000-46fb54c2a331")} imgAlt="Woman with a pre-owned handbag (stock placeholder)"
-        ctas={<><Link to="/buy/all" className="jd-btn-light" data-testid="buy-hero-shop">Shop bags to buy</Link><a href="#buy-steps" className="jd-btn border border-[#F3F1ED] text-[#F3F1ED] hover:bg-[#F3F1ED] hover:text-[#1F1A17]" data-testid="buy-hero-how">How buying works</a></>} />
+        ctas={<><Link to="/how-buying-works" className="jd-btn-light" data-testid="buy-hero-how-page">How buying works</Link><Link to="/buy/all" className="jd-btn border border-[#F3F1ED] text-[#F3F1ED] hover:bg-[#F3F1ED] hover:text-[#1F1A17]" data-testid="buy-hero-shop">Shop bags to buy</Link></>} />
 
       <section className="jd-container py-20 nav:py-28">
         <SectionHead eyebrow="Why buy here" title="The confidence of a boutique, the value of pre-loved" />

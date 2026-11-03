@@ -4,6 +4,7 @@ import { LoadingImg } from "../components/jadori/LoadingImg";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { MonogramPattern, Monogram } from "../components/jadori/Monogram";
 import { CTABand, SectionHead } from "../components/jadori/World";
+import { StepVideo } from "../components/jadori/Guide";
 
 const U = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=80`;
 const G = (h) => `https://static.prod-images.emergentagent.com/jobs/e6269308-79fb-49b1-b3b9-65fbe7478071/images/${h}.jpeg`;
@@ -69,9 +70,9 @@ const STEPS = [
   { t: "Choose your dates", v: <DatesVisual />, d: "Select a start and end date on the bag's page. The minimum rental is two days; the owner confirms your request.", pts: ["Plan up to a week ahead", "See the exact rental duration", "Nothing is charged until confirmed"] },
   { t: "Review every fee", v: <FeesVisual />, d: "Before you request, you see the full total: daily price, service fee, authentication and handling, damage protection and a refundable deposit.", pts: ["No hidden costs", "Deposit returned after the return check", "Prices always in US dollars"] },
   { t: "Authenticated before handoff", v: <AuthVisual />, d: "Every bag is independently inspected in person before it reaches you. If it doesn't pass, your booking is cancelled and fully refunded.", pts: ["Materials, stitching, hardware and codes", "Condition photographed, never retouched", "A record number for authenticated bags"], cta: ["How authentication works", "/authenticity"] },
-  { t: "The handoff", v: <Photo src={U("1683921470299-b8f0f3331657")} alt="Receiving a handbag (stock placeholder)" />, d: "Collect your bag locally or have it delivered within participating Massachusetts areas, with its dust bag and hang tag.", pts: ["Boston, Brookline, Cambridge, Newton, Somerville", "Condition confirmed together at handoff", "Service areas to be confirmed at launch"] },
+  { t: "The handoff", v: <StepVideo src="/guide/handoff.mp4" poster={U("1683921470299-b8f0f3331657")} label="Receiving a handbag" testid="rent-handoff-video" />, d: "Collect your bag locally or have it delivered within participating Massachusetts areas, with its dust bag and hang tag.", pts: ["Boston, Brookline, Cambridge, Newton, Somerville", "Condition confirmed together at handoff", "Service areas to be confirmed at launch"] },
   { t: "Carry it", v: <Photo src={U("1746730921536-6123c87a074d")} alt="Carrying a designer bag to an occasion (stock placeholder)" />, d: "Wear it to the wedding, the gala or the weekend away. Damage protection covers everyday wear while it's with you.", pts: ["Care card included with every bag", "Support available throughout your rental", "Love it? Ask the owner if it's for sale"] },
-  { t: "Return & deposit released", v: <ReturnVisual />, d: "Return the bag in its dust bag on your end date. Once the return check matches the handoff photos, your deposit is released.", pts: ["Simple local return", "Condition compared against handoff photos", "Late-return terms to be confirmed"] },
+  { t: "Return & deposit released", v: <StepVideo src="/guide/returnbag.mp4" poster={G("68793ac9242d8b0d5da376466dc6c771d179e13c233d70dc0ac107b00140d8f7")} label="Returning a handbag to its dust bag" testid="rent-return-video" />, d: "Return the bag in its dust bag on your end date. Once the return check matches the handoff photos, your deposit is released.", pts: ["Simple local return", "Condition compared against handoff photos", "Late-return terms to be confirmed"] },
 ];
 
 export default function HowRentingWorks() {
