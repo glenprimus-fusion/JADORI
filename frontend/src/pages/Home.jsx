@@ -63,7 +63,7 @@ const Listings = () => {
         </div>
         <Link to="/rent" className="jd-btn-outline hidden sm:inline-flex" data-testid="home-view-all-button">View all</Link>
       </div>
-      <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-4 nav:gap-x-6 gap-y-12">
+      <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10">
         {(items || Array.from({ length: 8 })).slice(0, 8).map((l, k) => l ? <ListingCard key={l.id} l={l} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
       </div>
       <Link to="/rent" className="jd-btn-outline w-full mt-12 sm:hidden">View all</Link>

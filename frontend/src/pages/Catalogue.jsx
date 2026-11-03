@@ -2,9 +2,23 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { SlidersHorizontal } from "lucide-react";
 import { http } from "../lib/api";
-import { BRANDS } from "../lib/content";
+import { Link } from "react-router-dom";
+import { BRANDS, DOORS } from "../lib/content";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
+
+const EditorialTile = () => (
+  <Link to="/lend" className="col-span-2 group block" data-testid="catalogue-editorial-tile">
+    <div className="relative aspect-[4/3] overflow-hidden jd-photo">
+      <img src={DOORS.rent[1]} alt="Editorial placeholder" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.02]" />
+      <div className="absolute inset-x-0 bottom-0 p-6 nav:p-8 bg-gradient-to-t from-[#1F1A17]/55 to-transparent text-[#F3F1ED]">
+        <p className="text-[11px] uppercase tracking-[0.22em] opacity-90">Lend with JADORI</p>
+        <p className="font-serif text-[22px] nav:text-[32px] leading-tight mt-2 max-w-md">Make money from a bag sitting in your closet.</p>
+      </div>
+    </div>
+    <p className="pt-4 text-[11px] uppercase tracking-[0.2em] underline underline-offset-4 decoration-[#E2DFDA] group-hover:decoration-[#1B1714]">Start a listing</p>
+  </Link>
+);
 
 const EMPTY = { brands: [], colors: [], availability: "all", auth: "all" };
 
@@ -44,57 +58,57 @@ export default function Catalogue() {
       <div className="jd-container pt-12 nav:pt-16 pb-8 jd-fade">
         <p className="jd-eyebrow mb-3">Massachusetts · Sample inventory</p>
         <h1 className="text-[32px] nav:text-[48px] leading-tight" data-testid="catalogue-title">
-          {f.brands.length === 1 ? f.brands[0] : mode === "buy" ? "Bags to buy" : "Bags to rent"}
+          {f.brands.length === 1 ? f.brands[0] : mode === "buy" ? "Handbags to buy" : "Handbags to rent"}
         </h1>
         {q && <p className="mt-2 text-[#4A423C]">Results for “{q}” <button className="jd-link ml-2 text-sm" onClick={() => setParams({})} data-testid="clear-search-button">Clear</button></p>}
       </div>
 
-      <div className="sticky top-[68px] nav:top-[84px] z-30 bg-[#F8F7F5] border-y border-[#E2DFDA]">
-        <div className="jd-container flex items-center gap-2 sm:gap-4 h-[64px]">
-          <div className="flex border border-[#1B1714] h-[40px]" role="tablist" data-testid="rent-buy-switch">
-            {["rent", "buy"].map((m) => (
-              <button key={m} role="tab" aria-selected={mode === m} onClick={() => nav(`/${m}${params.toString() ? `?${params}` : ""}`)} data-testid={`switch-${m}`}
-                className={`px-3 sm:px-5 text-[11px] uppercase tracking-[0.18em] font-medium transition-colors ${mode === m ? "bg-[#1B1714] text-[#F3F1ED]" : "hover:bg-[#EFEEEC]"}`}>{m}</button>
-            ))}
-          </div>
-          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="flex items-center gap-2 h-[40px] px-3 sm:px-4 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors">
-            <SlidersHorizontal size={15} strokeWidth={1.25} /> Filters{activeCount ? ` (${activeCount})` : ""}
-          </button>
-          <span className="hidden sm:inline text-sm text-[#7A716A]" data-testid="results-count">{items ? `${items.length} bags` : ""}</span>
-          <label className="ml-auto flex items-center gap-2">
-            <span className="hidden sm:inline jd-label">Sort</span>
-            <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort-select" className="jd-select !py-1 text-sm w-[112px] sm:w-[170px]">
-              <option value="recommended">Featured</option>
-              <option value="low">Price ↑</option>
-              <option value="high">Price ↓</option>
-            </select>
-          </label>
-        </div>
-      </div>
-
-      <div className="jd-container py-5 flex gap-2 overflow-x-auto jd-scroll" data-testid="brand-shortcuts">
+      <div className="jd-container pb-8 flex gap-3 nav:gap-4 overflow-x-auto jd-scroll" data-testid="brand-shortcuts">
         {[null, ...BRANDS.map((b) => b.name)].map((b) => {
           const on = b ? f.brands.length === 1 && f.brands[0] === b : !f.brands.length;
+          const img = all?.find((l) => !b || l.brand === b)?.images[0].url;
           return (
-            <button key={b || "all"} onClick={() => setBrand(b)} data-testid={`brand-shortcut-${(b || "all").toLowerCase().replace(/\s+/g, "-")}`}
-              className={`shrink-0 px-4 h-[36px] text-[12px] uppercase tracking-[0.14em] border transition-colors ${on ? "border-[#1B1714] bg-[#1B1714] text-[#F3F1ED]" : "border-[#E2DFDA] hover:border-[#1B1714]"}`}>{b || "All brands"}</button>
+            <button key={b || "all"} onClick={() => setBrand(b)} data-testid={`brand-shortcut-${(b || "all").toLowerCase().replace(/\s+/g, "-")}`} className="shrink-0 w-[96px] nav:w-[124px] text-left group">
+              <span className={`block aspect-[4/5] jd-photo overflow-hidden border-b-2 transition-colors ${on ? "border-[#1B1714]" : "border-transparent"}`}>
+                {img && <img src={img} alt="" className="w-full h-full object-cover scale-[1.3] group-hover:scale-[1.36] transition-transform duration-700" />}
+              </span>
+              <span className={`block mt-2 text-[11px] uppercase tracking-[0.14em] ${on ? "text-[#1B1714] font-medium" : "text-[#4A423C]"}`}>{b || "View all"}</span>
+            </button>
           );
         })}
       </div>
 
-      <div className="jd-container pb-24">
+      <div className="sticky top-[68px] nav:top-[84px] z-30 bg-[#F8F7F5]/95 backdrop-blur border-y border-[#E2DFDA]">
+        <div className="jd-container flex items-center gap-3 sm:gap-6 h-[60px]">
+          <div className="flex" role="tablist" data-testid="rent-buy-switch">
+            {["rent", "buy"].map((m) => (
+              <button key={m} role="tab" aria-selected={mode === m} onClick={() => nav(`/${m}${params.toString() ? `?${params}` : ""}`)} data-testid={`switch-${m}`}
+                className={`px-3 sm:px-4 h-[59px] text-[11px] uppercase tracking-[0.2em] font-medium border-b transition-colors ${mode === m ? "border-[#1B1714] text-[#1B1714]" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{m}</button>
+            ))}
+          </div>
+          <span className="text-[12px] text-[#7A716A] tracking-[0.06em]" data-testid="results-count">{items ? `${items.length} ${items.length === 1 ? "bag" : "bags"}` : ""}</span>
+          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="ml-auto flex items-center gap-2.5 h-[40px] px-4 sm:px-5 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors">
+            <SlidersHorizontal size={14} strokeWidth={1.25} /><span className="hidden sm:inline">Filters & Sort</span><span className="sm:hidden">Filters</span>{activeCount ? ` (${activeCount})` : ""}
+          </button>
+        </div>
+      </div>
+
+      <div className="jd-container pt-8 pb-24">
         {items && !items.length ? (
           <div className="py-24 text-center" data-testid="catalogue-empty">
             <p className="font-serif text-2xl">No bags match these filters.</p>
             <button className="jd-btn-outline mt-8" onClick={() => { setF(EMPTY); setParams({}); }}>Clear filters</button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-4 nav:gap-x-6 gap-y-12" data-testid="catalogue-grid">
-            {(items || Array.from({ length: 8 })).map((l, k) => l ? <ListingCard key={l.id} l={l} mode={mode} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />)}
+          <div className="grid grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
+            {(items || Array.from({ length: 8 })).flatMap((l, k) => {
+              const card = l ? <ListingCard key={l.id} l={l} mode={mode} /> : <div key={k} className="aspect-[2/3] jd-photo animate-pulse" />;
+              return k === 5 && items && items.length >= 8 && !activeCount && !q ? [<EditorialTile key="editorial" />, card] : [card];
+            })}
           </div>
         )}
       </div>
-      <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} count={items?.length ?? 0} reset={() => { setF(EMPTY); setParams({}); }} />
+      <FilterSheet open={open} onOpenChange={setOpen} f={f} setF={setF} sort={sort} setSort={setSort} count={items?.length ?? 0} reset={() => { setF(EMPTY); setParams({}); }} />
     </div>
   );
 }

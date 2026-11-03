@@ -23,16 +23,23 @@ const Group = ({ title, children }) => (
   </fieldset>
 );
 
-export const FilterSheet = ({ open, onOpenChange, f, setF, count, reset }) => {
+export const FilterSheet = ({ open, onOpenChange, f, setF, sort, setSort, count, reset }) => {
   const toggle = (key, v) => setF({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] });
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="bg-[#F8F7F5] w-full sm:max-w-md p-0 flex flex-col [&>button]:hidden" data-testid="filter-sheet">
         <div className="flex items-center justify-between px-8 h-[72px] border-b border-[#E2DFDA]">
-          <SheetTitle className="text-xs uppercase tracking-[0.2em] font-medium font-sans">Filters</SheetTitle>
+          <SheetTitle className="text-xs uppercase tracking-[0.2em] font-medium font-sans">Filters & Sort</SheetTitle>
           <button onClick={() => onOpenChange(false)} aria-label="Close filters" data-testid="filter-close-button"><X size={20} strokeWidth={1.25} /></button>
         </div>
         <div className="flex-1 overflow-y-auto px-8">
+          <Group title="Sort by">
+            <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort-select" className="jd-select text-[15px]">
+              <option value="recommended">Featured</option>
+              <option value="low">Price: low to high</option>
+              <option value="high">Price: high to low</option>
+            </select>
+          </Group>
           <Group title="Brand">
             <div className="grid grid-cols-2">{BRANDS.map((b) => <Check key={b.name} label={b.name} checked={f.brands.includes(b.name)} onChange={() => toggle("brands", b.name)} testid={`filter-brand-${b.name.toLowerCase().replace(/\s+/g, "-")}`} />)}</div>
           </Group>

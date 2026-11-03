@@ -16,7 +16,7 @@ export const BRANDS = [
   { name: "Prada", img: "https://images.pexels.com/photos/19186713/pexels-photo-19186713.jpeg?auto=compress&cs=tinysrgb&w=800", provisional: true },
 ];
 
-export const COLORS = ["Black", "Ivory", "Dove", "Grey", "Tan", "Cognac", "Red", "Green", "Teal", "Blue", "Navy"];
+export const COLORS = ["Black", "Beige", "Ivory", "Dove", "Grey", "Tan", "Cognac", "Red", "Green", "Navy"];
 export const CITIES = ["Boston", "Brookline", "Cambridge", "Newton", "Somerville"];
 export const CONDITIONS = ["Excellent", "Very good", "Good"];
 

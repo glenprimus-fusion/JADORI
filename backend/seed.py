@@ -1,20 +1,30 @@
 """Conceptual sample listings for the JADORI visual prototype. Not real inventory."""
 
-U = "https://images.unsplash.com/photo-{}?auto=format&fit=crop&w=1200&q=80"
+G = "https://static.prod-images.emergentagent.com/jobs/e6269308-79fb-49b1-b3b9-65fbe7478071/images/{}.jpeg"
+U = "https://images.unsplash.com/photo-{}?auto=format&fit=crop&w=1000&q=80"
 
-BAGS = {
-    "grey": U.format("1605733513597-a8f8341084e6"),
-    "teal": U.format("1594223274512-ad4803739b7c"),
-    "ivory": U.format("1682745230951-8a5aa9a474a0"),
-    "black": U.format("1705909237050-7a7625b47fac"),
-    "red": U.format("1637069422643-9b6d41d51dd9"),
-    "cognac": U.format("1746880223690-359948154c53"),
-    "tan": U.format("1637759292654-a12cb2be085e"),
-    "dove": U.format("1683921470299-b8f0f3331657"),
-    "green": U.format("1682031215004-161c99d5b225"),
-    "navy": U.format("1560891958-68bb1fe7fb78"),
-    "noir": U.format("1713425887412-9d39ecf06b24"),
-    "sand": U.format("1575202332411-b01fe9ace7a8"),
+STUDIO = {
+    1: "64e75346aff96195fec1f59f116b228beb87b5c68bf89da891bd47fd1b916b68",
+    2: "89ba3293a50337908347376ee10f5a1444d6e10585f8e03ba9cae262cf2e08e4",
+    3: "4e6bf51ac42d97729a52f948ccbfd54ba6c242963bdcaf4eb3c4d5e0bc1db5cd",
+    4: "2716a9e7ee94920d636a51555750238e7417eae2bcadeb2efd3d055bf28ded8b",
+    5: "8d841ae92dbb4357e99d2c626ced2b806a257cd7fee127d3de32f127a976f2eb",
+    6: "72e38f5337f1d5a9e79dd0a4f35dfaac33b85e02179f0d4901f1ef5b2dbf1530",
+    7: "9768963316716a4c29e387fe0ccfc0083b9581503cd949277538b3dc761434fc",
+    8: "142c094bd4916c6aad7ce537f74f2dd85c7f724f29dca53202e11e981cb492f4",
+    9: "bcb3726dc850bc44a167f934ad11b8cbb273e440832fa067c42607086f8e25f5",
+    10: "7eaf15f62ffa3df649b08582ee37e3866dcea44643b65ad8dd13792022cbf07f",
+    11: "d4aa48f2cccf0733494b30af6cb9134d1ad6be2946a1a0d1ad6667d44789b0d8",
+    12: "145379ca4a705194567ef6f67eda8c1ec922a4feeb8ed08cab7182d73a03a9a5",
+}
+WORN = {
+    1: U.format("1713425887412-9d39ecf06b24"), 2: U.format("1676716107070-1f9ef2a1ac3e"),
+    3: U.format("1746730921536-6123c87a074d"), 4: U.format("1683921470299-b8f0f3331657"),
+    5: U.format("1559127452-9328c6b697bd"), 6: U.format("1649544284889-2c30c3267013"),
+    7: "https://images.pexels.com/photos/19186713/pexels-photo-19186713.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    8: U.format("1649544145000-46fb54c2a331"), 9: U.format("1572009283538-2fce2d2a1909"),
+    10: U.format("1682031215004-161c99d5b225"), 11: U.format("1560891958-68bb1fe7fb78"),
+    12: U.format("1605813810260-1330807535bb"),
 }
 DETAIL = {
     "leather": U.format("1647960514922-052047430407"),
@@ -22,9 +32,11 @@ DETAIL = {
 }
 
 
-def gallery(main, alt):
+def gallery(i):
+    main = G.format(STUDIO[i])
     return [
         {"url": main, "view": "Front", "cleaned": True},
+        {"url": WORN[i], "view": "Worn (editorial)"},
         {"url": main, "view": "Back"},
         {"url": main, "view": "Side"},
         {"url": main, "view": "Bottom"},
@@ -34,29 +46,29 @@ def gallery(main, alt):
     ]
 
 
-def item(i, brand, name, color, main, alt, retail, verified_retail, rent, buy, auth, lender, rating, city, condition, available=True):
+def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender, rating, city, condition, available=True):
     return {
         "id": f"sample-{i:02d}", "is_sample": True, "brand": brand, "name": name, "color": color,
         "retail_price": retail, "retail_verified": verified_retail, "rent_per_day": rent,
         "buy_enabled": buy is not None, "buy_price": buy, "auth_status": auth,
         "lender": {"name": lender, "rating": rating, "city": city},
         "condition": condition, "available": available, "deposit": round((buy or retail) * 0.15 / 50) * 50,
-        "images": gallery(BAGS[main], BAGS[alt]),
+        "images": gallery(i),
         "description": "Sample description for the visual prototype. Lenders will describe the bag, its history and any signs of wear in their own words.",
     }
 
 
 SAMPLE_LISTINGS = [
-    item(1, "Chanel", "Bowling Bag, Medium", "Black", "black", "black", 10800, True, 145, 8900, "verified", "Eleanor V.", 4.9, "Boston", "Excellent"),
-    item(2, "Hermès", "Top-Handle Tote 30", "Blue", "sand", "tan", 14500, False, 240, None, "pending", "Sophia M.", None, "Cambridge", "Very good"),
-    item(3, "Dior", "Structured Top-Handle", "Ivory", "ivory", "dove", 6500, True, 95, 5100, "verified", "Camilla K.", 4.8, "Newton", "Excellent"),
-    item(4, "Gucci", "Satchel with Buckles", "Grey", "grey", "dove", 3400, False, 65, None, "pending", "Isabelle T.", None, "Brookline", "Good"),
-    item(5, "Burberry", "Grained Leather Tote", "Cognac", "cognac", "tan", 2750, True, 55, 1950, "verified", "Charlotte R.", 4.7, "Somerville", "Very good"),
-    item(6, "Louis Vuitton", "Round Crossbody", "Red", "red", "noir", 3100, False, 60, None, "pending", "Amara O.", None, "Boston", "Excellent", False),
-    item(7, "Prada", "Saffiano Top-Handle", "Teal", "teal", "navy", 3900, True, 70, 2900, "verified", "Mei L.", 5.0, "Cambridge", "Excellent"),
-    item(8, "Chanel", "Small Flap Clutch", "Black", "noir", "noir", 5600, False, 85, None, "pending", "Nadia F.", None, "Brookline", "Very good"),
-    item(9, "Dior", "Soft Shoulder Bag", "Dove", "dove", "ivory", 4200, False, 75, 3200, "pending", "Grace H.", None, "Newton", "Good"),
-    item(10, "Gucci", "Mini Top-Handle", "Green", "green", "teal", 2900, True, 50, None, "verified", "Priya S.", 4.9, "Somerville", "Excellent"),
-    item(11, "Prada", "Flap Shoulder Bag", "Navy", "navy", "grey", 3300, False, 60, None, "pending", "Hannah W.", None, "Boston", "Very good"),
-    item(12, "Hermès", "Hobo with Strap", "Cognac", "tan", "cognac", 9800, True, 160, 7400, "verified", "Juliette B.", 4.8, "Brookline", "Very good"),
+    item(1, "Chanel", "Quilted Flap, Medium", "Black", 10800, True, 145, 8900, "verified", "Eleanor V.", 4.9, "Boston", "Excellent"),
+    item(2, "Hermès", "Top-Handle Tote 30", "Tan", 14500, False, 240, None, "pending", "Sophia M.", None, "Cambridge", "Very good"),
+    item(3, "Dior", "Structured Top-Handle", "Ivory", 6500, True, 95, 5100, "verified", "Camilla K.", 4.8, "Newton", "Excellent"),
+    item(4, "Gucci", "Buckle Satchel", "Grey", 3400, False, 65, None, "pending", "Isabelle T.", None, "Brookline", "Good"),
+    item(5, "Burberry", "Grained Leather Tote", "Cognac", 2750, True, 55, 1950, "verified", "Charlotte R.", 4.7, "Somerville", "Very good"),
+    item(6, "Louis Vuitton", "Round Crossbody", "Red", 3100, False, 60, None, "pending", "Amara O.", None, "Boston", "Excellent", False),
+    item(7, "Prada", "Saffiano Top-Handle", "Black", 3900, True, 70, 2900, "verified", "Mei L.", 5.0, "Cambridge", "Excellent"),
+    item(8, "Chanel", "Mini Quilted Flap", "Beige", 5600, False, 85, None, "pending", "Nadia F.", None, "Brookline", "Very good"),
+    item(9, "Dior", "Soft Hobo", "Dove", 4200, False, 75, 3200, "pending", "Grace H.", None, "Newton", "Good"),
+    item(10, "Gucci", "Mini Top-Handle", "Green", 2900, True, 50, None, "verified", "Priya S.", 4.9, "Somerville", "Excellent"),
+    item(11, "Prada", "Nylon Flap Shoulder Bag", "Navy", 3300, False, 60, None, "pending", "Hannah W.", None, "Boston", "Very good"),
+    item(12, "Hermès", "Leather Bucket Bag", "Tan", 9800, True, 160, 7400, "verified", "Juliette B.", 4.8, "Brookline", "Very good"),
 ]
