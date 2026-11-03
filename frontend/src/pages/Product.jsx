@@ -61,7 +61,7 @@ export default function Product() {
         <Gallery images={l.images} title={`${l.brand} ${l.name}`} />
         <div className="space-y-6 nav:sticky nav:top-[108px]">
           <div className="jd-fade">
-            <div className="flex items-center gap-3 mb-3"><AuthBadge status={l.auth_status} testid="product-auth-badge" /><SampleTag className="!bg-[#EFEEEC]" /></div>
+            <div className="flex items-center gap-3 mb-3"><AuthBadge status={l.auth_status} id={l.id} testid="product-auth-badge" /><SampleTag className="!bg-[#EFEEEC]" /></div>
             <p className="jd-eyebrow !text-[#1B1714]" data-testid="product-brand">{l.brand}</p>
             <div className="flex items-start justify-between gap-4">
               <h1 className="text-[28px] nav:text-[38px] leading-tight mt-1" data-testid="product-name">{l.name}</h1>

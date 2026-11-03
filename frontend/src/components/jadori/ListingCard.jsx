@@ -13,7 +13,7 @@ export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false }) 
       <div className="relative aspect-[2/3] jd-photo overflow-hidden">
         <LoadingImg src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loading="lazy" loaderTestid={`card-loader-${l.id}`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]" />
         {worn && <img src={worn.url} alt="" aria-hidden loading="lazy" className="hidden nav:block absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500" />}
-        <div className={`${compact ? "hidden" : "hidden nav:block"} absolute top-3 left-3 z-10 bg-[#EFEEEC]/80 px-2 py-0.5`}><AuthBadge status={l.auth_status} testid={`listing-auth-${l.id}`} /></div>
+        <div className={`${compact ? "hidden" : "hidden nav:block"} absolute top-3 left-3 z-10 bg-[#EFEEEC]/80 px-2 py-0.5`}><AuthBadge status={l.auth_status} id={l.id} testid={`listing-auth-${l.id}`} /></div>
         <SaveButton id={l.id} />
         {onQuickView && (
           <>
@@ -27,7 +27,7 @@ export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false }) 
         {!l.available && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-[0.18em] bg-[#1B1714] text-[#F3F1ED] px-2 py-1 nav:group-hover:opacity-0 transition-opacity">Currently rented</span>}
       </div>
       <div className="pt-4 pb-2 px-0.5">
-        <div className={`${compact ? "" : "nav:hidden"} mb-1.5`}><AuthBadge status={l.auth_status} testid={`listing-auth-mobile-${l.id}`} /></div>
+        <div className={`${compact ? "" : "nav:hidden"} mb-1.5`}><AuthBadge status={l.auth_status} id={l.id} testid={`listing-auth-mobile-${l.id}`} /></div>
         <p className="text-[11px] uppercase tracking-[0.2em] text-[#7A716A]">{l.brand}</p>
         <p className="mt-1 text-[15px] leading-snug text-[#1B1714]">{l.name}</p>
         <div className="mt-1 flex flex-wrap items-baseline gap-x-2.5 text-[14px]">

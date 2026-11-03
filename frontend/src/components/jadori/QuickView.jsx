@@ -21,7 +21,7 @@ export const QuickView = ({ l, onClose }) => (
           </div>
           <div className="p-6 sm:p-8 flex flex-col">
             <div className="flex items-start justify-between gap-4 pr-6">
-              <AuthBadge status={l.auth_status} testid="quick-view-auth" />
+              <AuthBadge status={l.auth_status} id={l.id} testid="quick-view-auth" />
             </div>
             <p className="jd-eyebrow !text-[#1B1714] mt-4" data-testid="quick-view-brand">{l.brand}</p>
             <DialogTitle className="font-serif font-normal text-[28px] leading-tight mt-1" data-testid="quick-view-name">{l.name}</DialogTitle>

@@ -68,7 +68,7 @@ export default function StyleGuide() {
           </div>
         </Sec>
         <Sec t="Status & badges">
-          <div className="flex flex-wrap gap-8 items-center"><AuthBadge status="verified" /><AuthBadge status="pending" /><SampleTag className="!bg-[#EFEEEC]" /><AuthSeal size={80} /></div>
+          <div className="flex flex-wrap gap-8 items-center"><AuthBadge status="verified" id="sample-01" testid="style-auth-verified" /><AuthBadge status="pending" testid="style-auth-pending" /><SampleTag className="!bg-[#EFEEEC]" /><AuthSeal size={80} /></div>
           <p className="text-sm text-[#4A423C] mt-4">“Authenticated” + seal only after a passed inspection. New listings: “Authenticated before handoff”.</p>
         </Sec>
         <Sec t="Motion">

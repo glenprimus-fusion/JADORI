@@ -44,7 +44,7 @@ export const Journey = () => {
             <p className="mt-5 text-[#4A423C]">{s.d}</p>
             <div className="mt-8 p-5 border border-[#E2DFDA] bg-[#F8F7F5]" data-testid="journey-listing-status">
               <p className="jd-label mb-3">What the listing shows</p>
-              <AuthBadge status={s.status} testid="journey-status-badge" />
+              <AuthBadge status={s.status} interactive={false} testid="journey-status-badge" />
             </div>
             <div className="flex gap-3 mt-8">
               <button disabled={i === 0} onClick={() => setI(i - 1)} className="jd-btn-outline !px-6" data-testid="journey-prev">Previous</button>
