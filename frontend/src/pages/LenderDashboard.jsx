@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { http, getUser, usd } from "../lib/api";
 import { DashShell, TABS } from "./RenterDashboard";
 
-const STAT = [["Active listings", "—"], ["Upcoming rentals", "—"], ["Earnings to date", "—"]];
+const STAT = [["Listings submitted", "—"], ["Upcoming rentals", "—"], ["Earnings to date", "—"]];
 
 export default function LenderDashboard() {
   const u = getUser();
@@ -15,8 +15,8 @@ export default function LenderDashboard() {
       <div className="grid sm:grid-cols-3 border border-[#E2DFDA] bg-[#FFFFFF] mb-12" data-testid="lender-stats">
         {STAT.map(([k, v], i) => (
           <div key={k} className={`p-6 ${i ? "sm:border-l border-t sm:border-t-0 border-[#E2DFDA]" : ""}`}>
-            <p className="jd-label">{k}</p><p className="font-serif text-[30px] mt-2">{k === "Active listings" ? subs?.length ?? 0 : v}</p>
-            <p className="text-[11px] text-[#7A716A]">{k === "Active listings" ? "Submitted by you" : "Shown after first completed rental"}</p>
+            <p className="jd-label">{k}</p><p className="font-serif text-[30px] mt-2">{k === "Listings submitted" ? subs?.length ?? 0 : v}</p>
+            <p className="text-[11px] text-[#7A716A]">{k === "Listings submitted" ? "In review or live" : "Shown after first completed rental"}</p>
           </div>
         ))}
       </div>

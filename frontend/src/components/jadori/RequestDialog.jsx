@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dialog";
-import { http, errMsg, getUser, usd } from "../../lib/api";
+import { http, errMsg, getUser, setUser, usd } from "../../lib/api";
 
 export const RequestDialog = ({ kind, onClose, l, range, q, days }) => {
   const user = getUser();
@@ -20,6 +20,7 @@ export const RequestDialog = ({ kind, onClose, l, range, q, days }) => {
       const body = { listing_id: l.id, ...form };
       if (kind === "rent") await http.post("/rental-requests", { ...body, start_date: format(range.from, "yyyy-MM-dd"), end_date: format(range.to, "yyyy-MM-dd") });
       else await http.post("/purchase-requests", body);
+      setUser({ role: "rent", city: l.lender.city, ...(user || {}), full_name: form.full_name, email: form.email });
       setState({ s: "done", err: "" });
     } catch (er) { setState({ s: "idle", err: errMsg(er) }); }
   };

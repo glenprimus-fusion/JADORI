@@ -84,7 +84,7 @@ class ContactIn(BaseModel):
 
 def fees_for(listing, days):
     rental = listing["rent_per_day"] * days
-    service = round(rental * 0.10)
+    service = int(rental * 0.10 + 0.5)
     handling = 25
     protection = 4 * days
     deposit = listing["deposit"]
@@ -120,6 +120,8 @@ async def get_listing(listing_id: str):
 
 @api.post("/listings")
 async def create_listing(body: ListingIn):
+    if body.city not in MA_CITIES:
+        raise HTTPException(422, "Please choose a participating Massachusetts city")
     if body.buy_enabled and not body.buy_price:
         raise HTTPException(422, "Purchase price required when Buy is enabled")
     doc = body.model_dump()
@@ -149,6 +151,8 @@ async def newsletter(body: NewsletterIn):
 
 @api.post("/registrations")
 async def register(body: RegistrationIn):
+    if body.city not in MA_CITIES:
+        raise HTTPException(422, "Please choose a participating Massachusetts city")
     doc = body.model_dump()
     doc.update({"id": new_id(), "created_at": now_iso()})
     await db.registrations.update_one({"email": body.email}, {"$set": doc}, upsert=True)
@@ -171,6 +175,8 @@ async def rental_request(body: RentalRequestIn):
     days = (body.end_date - body.start_date).days + 1
     if days < 2:
         raise HTTPException(422, "Minimum rental is 2 days")
+    if not listing.get("available"):
+        raise HTTPException(422, "This bag is currently rented")
     if body.start_date < date.today():
         raise HTTPException(422, "Start date cannot be in the past")
     doc = body.model_dump()

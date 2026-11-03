@@ -18,7 +18,7 @@ export const DashShell = ({ title, tabs, active, children }) => {
         <div><p className="jd-eyebrow mb-3">{u.full_name} · {u.city}, MA</p><h1 className="text-[32px] nav:text-[44px]">{title}</h1></div>
         <div className="flex gap-6 text-xs uppercase tracking-[0.18em]">
           {tabs.map(([l, to]) => <Link key={to} to={to} data-testid={`dash-tab-${l.toLowerCase()}`} className={`pb-1 border-b ${active === to ? "border-[#1B1714]" : "border-transparent text-[#7A716A] hover:text-[#1B1714]"}`}>{l}</Link>)}
-          <button onClick={() => { clearUser(); nav("/"); }} className="text-[#7A716A] hover:text-[#1B1714]" data-testid="dash-sign-out">Sign out</button>
+          <button onClick={() => { clearUser(); nav("/"); }} className="uppercase tracking-[0.18em] text-[#7A716A] hover:text-[#1B1714]" data-testid="dash-sign-out">Sign out</button>
         </div>
       </div>
       {children}

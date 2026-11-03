@@ -13,7 +13,7 @@ const Field = ({ label, children }) => <label className="block"><span className=
 export default function CreateListing() {
   const u = getUser();
   const [step, setStep] = useState(0);
-  const [f, setF] = useState({ lender_name: u?.full_name || "", lender_email: u?.email || "", city: "Boston", brand: "Chanel", name: "", color: "Black", condition: "Excellent", rent_per_day: "", buy_enabled: false, buy_price: "", retail_price: "", description: "", photo_checklist: [] });
+  const [f, setF] = useState({ lender_name: u?.full_name || "", lender_email: u?.email || "", city: u?.city || "Boston", brand: "Chanel", name: "", color: "Black", condition: "Excellent", rent_per_day: "", buy_enabled: false, buy_price: "", retail_price: "", description: "", photo_checklist: [] });
   const [err, setErr] = useState("");
   const [done, setDone] = useState(null);
   const [busy, setBusy] = useState(false);

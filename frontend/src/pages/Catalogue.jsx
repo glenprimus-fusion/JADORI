@@ -50,23 +50,23 @@ export default function Catalogue() {
       </div>
 
       <div className="sticky top-[68px] nav:top-[84px] z-30 bg-[#F8F7F5] border-y border-[#E2DFDA]">
-        <div className="jd-container flex items-center gap-4 h-[64px]">
+        <div className="jd-container flex items-center gap-2 sm:gap-4 h-[64px]">
           <div className="flex border border-[#1B1714] h-[40px]" role="tablist" data-testid="rent-buy-switch">
             {["rent", "buy"].map((m) => (
               <button key={m} role="tab" aria-selected={mode === m} onClick={() => nav(`/${m}${params.toString() ? `?${params}` : ""}`)} data-testid={`switch-${m}`}
-                className={`px-5 text-[11px] uppercase tracking-[0.18em] font-medium transition-colors ${mode === m ? "bg-[#1B1714] text-[#F3F1ED]" : "hover:bg-[#EFEEEC]"}`}>{m}</button>
+                className={`px-3 sm:px-5 text-[11px] uppercase tracking-[0.18em] font-medium transition-colors ${mode === m ? "bg-[#1B1714] text-[#F3F1ED]" : "hover:bg-[#EFEEEC]"}`}>{m}</button>
             ))}
           </div>
-          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="flex items-center gap-2 h-[40px] px-4 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors">
+          <button onClick={() => setOpen(true)} data-testid="open-filters-button" className="flex items-center gap-2 h-[40px] px-3 sm:px-4 border border-[#1B1714] text-[11px] uppercase tracking-[0.18em] font-medium hover:bg-[#1B1714] hover:text-[#F3F1ED] transition-colors">
             <SlidersHorizontal size={15} strokeWidth={1.25} /> Filters{activeCount ? ` (${activeCount})` : ""}
           </button>
           <span className="hidden sm:inline text-sm text-[#7A716A]" data-testid="results-count">{items ? `${items.length} bags` : ""}</span>
           <label className="ml-auto flex items-center gap-2">
             <span className="hidden sm:inline jd-label">Sort</span>
-            <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort-select" className="jd-select !py-1 text-sm w-[150px]">
-              <option value="recommended">Recommended</option>
-              <option value="low">Price: low to high</option>
-              <option value="high">Price: high to low</option>
+            <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort-select" className="jd-select !py-1 text-sm w-[112px] sm:w-[170px]">
+              <option value="recommended">Featured</option>
+              <option value="low">Price ↑</option>
+              <option value="high">Price ↓</option>
             </select>
           </label>
         </div>

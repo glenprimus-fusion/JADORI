@@ -25,9 +25,9 @@ DETAIL = {
 def gallery(main, alt):
     return [
         {"url": main, "view": "Front", "cleaned": True},
-        {"url": alt, "view": "Back"},
+        {"url": main, "view": "Back"},
         {"url": main, "view": "Side"},
-        {"url": alt, "view": "Bottom"},
+        {"url": main, "view": "Bottom"},
         {"url": DETAIL["leather"], "view": "Interior"},
         {"url": main, "view": "Hardware"},
         {"url": DETAIL["stitch"], "view": "Wear & damage"},
@@ -47,14 +47,14 @@ def item(i, brand, name, color, main, alt, retail, verified_retail, rent, buy, a
 
 
 SAMPLE_LISTINGS = [
-    item(1, "Chanel", "Classic Flap, Medium", "Black", "noir", "black", 10800, True, 145, 8900, "verified", "Eleanor V.", 4.9, "Boston", "Excellent"),
-    item(2, "Hermès", "Top-Handle Tote 30", "Tan", "sand", "tan", 14500, False, 240, None, "pending", "Sophia M.", None, "Cambridge", "Very good"),
+    item(1, "Chanel", "Bowling Bag, Medium", "Black", "black", "black", 10800, True, 145, 8900, "verified", "Eleanor V.", 4.9, "Boston", "Excellent"),
+    item(2, "Hermès", "Top-Handle Tote 30", "Blue", "sand", "tan", 14500, False, 240, None, "pending", "Sophia M.", None, "Cambridge", "Very good"),
     item(3, "Dior", "Structured Top-Handle", "Ivory", "ivory", "dove", 6500, True, 95, 5100, "verified", "Camilla K.", 4.8, "Newton", "Excellent"),
     item(4, "Gucci", "Satchel with Buckles", "Grey", "grey", "dove", 3400, False, 65, None, "pending", "Isabelle T.", None, "Brookline", "Good"),
     item(5, "Burberry", "Grained Leather Tote", "Cognac", "cognac", "tan", 2750, True, 55, 1950, "verified", "Charlotte R.", 4.7, "Somerville", "Very good"),
     item(6, "Louis Vuitton", "Round Crossbody", "Red", "red", "noir", 3100, False, 60, None, "pending", "Amara O.", None, "Boston", "Excellent", False),
     item(7, "Prada", "Saffiano Top-Handle", "Teal", "teal", "navy", 3900, True, 70, 2900, "verified", "Mei L.", 5.0, "Cambridge", "Excellent"),
-    item(8, "Chanel", "Barrel Bag, Small", "Black", "black", "noir", 5600, False, 85, None, "pending", "Nadia F.", None, "Brookline", "Very good"),
+    item(8, "Chanel", "Small Flap Clutch", "Black", "noir", "noir", 5600, False, 85, None, "pending", "Nadia F.", None, "Brookline", "Very good"),
     item(9, "Dior", "Soft Shoulder Bag", "Dove", "dove", "ivory", 4200, False, 75, 3200, "pending", "Grace H.", None, "Newton", "Good"),
     item(10, "Gucci", "Mini Top-Handle", "Green", "green", "teal", 2900, True, 50, None, "verified", "Priya S.", 4.9, "Somerville", "Excellent"),
     item(11, "Prada", "Flap Shoulder Bag", "Navy", "navy", "grey", 3300, False, 60, None, "pending", "Hannah W.", None, "Boston", "Very good"),

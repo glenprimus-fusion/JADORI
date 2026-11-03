@@ -23,10 +23,10 @@ export const ListingCard = ({ l, mode = "rent" }) => (
         {l.retail_verified && <span className="text-[#7A716A] line-through" title="Retail reference verified (sample)">{usd(l.retail_price)} retail</span>}
       </div>
       {mode === "rent" && l.buy_enabled && <p className="text-xs text-[#4A423C]">Also to buy · {usd(l.buy_price)}</p>}
-      <p className="text-xs text-[#7A716A] flex items-center gap-1.5">
+      <p className="text-xs text-[#7A716A] flex flex-wrap items-center gap-x-1.5">
         {l.lender.name}
         {l.lender.rating ? <><span>·</span><Star size={11} strokeWidth={1.25} className="fill-[#1B1714] text-[#1B1714]" />{l.lender.rating.toFixed(1)} <span className="opacity-70">(sample)</span></> : <><span>·</span>New lender</>}
-        <span>·</span>{l.lender.city}, MA
+        <span>·</span><span className="whitespace-nowrap">{l.lender.city}, MA</span>
       </p>
     </div>
   </Link>

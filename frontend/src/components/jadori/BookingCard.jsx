@@ -35,7 +35,7 @@ export const BookingCard = ({ l }) => {
   const tooShort = days === 1;
 
   return (
-    <div className="bg-[#FFFFFF] border border-[#E2DFDA] p-6 nav:p-8" id="booking" data-testid="booking-card">
+    <div className="bg-[#FFFFFF] border border-[#E2DFDA] p-6 nav:p-8 scroll-mt-[110px]" id="booking" data-testid="booking-card">
       <div className="flex items-baseline justify-between">
         <p className="font-serif text-[28px]" data-testid="booking-price-per-day">{usd(l.rent_per_day)}<span className="font-sans text-sm text-[#7A716A]"> / day</span></p>
         {l.retail_verified && <p className="text-sm text-[#7A716A] line-through">{usd(l.retail_price)} retail</p>}

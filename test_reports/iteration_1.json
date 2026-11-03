@@ -1,0 +1,52 @@
+{
+  "summary": "First full E2E run of JADORI prototype. Backend pytest 19/21 pass (2 minor validation gaps). Frontend: every requested flow was tested and works: home section order, doors/links, rent-door crossfade, brand strip + arrows + Dior filter, newsletter (error/success/already on list), catalogue filters/clear/Rent-Buy switch (6 buy-enabled: 01,03,05,07,09,12)/sort/brand chips, product gallery/thumbs/accordions/calendar/1-day error/breakdown/request-to-rent/request-to-buy, pending vs verified authenticity card, register (+agree error), 3-step listing -> lender dashboard, support form, mobile menu/doors swipe/2-col catalogue/mobile booking bar, grid 4/3/2 cols at 1920/1100/1099/860/859, style guide tokens. Bugs found: fee rounding mismatch between UI and backend, mobile catalogue horizontal overflow, and guest requests do not show in the account.",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/rental-requests, /api/quote (fees_for)", "issue": "Service fee rounding differs from the UI. Python round() uses banker's rounding: round(28.5)=28, but JS Math.round(28.5)=29. Repro: sample-03, 3 days. UI booking-total shows $1,101 but the stored quote.total is $1,100, so the renter dashboard shows $1,100. Any rental where rent*days*0.1 ends in .5 is affected. Fix: in the backend use int(rental*0.10 + 0.5) or Decimal ROUND_HALF_UP.", "priority": "HIGH"}
+    ],
+    "minor": [
+      {"endpoint": "POST /api/rental-requests", "issue": "Accepts requests for unavailable bags (sample-06 available=false returns 200). The UI disables the button, but the API does not enforce it."},
+      {"endpoint": "POST /api/registrations, POST /api/listings", "issue": "city is not checked against MA_CITIES (a non-MA city like 'New York' returns 200), even though the spec says Massachusetts cities only. MA_CITIES is defined in server.py but never used."},
+      {"endpoint": "POST /api/rental-requests", "issue": "There is no check for overlapping bookings or a maximum date range. This is acceptable for the prototype, but should be noted."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Catalogue toolbar (mobile 390px)", "issue": "Horizontal page overflow: document scrollWidth is 456 at a 390 viewport. The sort label/select (w-[150px]) is pushed off-screen to the right and 'Recommended' is cut off.", "selector": "[data-testid='sort-select']", "priority": "MEDIUM"},
+      {"component": "Mobile booking bar", "issue": "Tapping 'Select dates' (href #booking) scrolls the booking card to y=0, under the sticky header, which hides the $/day row. Add scroll-margin-top to #booking. The button also keeps saying 'Select dates' after dates are chosen.", "selector": "[data-testid='mobile-book-button']", "priority": "LOW"}
+    ],
+    "integration_issues": [
+      {"flow": "Guest Request to rent/buy -> 'View in my account'", "issue": "A visitor who has not registered can send a request (success shown), but 'View in my account' leads to dashboard-signed-out. The request can never be seen, because the dashboard queries by the localStorage user's email. Requests are also lost if a registered user edits the email field in the dialog. Suggest: prompt registration, or save the dialog name/email as the concept user on submit.", "affected_selectors": ["request-view-dashboard", "dashboard-signed-out"]}
+    ],
+    "design_issues": [
+      {"screen": "Product gallery / sample images", "issues": ["Each gallery alternates two different stock bags. For example, on sample-01 the Chanel Classic Flap 'Front' is a woman in a burgundy dress with a small clutch, while 'Back'/'Bottom' show a different black bag on a yellow background. The 'Front · background cleaned' view is a lifestyle shot, not a cleaned product shot.", "sample-02 (Hermès, color Tan) shows a light-blue bag in its card and main image. The color and image do not match."]},
+      {"screen": "Home doors (mobile)", "issues": ["The first door snaps to x=0 with no left gutter: snap-start ignores px-5. Add scroll-pl-5 / scroll-padding."]},
+      {"screen": "Catalogue listing card meta (mobile)", "issues": ["The lender line ('Sophia M. · New lender · Cambridge, MA') wraps into a cramped 3-column layout at 2-col mobile widths."]},
+      {"screen": "Dashboard tabs", "issues": ["'Sign out' is rendered in mixed case with different tracking, unlike the uppercase RENTING/LENDING tabs next to it."]},
+      {"screen": "Create listing", "issues": ["City defaults to Boston instead of the registered user's city. Lender stat 'Active listings' counts listings that are still in review."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_jadori_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Make backend fee rounding match the frontend (round half up) so the stored quote.total equals the UI total",
+    "Fix mobile catalogue toolbar overflow (shrink or wrap the sort select below sm)",
+    "Make guest rental/purchase requests visible: auto-create the concept user from dialog name/email, or require registration",
+    "Backend: reject rental requests for available=false listings; validate city against MA_CITIES for registrations and listings",
+    "Optional: add scroll-margin-top on #booking, a scroll-padding gutter on the mobile doors row, and gallery images that match each bag's color/model"
+  ],
+  "critical_code_review_comments": [
+    "server.py fees_for: round() is banker's rounding, which differs from JS Math.round. The fee logic is also duplicated in BookingCard.quote. Consider calling /api/quote from the UI so there is one source of truth.",
+    "MA_CITIES is defined but unused in server.py",
+    "Catalogue fetches all listings and filters on the client. Fine for 12 items; the mode/brand query params on /api/listings go unused by the UI.",
+    "RequestDialog: the user's email can diverge from the localStorage user, which orphans the requests in the dashboard",
+    "Backend uses date.today() (server local time) while the client calendar uses local browser time. Around midnight, a client in another timezone could pick 'tomorrow' and still be valid; this is low risk."
+  ],
+  "updated_files": ["/app/backend/tests/test_jadori_api.py"],
+  "success_rate": {"backend": "90% (19/21)", "frontend": "~92% (all requested flows functional; 1 data mismatch, 1 mobile overflow, 1 guest-visibility gap)"},
+  "test_credentials": "None needed. /app/memory/test_credentials.md is an empty template. Registration is concept only (localStorage key jadori_concept_user).",
+  "seed_data_creation": "Test records created with TEST_/test_ prefixed emails in newsletter, registrations, rental_requests, purchase_requests, lender_submissions, contact_messages",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Container date is Nov 3 2026. Testids: gallery-next-button/gallery-prev-button (not gallery-next), contact success testid is contact-done, filter radios use filter-auth-verified/filter-availability-available. Filter sheet checkboxes need about 1s for the slide-in animation before clicking. Run: REACT_APP_BACKEND_URL=... pytest backend/tests/test_jadori_api.py. Two tests (unavailable bag, non-MA city) are expected to fail until the backend validation is added.",
+  "rca of the issue": "Fee mismatch: in the backend, fees_for computes service = round(rental*0.10). Python 3 rounds half to even, so round(28.5)=28, while BookingCard.quote uses Math.round, which gives 29. Repro: /bag/sample-03 ($95/day), pick 3 days. The UI shows $1,101 and POST /api/quote returns total 1100. Mitigation: use int(rental*0.10 + 0.5) in the backend."
+}
