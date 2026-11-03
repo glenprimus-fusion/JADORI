@@ -44,14 +44,31 @@ const ReqRow = ({ r, kind }) => (
   </div>
 );
 
+const OfferRow = ({ o }) => (
+  <div className="grid grid-cols-[72px_1fr_auto] gap-5 items-center py-5 border-b border-[#E2DFDA]" data-testid={`offer-row-${o.id}`}>
+    <div className="aspect-[2/3] jd-photo overflow-hidden"><img src={o.listing.images[0].url} alt="" className="w-full h-full object-cover" /></div>
+    <div>
+      <p className="jd-eyebrow !text-[#1B1714]">{o.listing.brand}</p>
+      <p className="font-serif text-lg">{o.listing.name}</p>
+      <p className="text-sm text-[#7A716A]">Asking {usd(o.asking)} · {o.lender}</p>
+    </div>
+    <div className="text-right">
+      <p className="font-medium">{usd(o.amount)}</p>
+      <p className="text-[11px] uppercase tracking-[0.16em] text-[#7A716A]" data-testid={`offer-status-${o.id}`}>{o.status === "countered" ? `Countered ${usd(o.counter)}` : o.status}</p>
+    </div>
+  </div>
+);
+
 export default function RenterDashboard() {
   const u = getUser();
   const [rentals, setRentals] = useState(null);
   const [buys, setBuys] = useState([]);
+  const [offers, setOffers] = useState([]);
   useEffect(() => {
     if (!u) return;
     http.get("/rental-requests", { params: { email: u.email } }).then((r) => setRentals(r.data));
     http.get("/purchase-requests", { params: { email: u.email } }).then((r) => setBuys(r.data));
+    http.get("/offers", { params: { email: u.email } }).then((r) => setOffers(r.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -62,11 +79,13 @@ export default function RenterDashboard() {
           {rentals && !rentals.length && <p className="py-8 text-[#4A423C]" data-testid="renter-empty">No requests yet. <Link to="/rent" className="jd-link">Browse bags to rent</Link></p>}
           {rentals?.map((r) => <ReqRow key={r.id} r={r} kind="rental" />)}
           {!!buys.length && <><p className="jd-label mt-12 mb-2">Purchase requests</p>{buys.map((r) => <ReqRow key={r.id} r={r} kind="purchase" />)}</>}
+          {!!offers.length && <div data-testid="renter-offers"><p className="jd-label mt-12 mb-2">Your offers</p>{offers.map((o) => <OfferRow key={o.id} o={o} />)}</div>}
         </div>
         <aside className="bg-[#FFFFFF] border border-[#E2DFDA] p-6 space-y-4 h-fit" data-testid="renter-summary">
           <p className="jd-label">Summary</p>
           <p className="flex justify-between text-sm"><span>Open rental requests</span><span data-testid="renter-open-count">{rentals?.length ?? 0}</span></p>
           <p className="flex justify-between text-sm"><span>Purchase requests</span><span>{buys.length}</span></p>
+          <p className="flex justify-between text-sm"><span>Offers</span><span data-testid="renter-offer-count">{offers.length}</span></p>
           <p className="text-xs text-[#7A716A]">Deposits are released after each return inspection.</p>
           <Link to="/rent" className="jd-btn-outline w-full">Find a bag</Link>
         </aside>

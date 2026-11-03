@@ -3,13 +3,14 @@ import { Eye, Star } from "lucide-react";
 import { AuthBadge } from "./AuthBadge";
 import { SaveButton } from "./SaveButton";
 import { LoadingImg } from "./LoadingImg";
+import { TopMark } from "./TopLender";
 import { usd } from "../../lib/api";
 
-export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false }) => {
+export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false, days = 0, search = "" }) => {
   const worn = l.images.find((im) => im.view.startsWith("Worn"));
   const qv = (e) => { e.preventDefault(); e.stopPropagation(); onQuickView(l); };
   return (
-    <Link to={`/bag/${l.id}`} className="group block" data-testid={`listing-card-${l.id}`}>
+    <Link to={`/bag/${l.id}${search}`} className="group block" data-testid={`listing-card-${l.id}`}>
       <div className="relative aspect-[2/3] jd-photo overflow-hidden">
         <LoadingImg src={l.images[0].url} alt={`${l.brand} ${l.name} (sample image)`} loading="lazy" loaderTestid={`card-loader-${l.id}`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]" />
         {worn && <img src={worn.url} alt="" aria-hidden loading="lazy" className="hidden nav:block absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500" />}
@@ -39,8 +40,9 @@ export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false }) 
           {l.retail_verified && <span className="text-[#7A716A] line-through text-[13px]" title="Retail reference verified (sample)">{usd(l.retail_price)}</span>}
           {mode === "rent" && l.buy_enabled && <span className="text-[13px] text-[#4A423C]">· Buy {usd(l.buy_price)}</span>}
         </div>
+        {mode === "rent" && days > 1 && <p className="mt-1 text-[13px] text-[#1B1714]" data-testid={`listing-total-${l.id}`}>{usd(l.rent_per_day * days)} total<span className="text-[#7A716A]"> · {days} days, before fees</span></p>}
         <p className="mt-1.5 text-[12px] text-[#7A716A] flex flex-wrap items-center gap-x-1.5">
-          {l.lender.name}
+          {l.lender.top && <span title="Top Lender" className="inline-flex" data-testid={`listing-top-lender-${l.id}`}><TopMark size={11} /></span>}{l.lender.name}
           {l.lender.rating ? <><Star size={10} strokeWidth={1.25} className="fill-[#7A716A] text-[#7A716A]" />{l.lender.rating.toFixed(1)}<span className="opacity-70">(sample)</span></> : <span>· New lender</span>}
           <span>·</span><span className="whitespace-nowrap">{l.lender.city}, MA</span>
         </p>

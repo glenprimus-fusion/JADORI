@@ -48,12 +48,27 @@ def gallery(i):
     ]
 
 
-def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender, rating, city, condition, available=True):
+LENDERS = {
+    "eleanor-v": {"slug": "eleanor-v", "name": "Eleanor V.", "city": "Boston", "rating": 4.9, "reviews": 38, "rentals": 42, "since": "2024", "response": "within an hour", "followers": 214, "top": True,
+                  "bio": "A small, much-loved collection of Chanel and Louis Vuitton classics, kept in dust bags between every outing."},
+    "sophia-m": {"slug": "sophia-m", "name": "Sophia M.", "city": "Cambridge", "rating": 5.0, "reviews": 24, "rentals": 27, "since": "2024", "response": "within an hour", "followers": 168, "top": True,
+                 "bio": "Structured top-handles for the working week and the evening after."},
+    "camilla-k": {"slug": "camilla-k", "name": "Camilla K.", "city": "Newton", "rating": 4.8, "reviews": 7, "rentals": 8, "since": "2025", "response": "within a few hours", "followers": 61, "top": False,
+                  "bio": "Soft Dior leathers, lent for weddings and long lunches."},
+    "isabelle-t": {"slug": "isabelle-t", "name": "Isabelle T.", "city": "Brookline", "rating": 4.7, "reviews": 12, "rentals": 15, "since": "2025", "response": "within a few hours", "followers": 92, "top": False,
+                   "bio": "A Brookline closet of minis, buckets and everyday icons."},
+    "charlotte-r": {"slug": "charlotte-r", "name": "Charlotte R.", "city": "Somerville", "rating": None, "reviews": 0, "rentals": 0, "since": "2026", "response": "within a day", "followers": 9, "top": False,
+                    "bio": "New to JADORI. Warm leathers and easy totes."},
+}
+
+
+def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender_slug, condition, available=True):
+    L = LENDERS[lender_slug]
     return {
         "id": f"sample-{i:02d}", "is_sample": True, "brand": brand, "name": name, "color": color, "style": STYLE[i],
         "retail_price": retail, "retail_verified": verified_retail, "rent_per_day": rent,
         "buy_enabled": buy is not None, "buy_price": buy, "auth_status": auth,
-        "lender": {"name": lender, "rating": rating, "city": city},
+        "lender": {k: L[k] for k in ("slug", "name", "rating", "city", "top")},
         "condition": condition, "available": available, "deposit": round((buy or retail) * 0.15 / 50) * 50,
         "images": gallery(i),
         "description": "Sample description for the visual prototype. Lenders will describe the bag, its history and any signs of wear in their own words.",
@@ -61,16 +76,16 @@ def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender
 
 
 SAMPLE_LISTINGS = [
-    item(1, "Chanel", "Quilted Flap, Medium", "Black", 10800, True, 145, 8900, "verified", "Eleanor V.", 4.9, "Boston", "Excellent"),
-    item(2, "Hermès", "Top-Handle Tote 30", "Tan", 14500, False, 240, None, "pending", "Sophia M.", None, "Cambridge", "Very good"),
-    item(3, "Dior", "Structured Top-Handle", "Ivory", 6500, True, 95, 5100, "verified", "Camilla K.", 4.8, "Newton", "Excellent"),
-    item(4, "Gucci", "Buckle Satchel", "Grey", 3400, False, 65, None, "pending", "Isabelle T.", None, "Brookline", "Good"),
-    item(5, "Burberry", "Grained Leather Tote", "Cognac", 2750, True, 55, 1950, "verified", "Charlotte R.", 4.7, "Somerville", "Very good"),
-    item(6, "Louis Vuitton", "Round Crossbody", "Red", 3100, False, 60, None, "pending", "Amara O.", None, "Boston", "Excellent", False),
-    item(7, "Prada", "Saffiano Top-Handle", "Black", 3900, True, 70, 2900, "verified", "Mei L.", 5.0, "Cambridge", "Excellent"),
-    item(8, "Chanel", "Mini Quilted Flap", "Beige", 5600, False, 85, None, "pending", "Nadia F.", None, "Brookline", "Very good"),
-    item(9, "Dior", "Soft Hobo", "Dove", 4200, False, 75, 3200, "pending", "Grace H.", None, "Newton", "Good"),
-    item(10, "Gucci", "Mini Top-Handle", "Green", 2900, True, 50, None, "verified", "Priya S.", 4.9, "Somerville", "Excellent"),
-    item(11, "Prada", "Nylon Flap Shoulder Bag", "Navy", 3300, False, 60, None, "pending", "Hannah W.", None, "Boston", "Very good"),
-    item(12, "Hermès", "Leather Bucket Bag", "Tan", 9800, True, 160, 7400, "verified", "Juliette B.", 4.8, "Brookline", "Very good"),
+    item(1, "Chanel", "Quilted Flap, Medium", "Black", 10800, True, 145, 8900, "verified", "eleanor-v", "Excellent"),
+    item(2, "Hermès", "Top-Handle Tote 30", "Tan", 14500, False, 240, None, "pending", "sophia-m", "Very good"),
+    item(3, "Dior", "Structured Top-Handle", "Ivory", 6500, True, 95, 5100, "verified", "camilla-k", "Excellent"),
+    item(4, "Gucci", "Buckle Satchel", "Grey", 3400, False, 65, None, "pending", "isabelle-t", "Good"),
+    item(5, "Burberry", "Grained Leather Tote", "Cognac", 2750, True, 55, 1950, "verified", "charlotte-r", "Very good"),
+    item(6, "Louis Vuitton", "Round Crossbody", "Red", 3100, False, 60, None, "pending", "eleanor-v", "Excellent", False),
+    item(7, "Prada", "Saffiano Top-Handle", "Black", 3900, True, 70, 2900, "verified", "sophia-m", "Excellent"),
+    item(8, "Chanel", "Mini Quilted Flap", "Beige", 5600, False, 85, None, "pending", "isabelle-t", "Very good"),
+    item(9, "Dior", "Soft Hobo", "Dove", 4200, False, 75, 3200, "pending", "camilla-k", "Good"),
+    item(10, "Gucci", "Mini Top-Handle", "Green", 2900, True, 50, None, "verified", "charlotte-r", "Excellent"),
+    item(11, "Prada", "Nylon Flap Shoulder Bag", "Navy", 3300, False, 60, None, "pending", "eleanor-v", "Very good"),
+    item(12, "Hermès", "Leather Bucket Bag", "Tan", 9800, True, 160, 7400, "verified", "isabelle-t", "Very good"),
 ]

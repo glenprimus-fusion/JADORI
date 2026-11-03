@@ -22,13 +22,13 @@ const GRADES = [
 
 const STEPS = [
   ["Browse", "Find it", "Look for bags whose owners have enabled a purchase price."],
-  ["Owner confirms", "Request to buy", "Send a request. The owner confirms and the price is held for you."],
+  ["Owner confirms", "Buy or make an offer", "Buy at the asking price, or make an offer the owner can accept or counter."],
   ["Before sale", "Authentication", "The bag is inspected in person before any sale is completed."],
   ["Handoff", "Make it yours", "Local handoff, with the condition report and authentication record."],
 ];
 
 const FAQ = [
-  ["Is the purchase price negotiable?", "Prices are set by each owner. Offers and negotiation are a proposed feature to be confirmed."],
+  ["Is the purchase price negotiable?", "Yes. Use Make an offer on any bag for sale. The owner can accept, decline or counter. Offers below 60% of the asking price aren't sent."],
   ["What happens if the bag fails authentication?", "The sale does not go ahead and nothing is charged. JADORI never sells a bag that has not passed inspection."],
   ["Can I return a purchased bag?", "Return terms are being finalised by JADORI and will be shown on every listing before launch."],
   ["Are prices in US dollars?", "Yes. All prices are shown in USD."],

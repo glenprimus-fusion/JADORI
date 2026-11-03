@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { addDays, differenceInCalendarDays, format, startOfToday } from "date-fns";
+import { useSearchParams } from "react-router-dom";
+import { addDays, format, startOfToday } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { usd } from "../../lib/api";
+import { PLANS, FULFILMENT, quote, rangeFrom, daysOf } from "../../lib/plans";
 import { RequestDialog } from "./RequestDialog";
+import { OfferDialog } from "./OfferDialog";
 
-export const quote = (l, days) => {
-  const rental = l.rent_per_day * days;
-  const service = Math.round(rental * 0.1);
-  const handling = 25;
-  const protection = 4 * days;
-  return { rental, service, handling, protection, deposit: l.deposit, total: rental + service + handling + protection + l.deposit };
-};
+export { quote };
 
 const Row = ({ k, v, strong, testid }) => (
   <div className={`flex justify-between py-1.5 ${strong ? "font-medium text-base border-t border-[#1B1714] pt-3 mt-2" : "text-sm text-[#4A423C]"}`}>
@@ -26,12 +23,33 @@ const DateField = ({ label, value, testid }) => (
   </div>
 );
 
+const Choice = ({ label, items, value, set, price, testid }) => (
+  <fieldset className="mt-7" data-testid={testid}>
+    <legend className="jd-label mb-3">{label}</legend>
+    <div className="space-y-2">
+      {items.map((it) => (
+        <button type="button" key={it.key} onClick={() => set(it.key)} aria-pressed={value === it.key} data-testid={`${testid}-${it.key}`}
+          className={`w-full text-left p-4 border flex gap-4 items-start transition-colors ${value === it.key ? "border-[#1B1714] bg-[#F8F7F5]" : "border-[#E2DFDA] hover:border-[#7A716A]"}`}>
+          <span className={`mt-1 w-[11px] h-[11px] shrink-0 rounded-full border border-[#1B1714] ${value === it.key ? "bg-[#1B1714]" : ""}`} />
+          <span className="flex-1 min-w-0">
+            <span className="flex justify-between gap-3 text-[13px] uppercase tracking-[0.14em] font-medium"><span>{it.name}</span><span className="normal-case tracking-normal font-normal text-[#4A423C]">{price(it)}</span></span>
+            <span className="block text-[13px] text-[#7A716A] mt-1">{it.line}</span>
+          </span>
+        </button>
+      ))}
+    </div>
+  </fieldset>
+);
+
 export const BookingCard = ({ l }) => {
-  const [range, setRange] = useState({ from: undefined, to: undefined });
+  const [params] = useSearchParams();
+  const [range, setRange] = useState(() => rangeFrom(params));
+  const [plan, setPlan] = useState("signature");
+  const [fulfil, setFulfil] = useState("pickup");
   const [open, setOpen] = useState(false);
   const [dialog, setDialog] = useState(null);
-  const days = range.from && range.to ? differenceInCalendarDays(range.to, range.from) + 1 : 0;
-  const q = days ? quote(l, days) : null;
+  const days = daysOf(range);
+  const q = days ? quote(l, days, plan, fulfil) : null;
   const tooShort = days === 1;
 
   return (
@@ -48,22 +66,27 @@ export const BookingCard = ({ l }) => {
           </button>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-auto p-0 rounded-none border-[#E2DFDA]" data-testid="booking-calendar">
-          <Calendar mode="range" numberOfMonths={1} selected={range} onSelect={(r) => { setRange(r || {}); if (r?.from && r?.to) setOpen(false); }}
+          <Calendar mode="range" numberOfMonths={1} selected={range} defaultMonth={range.from} onSelect={(r) => { setRange(r || {}); if (r?.from && r?.to) setOpen(false); }}
             disabled={[{ before: addDays(startOfToday(), 1) }]} />
         </PopoverContent>
       </Popover>
       <p className="text-xs text-[#7A716A] mt-3">Minimum rental 2 days. Availability shown is sample data.</p>
 
+      <Choice label="Protection plan" items={PLANS} value={plan} set={setPlan} testid="plan-choice"
+        price={(p) => `${usd(p.perDay)}/day · ${usd(Math.floor((l.deposit * p.share) / 50 + 0.5) * 50)} deposit`} />
+      <Choice label="Handoff" items={FULFILMENT} value={fulfil} set={setFulfil} testid="fulfilment-choice" price={(f) => (f.fee ? usd(f.fee) : "Free")} />
+
       {q && (
-        <div className="mt-6" data-testid="booking-breakdown">
+        <div className="mt-7" data-testid="booking-breakdown">
           <Row k="Rental duration" v={`${days} days`} testid="booking-duration" />
           <Row k={`${usd(l.rent_per_day)} × ${days} days`} v={usd(q.rental)} testid="booking-rental-subtotal" />
           <Row k="Service fee (10%)" v={usd(q.service)} testid="booking-service-fee" />
           <Row k="Authentication & handling" v={usd(q.handling)} testid="booking-handling-fee" />
-          <Row k="Damage protection" v={usd(q.protection)} testid="booking-protection-fee" />
+          <Row k={`${PLANS.find((p) => p.key === plan).name} protection`} v={usd(q.protection)} testid="booking-protection-fee" />
+          {!!q.delivery && <Row k="Courier delivery & collection" v={usd(q.delivery)} testid="booking-delivery-fee" />}
           <Row k="Refundable deposit" v={usd(q.deposit)} testid="booking-deposit" />
           <Row k="Total due" v={usd(q.total)} strong testid="booking-total" />
-          <p className="text-[11px] text-[#7A716A] mt-2">Fee structure is illustrative and not final.</p>
+          <p className="text-[11px] text-[#7A716A] mt-2">Fees and protection plans are illustrative and not final.</p>
         </div>
       )}
       {tooShort && <p className="text-sm mt-4" data-testid="booking-min-error">Please choose at least 2 days.</p>}
@@ -73,12 +96,16 @@ export const BookingCard = ({ l }) => {
       </button>
       {l.buy_enabled && (
         <div className="mt-6 pt-6 border-t border-[#E2DFDA]" data-testid="buy-option">
-          <div className="flex justify-between items-baseline mb-4"><span className="jd-label">Owner accepts offers to buy</span><span className="font-serif text-xl" data-testid="buy-price">{usd(l.buy_price)}</span></div>
-          <button onClick={() => setDialog("buy")} className="jd-btn-outline w-full" data-testid="request-to-buy-button">Request to buy</button>
+          <div className="flex justify-between items-baseline mb-4"><span className="jd-label">Also available to buy</span><span className="font-serif text-xl" data-testid="buy-price">{usd(l.buy_price)}</span></div>
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={() => setDialog("buy")} className="jd-btn-outline !px-3" data-testid="request-to-buy-button">Buy now</button>
+            <button onClick={() => setDialog("offer")} className="jd-btn-outline !px-3" data-testid="make-offer-button">Make an offer</button>
+          </div>
         </div>
       )}
       <p className="text-[11px] text-[#7A716A] mt-5">No payment is taken in this concept prototype. Your request is sent to the lender for confirmation.</p>
-      <RequestDialog kind={dialog} onClose={() => setDialog(null)} l={l} range={range} q={q} days={days} />
+      <RequestDialog kind={dialog === "offer" ? null : dialog} onClose={() => setDialog(null)} l={l} range={range} q={q} days={days} plan={plan} fulfil={fulfil} />
+      {l.buy_enabled && <OfferDialog open={dialog === "offer"} onClose={() => setDialog(null)} l={l} />}
     </div>
   );
 };

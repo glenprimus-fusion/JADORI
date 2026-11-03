@@ -33,7 +33,7 @@ export const QuickView = ({ l, onClose }) => (
               <Row k="Refundable deposit" v={usd(l.deposit)} />
               <Row k="Condition" v={l.condition} />
               <Row k="Style · Color" v={`${l.style} · ${l.color}`} />
-              <Row k="Lender" v={<span className="inline-flex items-center gap-1.5">{l.lender.name}{l.lender.rating ? <><Star size={11} strokeWidth={1.25} className="fill-[#1B1714]" />{l.lender.rating.toFixed(1)} (sample)</> : " · New lender"}</span>} />
+              <Row k="Lender" v={<Link to={`/closet/${l.lender.slug}`} className="jd-link inline-flex items-center gap-1.5" data-testid="quick-view-closet-link">{l.lender.name}{l.lender.rating ? <><Star size={11} strokeWidth={1.25} className="fill-[#1B1714]" />{l.lender.rating.toFixed(1)} (sample)</> : " · New lender"}</Link>} />
               <Row k="Location" v={`${l.lender.city}, MA`} />
               <Row k="Availability" v={l.available ? "Available" : "Currently rented"} />
             </div>

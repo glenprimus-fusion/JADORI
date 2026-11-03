@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShieldCheck, CheckSquare, Camera, Lock, ImagePlus } from "lucide-react";
+import { CheckSquare, Camera, ImagePlus } from "lucide-react";
 import { usd } from "../lib/api";
 import { BRANDS, CONDITIONS } from "../lib/content";
-import { WorldHero, SectionHead, Timeline, Pillars, WorldFAQ, CTABand } from "../components/jadori/World";
+import { WorldHero, SectionHead, Timeline, WorldFAQ, CTABand } from "../components/jadori/World";
+import { LenderProtection, TopLenderBand } from "../components/jadori/LendExtras";
 import { MonogramPattern } from "../components/jadori/Monogram";
 import { DOORS } from "../lib/content";
 
@@ -83,14 +84,8 @@ const STEPS = [
   ["After each rental", "Get paid", "Payout follows each completed rental (terms to be confirmed)."],
 ];
 
-const PROTECT = [
-  [ShieldCheck, "Your approval", "Nothing is rented without you accepting the request."],
-  [Lock, "Deposits held", "Every renter pays a refundable deposit before handoff."],
-  [Camera, "Documented condition", "Condition is photographed before and after each rental."],
-  [CheckSquare, "Damage protection", "Renters pay a daily protection fee. Coverage terms to be finalised."],
-];
-
 const FAQ = [
+  ["What if my bag is damaged?", "Report it within 48 hours of return. JADORI reviews the handoff and return photos, arranges specialist repair, and reimburses you up to the bag's verified value (terms to be confirmed)."],
   ["Do I keep ownership of my bag?", "Yes. Your bag stays yours. You can also choose to offer it for sale by enabling a purchase price."],
   ["Who pays for authentication?", "Authentication is arranged by JADORI before the first handoff. Fee structure to be confirmed."],
   ["Can I pause my listing?", "Yes. You'll be able to pause or remove your listing at any time from your lender dashboard."],
@@ -111,10 +106,8 @@ export default function LendWorld() {
       <Estimator />
       <Accept />
       <PhotoGuide />
-      <section className="jd-container pb-20 nav:pb-28">
-        <SectionHead eyebrow="Lender protection" title="Your bag, looked after" />
-        <Pillars items={PROTECT} testid="lend-protection" />
-      </section>
+      <LenderProtection />
+      <TopLenderBand />
       <WorldFAQ items={FAQ} testid="lend-faq" />
       <CTABand testid="lend-cta" title="Give your bag a second life, and an income." copy="Renting gives designer handbags a longer useful life and helps more people enjoy them." cta="Start a listing" to="/lend/new" />
     </div>

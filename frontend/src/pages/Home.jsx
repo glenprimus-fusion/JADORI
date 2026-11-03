@@ -9,6 +9,7 @@ import { HeroBanner } from "../components/jadori/HeroSeasonal";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { AuthSeal } from "../components/jadori/AuthBadge";
 import { Newsletter } from "../components/jadori/Newsletter";
+import { EditSpotlight } from "../components/jadori/EditSpotlight";
 
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -123,6 +124,7 @@ export default function Home() {
     <div data-testid="home-page">
       <HeroBanner />
       <Doors />
+      <EditSpotlight />
       <Listings />
       <Brands />
       <TrustLine />

@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dialog";
 import { http, errMsg, getUser, setUser, usd } from "../../lib/api";
 
-export const RequestDialog = ({ kind, onClose, l, range, q, days }) => {
+export const RequestDialog = ({ kind, onClose, l, range, q, days, plan, fulfil }) => {
   const user = getUser();
   const [form, setForm] = useState({ full_name: "", email: "", message: "" });
   const [state, setState] = useState({ s: "idle", err: "" });
@@ -18,7 +18,7 @@ export const RequestDialog = ({ kind, onClose, l, range, q, days }) => {
     setState({ s: "loading", err: "" });
     try {
       const body = { listing_id: l.id, ...form };
-      if (kind === "rent") await http.post("/rental-requests", { ...body, start_date: format(range.from, "yyyy-MM-dd"), end_date: format(range.to, "yyyy-MM-dd") });
+      if (kind === "rent") await http.post("/rental-requests", { ...body, start_date: format(range.from, "yyyy-MM-dd"), end_date: format(range.to, "yyyy-MM-dd"), plan, fulfilment: fulfil });
       else await http.post("/purchase-requests", body);
       setUser({ role: "rent", city: l.lender.city, ...(user || {}), full_name: form.full_name, email: form.email });
       setState({ s: "done", err: "" });
@@ -41,7 +41,7 @@ export const RequestDialog = ({ kind, onClose, l, range, q, days }) => {
           <form onSubmit={submit} className="space-y-5">
             <DialogTitle className="font-serif font-normal text-[26px]">{kind === "rent" ? "Request to rent" : "Request to buy"}</DialogTitle>
             <DialogDescription className="text-sm text-[#4A423C]">
-              {l.brand} {l.name} · {kind === "rent" && q ? `${days} days · ${usd(q.total)} total due` : usd(l.buy_price)}
+              {l.brand} {l.name} · {kind === "rent" && q ? `${days} days · ${plan} protection · ${fulfil === "delivery" ? "courier" : "meet the owner"} · ${usd(q.total)} total due` : usd(l.buy_price)}
             </DialogDescription>
             <label className="block"><span className="jd-label">Full name</span><input required value={form.full_name} onChange={set("full_name")} className="jd-input" data-testid="request-name-input" /></label>
             <label className="block"><span className="jd-label">Email</span><input required type="email" value={form.email} onChange={set("email")} className="jd-input" data-testid="request-email-input" /></label>

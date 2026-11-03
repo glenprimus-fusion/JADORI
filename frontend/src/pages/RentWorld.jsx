@@ -6,6 +6,7 @@ import { quote } from "../components/jadori/BookingCard";
 import { WorldHero, SectionHead, Timeline, Pillars, FeaturedRow, WorldFAQ, CTABand } from "../components/jadori/World";
 import { LoadingImg } from "../components/jadori/LoadingImg";
 import { MonthlyEdits } from "../components/jadori/MonthlyEdits";
+import { RentSearch } from "../components/jadori/RentSearch";
 
 const U = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1100&q=80`;
 
@@ -26,8 +27,8 @@ const STEPS = [
 
 const INCLUDED = [
   [ShieldCheck, "Authenticated before handoff", "Every bag is independently inspected before it reaches you."],
-  [Umbrella, "Damage protection", "Everyday wear is covered by a small daily protection fee."],
-  [MapPin, "Local handoff", "Delivered or collected near you, beginning in Massachusetts."],
+  [Umbrella, "Protection plans", "Choose Essential, Signature or Complete. More cover means a smaller deposit."],
+  [MapPin, "Pickup or delivery", "Meet the owner nearby, or have it couriered to your door."],
   [RotateCcw, "Refundable deposit", "Held during your rental and released after the return inspection."],
 ];
 
@@ -69,6 +70,10 @@ export default function RentWorld() {
         img={U("1605813810260-1330807535bb")} imgAlt="Model carrying a handbag to an occasion (stock placeholder)"
         ctas={<><Link to="/rent/all" className="jd-btn-solid" data-testid="rent-hero-browse">Browse bags to rent</Link><Link to="/how-renting-works" className="jd-btn-outline" data-testid="rent-hero-how">How renting works</Link></>} />
 
+      <section className="jd-container pt-4 nav:pt-6" data-testid="rent-search-section">
+        <p className="jd-eyebrow mb-4">Find a bag near you</p>
+        <RentSearch testid="rent-search" />
+      </section>
       <section className="jd-container py-20 nav:py-28" data-testid="rent-occasions">
         <SectionHead eyebrow="Rent by occasion" title="A bag for every moment on your calendar" />
         <div className="flex nav:grid nav:grid-cols-4 gap-3 overflow-x-auto snap-x snap-mandatory jd-scroll -mx-5 px-5 scroll-pl-5 nav:mx-0 nav:px-0">

@@ -8,6 +8,8 @@ import { BookingCard } from "../components/jadori/BookingCard";
 import { AuthBadge, AuthSeal, SampleTag } from "../components/jadori/AuthBadge";
 import { SaveButton } from "../components/jadori/SaveButton";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
+import { TopLenderBadge } from "../components/jadori/TopLender";
+import { FollowButton } from "./Closet";
 
 const AuthCard = ({ l }) => (
   <div className={`p-6 flex gap-5 items-start ${l.auth_status === "verified" ? "bg-[#1F1A17] text-[#F3F1ED]" : "border border-[#E2DFDA]"}`} data-testid="authenticity-card">
@@ -27,20 +29,24 @@ const AuthCard = ({ l }) => (
 
 const Lender = ({ l }) => (
   <div className="flex items-center gap-4 py-5 border-y border-[#E2DFDA]" data-testid="lender-profile">
-    <div className="w-12 h-12 rounded-full jd-photo flex items-center justify-center font-serif text-lg">{l.lender.name[0]}</div>
-    <div className="text-sm">
-      <p className="font-medium">Lent by {l.lender.name}</p>
-      <p className="text-[#7A716A] flex items-center gap-1.5">
+    <Link to={`/closet/${l.lender.slug}`} className="w-12 h-12 shrink-0 rounded-full jd-photo flex items-center justify-center font-serif text-lg" aria-hidden tabIndex={-1}>{l.lender.name[0]}</Link>
+    <div className="text-sm flex-1 min-w-0">
+      <p className="font-medium flex flex-wrap items-center gap-2">
+        <Link to={`/closet/${l.lender.slug}`} className="jd-link" data-testid="lender-closet-link">Lent by {l.lender.name}</Link>
+        {l.lender.top && <TopLenderBadge testid="product-top-lender" />}
+      </p>
+      <p className="text-[#7A716A] flex items-center gap-1.5 mt-1">
         {l.lender.rating ? <><Star size={12} strokeWidth={1.25} className="fill-[#1B1714] text-[#1B1714]" />{l.lender.rating.toFixed(1)} sample rating</> : "New lender · no reviews yet"} · {l.lender.city}, MA
       </p>
     </div>
+    <FollowButton slug={l.lender.slug} className="!h-[40px] !px-4 !text-[10px] shrink-0" testid="product-follow-button" />
   </div>
 );
 
 const INFO = (l) => [
   ["details", "Details", `${l.color}. ${l.description} Dimensions and materials to be supplied by the lender.`],
   ["condition", "Condition report", `Lender-reported condition: ${l.condition}. Condition photographs are unretouched — wear is documented, never removed. Only the main thumbnail background is cleaned.`],
-  ["delivery", "Delivery & returns", "Local handoff or courier within participating Massachusetts areas (service areas to be confirmed at launch). The refundable deposit is released after the return inspection."],
+  ["delivery", "Delivery & returns", "Meet the owner at an agreed place nearby, or choose courier delivery and collection within participating Massachusetts areas (service areas to be confirmed at launch). The refundable deposit is released after the return inspection."],
 ];
 
 export default function Product() {

@@ -10,7 +10,7 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone, date
 
-from seed import SAMPLE_LISTINGS
+from seed import SAMPLE_LISTINGS, LENDERS
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -50,12 +50,22 @@ class RentalRequestIn(BaseModel):
     start_date: date
     end_date: date
     message: Optional[str] = ""
+    plan: str = Field("essential", pattern="^(essential|signature|complete)$")
+    fulfilment: str = Field("pickup", pattern="^(pickup|delivery)$")
 
 
 class PurchaseRequestIn(BaseModel):
     listing_id: str
     full_name: str = Field(min_length=2)
     email: EmailStr
+    message: Optional[str] = ""
+
+
+class OfferIn(BaseModel):
+    listing_id: str
+    full_name: str = Field(min_length=2)
+    email: EmailStr
+    amount: int = Field(gt=0)
     message: Optional[str] = ""
 
 
@@ -82,16 +92,23 @@ class ContactIn(BaseModel):
     message: str = Field(min_length=5)
 
 
-def fees_for(listing, days):
+PLANS = {"essential": (4, 1.0), "signature": (9, 0.5), "complete": (16, 0.25)}
+DELIVERY_FEE = 45
+
+
+def fees_for(listing, days, plan="essential", fulfilment="pickup"):
+    per_day, deposit_share = PLANS[plan]
     rental = listing["rent_per_day"] * days
     service = int(rental * 0.10 + 0.5)
     handling = 25
-    protection = 4 * days
-    deposit = listing["deposit"]
+    protection = per_day * days
+    deposit = int(listing["deposit"] * deposit_share / 50 + 0.5) * 50
+    delivery = DELIVERY_FEE if fulfilment == "delivery" else 0
     return {
         "days": days, "rental": rental, "service_fee": service,
-        "authentication_handling": handling, "damage_protection": protection,
-        "deposit": deposit, "total": rental + service + handling + protection + deposit,
+        "authentication_handling": handling, "damage_protection": protection, "plan": plan,
+        "fulfilment": fulfilment, "delivery": delivery,
+        "deposit": deposit, "total": rental + service + handling + protection + delivery + deposit,
     }
 
 
@@ -166,7 +183,7 @@ async def quote(body: RentalRequestIn):
     days = (body.end_date - body.start_date).days + 1
     if days < 1:
         raise HTTPException(422, "End date must be after start date")
-    return fees_for(listing, days)
+    return fees_for(listing, days, body.plan, body.fulfilment)
 
 
 @api.post("/rental-requests")
@@ -182,7 +199,7 @@ async def rental_request(body: RentalRequestIn):
     doc = body.model_dump()
     doc.update({
         "id": new_id(), "start_date": body.start_date.isoformat(), "end_date": body.end_date.isoformat(),
-        "status": "requested", "quote": fees_for(listing, days), "created_at": now_iso(),
+        "status": "requested", "quote": fees_for(listing, days, body.plan, body.fulfilment), "created_at": now_iso(),
         "listing": {k: listing[k] for k in ("id", "brand", "name", "images")},
     })
     await db.rental_requests.insert_one(doc.copy())
@@ -211,6 +228,57 @@ async def purchase_request(body: PurchaseRequestIn):
 @api.get("/purchase-requests")
 async def list_purchases(email: EmailStr):
     return await db.purchase_requests.find({"email": email}, {"_id": 0}).sort("created_at", -1).to_list(200)
+
+
+def owner_reply(price, amount):
+    if amount >= price * 0.9:
+        return "accepted", amount
+    if amount >= price * 0.75:
+        return "countered", int(round((amount + price) / 2 / 10) * 10)
+    return "declined", None
+
+
+@api.post("/offers")
+async def make_offer(body: OfferIn):
+    listing = await get_listing(body.listing_id)
+    if not listing.get("buy_enabled"):
+        raise HTTPException(422, "The owner has not enabled purchase for this bag")
+    price = listing["buy_price"]
+    if body.amount >= price:
+        raise HTTPException(422, "Your offer is at or above the asking price. Please use Request to buy.")
+    if body.amount < price * 0.6:
+        raise HTTPException(422, f"Offers must be at least 60% of the asking price (${int(price * 0.6):,}).")
+    status, counter = owner_reply(price, body.amount)
+    doc = body.model_dump()
+    doc.update({"id": new_id(), "asking": price, "status": status, "counter": counter, "created_at": now_iso(),
+                "listing": {k: listing[k] for k in ("id", "brand", "name", "images")}, "lender": listing["lender"]["name"]})
+    await db.offers.insert_one(doc.copy())
+    doc.pop("_id", None)
+    return doc
+
+
+@api.post("/offers/{offer_id}/accept-counter")
+async def accept_counter(offer_id: str):
+    doc = await db.offers.find_one({"id": offer_id}, {"_id": 0})
+    if not doc or doc["status"] != "countered":
+        raise HTTPException(404, "No counter-offer to accept")
+    await db.offers.update_one({"id": offer_id}, {"$set": {"status": "accepted", "amount": doc["counter"]}})
+    doc.update({"status": "accepted", "amount": doc["counter"]})
+    return doc
+
+
+@api.get("/offers")
+async def list_offers(email: EmailStr):
+    return await db.offers.find({"email": email}, {"_id": 0}).sort("created_at", -1).to_list(200)
+
+
+@api.get("/lenders/{slug}")
+async def get_lender(slug: str):
+    lender = LENDERS.get(slug)
+    if not lender:
+        raise HTTPException(404, "Closet not found")
+    listings = await db.listings.find({"lender.slug": slug}, {"_id": 0}).to_list(100)
+    return {**lender, "listings": listings}
 
 
 @api.post("/contact")

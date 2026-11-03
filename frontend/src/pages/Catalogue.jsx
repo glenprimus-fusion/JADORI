@@ -9,6 +9,8 @@ import { EDITS } from "../lib/edits";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { ListingCard } from "../components/jadori/ListingCard";
 import { FilterSheet } from "../components/jadori/FilterSheet";
+import { RentSearch } from "../components/jadori/RentSearch";
+import { rangeFrom, daysOf, rangeLabel } from "../lib/plans";
 
 const EditorialTile = () => (
   <Link to="/lend" className="col-span-2 group block" data-testid="catalogue-editorial-tile">
@@ -38,7 +40,10 @@ export default function Catalogue() {
   const style = params.get("style") || "";
   const edit = EDITS.find((e) => e.slug === params.get("edit"));
   const [quick, setQuick] = useState(null);
-
+  const city = params.get("city") || "";
+  const range = rangeFrom(params);
+  const days = mode === "rent" ? daysOf(range) : 0;
+  const dateSearch = days > 0 ? `?from=${params.get("from")}&to=${params.get("to")}` : "";
   useEffect(() => { http.get("/listings").then((r) => setAll(r.data)); }, []);
   useEffect(() => { const b = params.get("brand"); setF((x) => ({ ...x, brands: b ? [b] : [] })); }, [params]);
 
@@ -48,6 +53,7 @@ export default function Catalogue() {
     let r = all.filter((l) => (mode === "buy" ? l.buy_enabled : true)
       && (!style || l.style === style)
       && (!edit || edit.ids.includes(l.id))
+      && (!city || l.lender.city === city)
       && (!f.brands.length || f.brands.includes(l.brand))
       && (!f.colors.length || f.colors.includes(l.color))
       && (f.availability === "all" || l.available)
@@ -56,11 +62,11 @@ export default function Catalogue() {
     if (sort === "low") r = [...r].sort((a, b) => price(a) - price(b));
     if (sort === "high") r = [...r].sort((a, b) => price(b) - price(a));
     return r;
-  }, [all, f, sort, mode, q, style, edit]);
+  }, [all, f, sort, mode, q, style, edit, city]);
 
   const setParam = (k, v) => { const p = new URLSearchParams(params); p.delete("q"); v ? p.set(k, v) : p.delete(k); setParams(p); };
   const setBrand = (b) => setParam("brand", b);
-  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all") + (style ? 1 : 0) + (edit ? 1 : 0);
+  const activeCount = f.brands.length + f.colors.length + (f.availability !== "all") + (f.auth !== "all") + (style ? 1 : 0) + (edit ? 1 : 0) + (city ? 1 : 0);
   const styleLabel = STYLES.find(([v]) => v === style)?.[1];
 
   return (
@@ -68,8 +74,15 @@ export default function Catalogue() {
       <div className="jd-container pt-12 nav:pt-16 pb-8 jd-fade">
         <p className="jd-eyebrow mb-3">Massachusetts · Sample inventory</p>
         <h1 className="text-[32px] nav:text-[48px] leading-tight" data-testid="catalogue-title">
-          {edit ? `The edit · ${edit.title}` : [f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}
+          {edit ? `The edit · ${edit.title}` : [f.brands.length === 1 ? f.brands[0] : null, styleLabel].filter(Boolean).join(" · ") || (mode === "buy" ? "Handbags to buy" : "Handbags to rent")}{city && !edit ? <span className="text-[#7A716A]"> in {city}</span> : null}
         </h1>
+        {mode === "rent" && <RentSearch key={`${city}${params.get("from")}${params.get("to")}`} testid="catalogue-search" className="mt-8 max-w-4xl" />}
+        {mode === "rent" && (city || days > 0) && (
+          <p className="mt-4 text-[12px] uppercase tracking-[0.16em] text-[#4A423C]" data-testid="catalogue-search-summary">
+            {[city ? `${city}, MA` : "All of Massachusetts", days > 0 ? `${rangeLabel(range)} · ${days} days` : null].filter(Boolean).join(" · ")}
+            <button className="jd-link ml-3 normal-case tracking-normal text-[13px]" onClick={() => { const p = new URLSearchParams(params); ["city", "from", "to"].forEach((k) => p.delete(k)); setParams(p); }} data-testid="clear-rent-search">Clear</button>
+          </p>
+        )}
         {edit && <p className="mt-3 text-[#4A423C] max-w-xl" data-testid="catalogue-edit-blurb">{edit.blurb} <button className="jd-link ml-1 text-sm" onClick={() => setParam("edit", "")} data-testid="clear-edit-button">See all bags</button></p>}
         {q && <p className="mt-2 text-[#4A423C]">Results for “{q}” <button className="jd-link ml-2 text-sm" onClick={() => setParams({})} data-testid="clear-search-button">Clear</button></p>}
         <nav className="mt-8 flex gap-5 nav:gap-8 overflow-x-auto jd-scroll border-b border-[#E2DFDA]" aria-label="Shop by style" data-testid="style-shortcuts">
@@ -119,7 +132,7 @@ export default function Catalogue() {
         ) : (
           <div className="grid grid-flow-row-dense grid-cols-2 nav:grid-cols-3 wide:grid-cols-4 gap-x-2 nav:gap-x-3 gap-y-10" data-testid="catalogue-grid">
             {(items || Array.from({ length: 8 })).flatMap((l, k) => {
-              const card = l ? <ListingCard key={l.id} l={l} mode={mode} onQuickView={setQuick} /> : <PlaceholderTile key={k} />;
+              const card = l ? <ListingCard key={l.id} l={l} mode={mode} onQuickView={setQuick} days={days} search={dateSearch} /> : <PlaceholderTile key={k} />;
               return k === 5 && items && items.length >= 8 && !activeCount && !q && sort === "recommended" ? [<EditorialTile key="editorial" />, card] : [card];
             })}
           </div>
