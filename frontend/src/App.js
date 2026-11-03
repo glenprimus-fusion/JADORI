@@ -14,7 +14,7 @@ import RenterDashboard from "./pages/RenterDashboard";
 import LenderDashboard from "./pages/LenderDashboard";
 import Saved from "./pages/Saved";
 import Support from "./pages/Support";
-import Authenticity from "./pages/Authenticity";
+import Authenticity from "./pages/AuthenticityExperience";
 import StyleGuide from "./pages/StyleGuide";
 import InfoPage from "./pages/InfoPage";
 

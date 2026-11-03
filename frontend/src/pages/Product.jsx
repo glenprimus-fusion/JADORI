@@ -20,6 +20,7 @@ const AuthCard = ({ l }) => (
           : "This listing is new. It will be independently inspected in person before it reaches you. If it does not pass, your booking is cancelled and fully refunded."}
       </p>
       <Link to="/authenticity" className={`text-xs mt-3 inline-block underline underline-offset-4 ${l.auth_status === "verified" ? "decoration-[#F3F1ED]/40" : "decoration-[#E2DFDA]"}`} data-testid="authenticity-card-link">How authentication works</Link>
+      {l.auth_status === "verified" && <p className="text-[11px] uppercase tracking-[0.18em] mt-3 text-[#F3F1ED]/60" data-testid="authenticity-record-number">Record no. JD-SAMPLE-{l.id.replace("sample-", "").padStart(4, "0")}</p>}
     </div>
   </div>
 );
