@@ -1,0 +1,36 @@
+{
+  "summary": "Tested the on-model gallery, zoom viewer, How it wears, dimensions, what fits and details accordion. Backend: new test_jadori_iter6_fit.py, 15/15 passed. The API returns the correct fit, showcase and on_model image data for sample-01/03/12; the on-model image URLs return 200. Non-showcase bags get fit by style, model_height null and no on_model images; /listings has exactly 3 showcase bags; unknown id returns 404. Frontend at 1920: on-model thumbs labelled MODEL, 'On the model' tag and '· model is 5'9\"' label shown, prev/next work. The zoom viewer opens from the main image. Label, counter, thumbs, prev/next, ArrowLeft/Right, stage click, toggle, Esc and the close X all work. The counter does not overlap the X on desktop or mobile. How it wears checked on sample-01/03/12/05/08: every carry chip changes the bag rect position, drop label, summary and photo. Showcase bags show the matching on-model photo and caption; non-showcase bags show the studio image with 'On-model photography coming soon'. Dimension labels, weight and fit-item tiles match the API. The details accordion lists dimensions and strap drops. Mobile 390: no horizontal overflow, sections stack, photo is exactly 4:5 (350x437.5), tapping gallery-swipe-2 opens the viewer at 3/10, stage tap zooms. Regression: 12 catalogue cards, quick view to product page, booking card (request disabled until dates chosen), offer dialog and closet link all work. No page errors.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/rentals (old regression tests)", "issue": "test_jadori_api.py::TestRental::test_rental_request_persist and test_jadori_iter4.py::TestQuote::test_rental_request_stores_plan return 422 'Those dates are not available'. Earlier test runs already booked the fixed date range (today+10) on sample-01. This is test-data pollution, not an iter6 bug. The tests should pick free dates from /availability."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "How it wears figure (FitFigure.jsx)", "issues": ["Y-axis tick labels (0′–5′) use fontSize 9 in a 620-unit viewBox and render at about 5px, too small to read on desktop and mobile. Raise to about 14 or reduce the viewBox."]},
+      {"screen": "Zoom viewer mobile header", "issues": ["zoom-label is truncated at 390px ('HERMÈS LEATHER BUCKET BAG · ...'), which hides the view name (e.g. 'In the crook of the arm'). Show the view name on its own line on mobile, or truncate the title instead."]},
+      {"screen": "How it wears – Crook of arm / Top handle", "issues": ["The bag is drawn slightly outside the arm line (centred at x=200 while the arm is at about x=196), so it looks like it floats beside the arm rather than hanging from it. Cosmetic."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_jadori_iter6_fit.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional: enlarge the FitFigure y-axis tick labels",
+    "Optional: stop the mobile zoom-label truncation from hiding the view name",
+    "Optional: make the older rental regression tests pick free dates dynamically"
+  ],
+  "critical_code_review_comments": [
+    "HowItWears: `c = f.carry.find(...)` would crash if `way` state goes stale after navigating between bags. Product keeps the same component instance when :id changes (e.g. closet → another bag via client routing), so useState(f.carry[0].way) keeps the old way. If the new bag has no such carry, c is undefined and c.drop throws. Add key={l.id} on <HowItWears> or reset way on l.id change. Not reproduced in this run, but it is a real risk.",
+    "Gallery: same stale-state risk. `i` is not reset when `images` changes between bags, so images[i] could be out of range if galleries had different lengths (currently all have 10).",
+    "ZoomViewer keydown effect has no deps and re-subscribes on every render. It works, but use deps [open, images.length].",
+    "Product.jsx computes window.location.search during render. Fine, but useSearchParams is cleaner."
+  ],
+  "updated_files": ["/app/backend/tests/test_jadori_iter6_fit.py"],
+  "success_rate": {"backend": "100% (iter6 15/15; overall 46/48, 2 failures caused by test-data date pollution)", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Fit data is in seed.py (FIT_BY_STYLE + FIT_OVERRIDE; showcase = ON_MODEL keys 1, 3, 12). Testids: fit-carry-<way lowercased, hyphenated>, fit-figure-bag (rect x/y change with carry), fit-figure-drop, fit-summary, fit-model-photo img, fit-model-caption, fit-dim-width/height/depth, fit-weight, fit-item-<key>. The zoom close X is the last direct child button of [data-testid=zoom-viewer]. On mobile, scroll gallery-swipe with scrollTo before clicking gallery-swipe-k."
+}

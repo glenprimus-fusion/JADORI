@@ -10,8 +10,8 @@ const BAG_COLORS = { Black: "#1B1714", Ivory: "#ECE6DA", Tan: "#B07A4A", Cognac:
 export const placement = (way, drop, f) => {
   const w = f.w * S, h = f.h * S;
   if (way === "Crossbody") { const top = y(SHOULDER) + drop * S * 0.82; return { x: 168 - w / 2, top, w, h, anchor: [74, y(SHOULDER) + 2], strap: "cross" }; }
-  if (way === "Top handle") { const top = y(HAND) + drop * S; return { x: 198 - w / 2, top, w, h, anchor: [198, y(HAND)], strap: "handle" }; }
-  if (way === "Crook of arm") { const top = y(ELBOW) + drop * S; return { x: 200 - w / 2, top, w, h, anchor: [196, y(ELBOW)], strap: "handle" }; }
+  if (way === "Top handle") { const top = y(HAND) + drop * S; return { x: 196 - w / 2, top, w, h, anchor: [196, y(HAND)], strap: "handle" }; }
+  if (way === "Crook of arm") { const top = y(ELBOW) + drop * S; return { x: 194 - w / 2, top, w, h, anchor: [194, y(ELBOW)], strap: "handle" }; }
   const top = y(SHOULDER) + drop * S; return { x: 190 - w / 2, top, w, h, anchor: [166, y(SHOULDER) + 1], strap: "shoulder" };
 };
 
@@ -48,11 +48,11 @@ const Bag = ({ p, color }) => {
 export const FitFigure = ({ p, color, drop, height }) => (
   <svg viewBox="-34 0 300 620" className="w-full max-h-[520px]" role="img" aria-label={`Figure showing the bag worn with a ${drop} inch drop`} data-testid="fit-figure">
     <line x1="-14" y1={y(69)} x2="-14" y2={FLOOR} stroke="#C9C2BA" strokeWidth="0.8" />
-    {[0, 12, 24, 36, 48, 60].map((v) => <g key={v}><line x1="-18" x2="-10" y1={y(v)} y2={y(v)} stroke="#C9C2BA" strokeWidth="0.8" /><text x="-22" y={y(v) + 3} fontSize="9" textAnchor="end" fill="#7A716A">{v / 12}′</text></g>)}
-    <text x="-14" y={y(69) - 6} fontSize="10" textAnchor="middle" fill="#1B1714">{height}</text>
+    {[0, 12, 24, 36, 48, 60].map((v) => <g key={v}><line x1="-18" x2="-10" y1={y(v)} y2={y(v)} stroke="#C9C2BA" strokeWidth="0.8" /><text x="-22" y={y(v) + 5} fontSize="15" textAnchor="end" fill="#7A716A">{v / 12}′</text></g>)}
+    <text x="-14" y={y(69) - 8} fontSize="15" textAnchor="middle" fill="#1B1714">{height}</text>
     <line x1="40" x2="200" y1={FLOOR} y2={FLOOR} stroke="#C9C2BA" strokeWidth="0.8" />
     <Body />
     <Bag p={p} color={color} />
-    <text x={p.x + p.w + 15} y={(p.anchor[1] + p.top) / 2 + 4} fontSize="12" fill="#1B1714" data-testid="fit-figure-drop">{drop}″</text>
+    <text x={p.x + p.w + 15} y={(p.anchor[1] + p.top) / 2 + 5} fontSize="17" fill="#1B1714" data-testid="fit-figure-drop">{drop}″</text>
   </svg>
 );

@@ -39,7 +39,10 @@ export const ZoomViewer = ({ images, title, index, onClose }) => {
         <DialogDescription className="sr-only">Full-screen view. Click or tap the image to zoom.</DialogDescription>
         {im && <>
           <div className="flex items-center gap-4 px-5 nav:px-8 h-[64px] shrink-0 border-b border-[#E2DFDA] pr-[76px] nav:pr-[84px]">
-            <p className="text-[11px] uppercase tracking-[0.2em] truncate" data-testid="zoom-label">{title} · {im.view}{im.on_model ? " · on the model" : ""}</p>
+            <div className="min-w-0 flex flex-col nav:flex-row nav:gap-1 text-[11px] uppercase tracking-[0.2em]" data-testid="zoom-label">
+              <span className="truncate">{title}</span>
+              <span className="text-[#7A716A] truncate"><span className="hidden nav:inline">· </span>{im.view}{im.on_model ? " · on the model" : ""}</span>
+            </div>
             <span className="ml-auto text-[11px] tracking-[0.16em] text-[#7A716A] shrink-0" data-testid="zoom-counter">{i + 1} / {images.length}</span>
           </div>
           <div className="relative flex-1 min-h-0 overflow-hidden">
