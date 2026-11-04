@@ -10,6 +10,7 @@ import { SaveButton } from "../components/jadori/SaveButton";
 import { PlaceholderTile } from "../components/jadori/LoadingImg";
 import { TopLenderBadge } from "../components/jadori/TopLender";
 import { FollowButton } from "./Closet";
+import { HowItWears } from "../components/jadori/fit/HowItWears";
 
 const AuthCard = ({ l }) => (
   <div className={`p-6 flex gap-5 items-start ${l.auth_status === "verified" ? "bg-[#1F1A17] text-[#F3F1ED]" : "border border-[#E2DFDA]"}`} data-testid="authenticity-card">
@@ -44,7 +45,7 @@ const Lender = ({ l }) => (
 );
 
 const INFO = (l) => [
-  ["details", "Details", `${l.color}. ${l.description} Dimensions and materials to be supplied by the lender.`],
+  ["details", "Details", `${l.color}. ${l.fit ? `${l.fit.w}″ W × ${l.fit.h}″ H × ${l.fit.d}″ D, about ${l.fit.weight} lbs. ${l.fit.carry.map((c) => `${c.way} with ${c.drop}″ drop`).join("; ")}. ` : ""}${l.description} Sample measurements; lenders confirm exact sizes and materials.`],
   ["condition", "Condition report", `Lender-reported condition: ${l.condition}. Condition photographs are unretouched — wear is documented, never removed. Only the main thumbnail background is cleaned.`],
   ["delivery", "Delivery & returns", "Meet the owner at an agreed place nearby, or choose courier delivery and collection within participating Massachusetts areas (service areas to be confirmed at launch). The refundable deposit is released after the return inspection."],
 ];
@@ -88,6 +89,7 @@ export default function Product() {
           </Accordion>
         </div>
       </div>
+      {l.fit && <HowItWears l={l} />}
       <div className="nav:hidden fixed bottom-0 inset-x-0 z-30 bg-[#FFFFFF] border-t border-[#E2DFDA] px-5 py-3 flex items-center justify-between gap-4" data-testid="mobile-booking-bar">
         <p className="font-serif text-xl">{usd(l.rent_per_day)}<span className="font-sans text-xs text-[#7A716A]"> / day</span></p>
         <a href="#booking" className="jd-btn-solid !px-6" data-testid="mobile-book-button">{new URLSearchParams(window.location.search).get("from") ? "Review booking" : "Select dates"}</a>

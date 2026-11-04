@@ -33,12 +33,47 @@ DETAIL = {
 STYLE = {1: "Shoulder", 2: "Tote", 3: "Crossbody", 4: "Crossbody", 5: "Tote", 6: "Mini", 7: "Crossbody",
          8: "Mini", 9: "Shoulder", 10: "Mini", 11: "Shoulder", 12: "Tote"}
 
+# AI-generated on-model photography for the three showcase bags.
+ON_MODEL = {
+    1: [("aade2205c3d65484a81fc7dba1709cfa517a1031c0b9dacaa10dda441df8d7bc", "On the shoulder", "Shoulder"),
+        ("63e32e32aab08405d1d947a5d88f0f70d5a6d8220723ad30015dd1d27d4669b7", "Worn crossbody", "Crossbody"),
+        ("53914b66d8d190a1cb8a55443f672e24ae9d9ebd9fed52dd3c805c498d18ce8d", "Detail, worn", None)],
+    3: [("c82769e4086ee09704e14664d7840743fa40ce9281a67ca06c561fb61d386c47", "Carried by the handle", "Top handle"),
+        ("0d7b9f9f647a8dda5ac2a95d59426458c2461fda10de80a760740d7a18505971", "Worn crossbody", "Crossbody"),
+        ("30dbc5238eb8fcbb41e1fb131085200bb372b9bb8ea755f81fd36e2027d697ac", "Detail, in hand", None)],
+    12: [("3751af95fb6b5a020081c0bd3da9e8f606cfb71f629250f13022420771ba2e98", "On the shoulder", "Shoulder"),
+         ("38e57035a924283197ea0187523be0e33fd84f7fe79a868075935e9fc19238a7", "In the crook of the arm", "Crook of arm"),
+         ("fd90711a2b4189cd1de7572b58b5959eb94fd5ad133b3f534c58e06220059369", "Detail, worn", None)],
+}
+
+# Sample measurements for the prototype (inches / lbs). Lenders confirm real values.
+FIT_BY_STYLE = {
+    "Shoulder": {"w": 10, "h": 6.5, "d": 3, "weight": 1.4, "carry": [("Shoulder", 10), ("Crossbody", 20)], "fits": ["phone", "cardholder", "keys", "lipstick", "sunglasses"]},
+    "Tote": {"w": 13, "h": 10, "d": 6, "weight": 2.2, "carry": [("Top handle", 5), ("Shoulder", 10)], "fits": ["phone", "wallet", "sunglasses", "notebook", "keys", "bottle"]},
+    "Crossbody": {"w": 9, "h": 6, "d": 3, "weight": 1.2, "carry": [("Crossbody", 21), ("Top handle", 4)], "fits": ["phone", "cardholder", "keys", "lipstick"]},
+    "Mini": {"w": 7, "h": 5, "d": 2.5, "weight": 0.9, "carry": [("Top handle", 3), ("Crossbody", 20)], "fits": ["phone", "cardholder", "lipstick", "keys"]},
+}
+FIT_OVERRIDE = {
+    1: {"w": 10, "h": 6, "d": 2.5, "weight": 1.5, "carry": [("Shoulder", 9.5), ("Crossbody", 19)], "fits": ["phone", "cardholder", "keys", "lipstick", "earbuds"]},
+    3: {"w": 9.5, "h": 7, "d": 4.5, "weight": 1.6, "carry": [("Top handle", 3.5), ("Crossbody", 20)], "fits": ["phone", "cardholder", "keys", "lipstick", "compact"]},
+    12: {"w": 9, "h": 10, "d": 7, "weight": 1.8, "carry": [("Shoulder", 11), ("Crook of arm", 6)], "fits": ["phone", "wallet", "sunglasses", "keys", "pouch", "earbuds"]},
+}
+
+
+def fit(i):
+    f = dict(FIT_BY_STYLE[STYLE[i]], **FIT_OVERRIDE.get(i, {}))
+    f["carry"] = [{"way": w, "drop": dr} for w, dr in f["carry"]]
+    f["model_height"] = "5'9\"" if i in ON_MODEL else None
+    return f
+
 
 def gallery(i):
     main = G.format(STUDIO[i])
+    worn = [{"url": G.format(h), "view": v, "on_model": True, "carry": c} for h, v, c in ON_MODEL[i]] if i in ON_MODEL \
+        else [{"url": WORN[i], "view": "Worn (editorial)"}]
     return [
         {"url": main, "view": "Front", "cleaned": True},
-        {"url": WORN[i], "view": "Worn (editorial)"},
+        *worn,
         {"url": main, "view": "Back (photo pending)"},
         {"url": main, "view": "Side (photo pending)"},
         {"url": main, "view": "Bottom (photo pending)"},
@@ -70,7 +105,7 @@ def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender
         "buy_enabled": buy is not None, "buy_price": buy, "auth_status": auth,
         "lender": {k: L[k] for k in ("slug", "name", "rating", "city", "top")},
         "condition": condition, "available": available, "deposit": round((buy or retail) * 0.15 / 50) * 50,
-        "images": gallery(i),
+        "images": gallery(i), "fit": fit(i), "showcase": i in ON_MODEL,
         "description": "Sample description for the visual prototype. Lenders will describe the bag, its history and any signs of wear in their own words.",
     }
 
