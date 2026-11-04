@@ -16,7 +16,7 @@ export const HowItWears = ({ l }) => {
   const [way, setWay] = useState(f.carry[0].way);
   const c = f.carry.find((x) => x.way === way);
   const p = placement(way, c.drop, f);
-  const photo = l.images.find((im) => im.on_model && im.carry === way);
+  const photo = l.images.find((im) => im.on_model && im.carry === way) || l.images.find((im) => im.on_model);
   const height = f.model_height || "5'9\"";
 
   return (

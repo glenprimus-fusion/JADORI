@@ -44,7 +44,17 @@ ON_MODEL = {
     12: [("3751af95fb6b5a020081c0bd3da9e8f606cfb71f629250f13022420771ba2e98", "On the shoulder", "Shoulder"),
          ("38e57035a924283197ea0187523be0e33fd84f7fe79a868075935e9fc19238a7", "In the crook of the arm", "Crook of arm"),
          ("fd90711a2b4189cd1de7572b58b5959eb94fd5ad133b3f534c58e06220059369", "Detail, worn", None)],
+    2: [("11a145a6d3752a8f4eaccd436dcf5b7d743fbceefd54c16205af6ca7f0d9a1db", "Carried by the handles", "Top handle")],
+    4: [("8bdecb1c4dd57f1161b4e81cb3542917ea190e61de04a0cdfcb9ff165ddf45be", "Worn crossbody", "Crossbody")],
+    5: [("c2847242ac7172d33d9df53513d4b464f60e3f49708dbed19c7721f8a41811ff", "Carried by the handles", "Top handle")],
+    6: [("b1780d28a2429b8bea6e2bcce53cafc20857600a256f96618c56a7f3b346ff50", "Worn crossbody", "Crossbody")],
+    7: [("e16b2b757c4673d97f8e683d4a592c1c4ea2382d47c99d8ef786ff291dc292c1", "Worn crossbody", "Crossbody")],
+    8: [("45a8e703fe4a5e80f5631da05ad0aa6579aebf57c0a25aa18f951cb8f5382918", "Worn crossbody", "Crossbody")],
+    9: [("78d658f3513842460ba36c361160b721d9d3bfb38a2ecbb71b04950f6fa2f5c8", "On the shoulder", "Shoulder")],
+    10: [("b0c9bfe666b8288b75b2cf7bda67688f85d28ffe89a1de5b5de459d692f5275f", "Carried by the handle", "Top handle")],
+    11: [("c6a4e37e0f0bd295ca6bb17f5e6e37de4a97d2325bba8df3519467c9c265af0b", "On the shoulder", "Shoulder")],
 }
+SHOWCASE = {1, 3, 12}
 
 # Sample measurements for the prototype (inches / lbs). Lenders confirm real values.
 FIT_BY_STYLE = {
@@ -57,6 +67,8 @@ FIT_OVERRIDE = {
     1: {"w": 10, "h": 6, "d": 2.5, "weight": 1.5, "carry": [("Shoulder", 9.5), ("Crossbody", 19)], "fits": ["phone", "cardholder", "keys", "lipstick", "earbuds"]},
     3: {"w": 9.5, "h": 7, "d": 4.5, "weight": 1.6, "carry": [("Top handle", 3.5), ("Crossbody", 20)], "fits": ["phone", "cardholder", "keys", "lipstick", "compact"]},
     12: {"w": 9, "h": 10, "d": 7, "weight": 1.8, "carry": [("Shoulder", 11), ("Crook of arm", 6)], "fits": ["phone", "wallet", "sunglasses", "keys", "pouch", "earbuds"]},
+    6: {"carry": [("Crossbody", 21), ("Top handle", 3)]},
+    8: {"carry": [("Crossbody", 20), ("Top handle", 3)]},
 }
 
 
@@ -105,7 +117,7 @@ def item(i, brand, name, color, retail, verified_retail, rent, buy, auth, lender
         "buy_enabled": buy is not None, "buy_price": buy, "auth_status": auth,
         "lender": {k: L[k] for k in ("slug", "name", "rating", "city", "top")},
         "condition": condition, "available": available, "deposit": round((buy or retail) * 0.15 / 50) * 50,
-        "images": gallery(i), "fit": fit(i), "showcase": i in ON_MODEL,
+        "images": gallery(i), "fit": fit(i), "showcase": i in SHOWCASE,
         "description": "Sample description for the visual prototype. Lenders will describe the bag, its history and any signs of wear in their own words.",
     }
 
