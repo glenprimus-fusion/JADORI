@@ -16,6 +16,18 @@ STUDIO = {
     10: "7eaf15f62ffa3df649b08582ee37e3866dcea44643b65ad8dd13792022cbf07f",
     11: "d4aa48f2cccf0733494b30af6cb9134d1ad6be2946a1a0d1ad6667d44789b0d8",
     12: "145379ca4a705194567ef6f67eda8c1ec922a4feeb8ed08cab7182d73a03a9a5",
+    13: "01efc8cdb1454969438d39412b38c1bd8f85a5efd0f4bbf4d9980beecc454f1c",
+    14: "0dab704464e99c72e83980587e9d94f7f5c63e8dd7c9d2c5e75f0905a84a8fd1",
+    15: "fa20277a48bfe3c5c792c6da14cb3e0ddf9dfdb4fe589514643e071879b6d14c",
+    16: "b71d00b9273eac26a85d47baccc2d750a345b249c08a7a33cc50eb099842dce5",
+    17: "11fc757d72ca7809d8645458386398ee804d97283ecc2aecd9bbd5d3a8002fe9",
+    18: "fe6f29355850ab8e06d9695753d74764490c3e24e6e2ddeaa1d99f9328949457",
+    19: "6f3ec31ab5c50eb258682ce3875bf9937d9ae413d8c7f715699af3186fb0459f",
+    20: "b00f92d6a059c6333025c9fae065a45a7f0475d43b5a3d25c6fec78b0b787ea3",
+    21: "4391f2e29849ca40fa2d0bc6afe8897620bf9728c64e0213267530b86b212d63",
+    22: "7fe8e327bfc6c514c03b0a82bc75aa8c57b2396d9ca4e904ceb68e9c53be0d9f",
+    23: "728a9a6701ebce43c2f8826f590a7be298de2fb40143a52aa9f2cdb8623150b4",
+    24: "3736b8aa3f139c6ddc4562edcfe99d699f33907dbb8130c92ce01d65ea85b5da",
 }
 WORN = {
     1: U.format("1713425887412-9d39ecf06b24"), 2: U.format("1676716107070-1f9ef2a1ac3e"),
@@ -31,7 +43,9 @@ DETAIL = {
     "stitch": U.format("1741086154510-522e68f76933"),
 }
 STYLE = {1: "Shoulder", 2: "Tote", 3: "Crossbody", 4: "Crossbody", 5: "Tote", 6: "Mini", 7: "Crossbody",
-         8: "Mini", 9: "Shoulder", 10: "Mini", 11: "Shoulder", 12: "Tote"}
+         8: "Mini", 9: "Shoulder", 10: "Mini", 11: "Shoulder", 12: "Tote",
+         13: "Tote", 14: "Tote", 15: "Tote", 16: "Shoulder", 17: "Shoulder", 18: "Shoulder",
+         19: "Crossbody", 20: "Crossbody", 21: "Crossbody", 22: "Mini", 23: "Mini", 24: "Mini"}
 
 # AI-generated on-model photography for the three showcase bags.
 ON_MODEL = {
@@ -53,6 +67,18 @@ ON_MODEL = {
     9: [("78d658f3513842460ba36c361160b721d9d3bfb38a2ecbb71b04950f6fa2f5c8", "On the shoulder", "Shoulder")],
     10: [("b0c9bfe666b8288b75b2cf7bda67688f85d28ffe89a1de5b5de459d692f5275f", "Carried by the handle", "Top handle")],
     11: [("c6a4e37e0f0bd295ca6bb17f5e6e37de4a97d2325bba8df3519467c9c265af0b", "On the shoulder", "Shoulder")],
+    13: [("a8b11655e47e1a544b549b2475b94318071600edee16c754f0ba6b75ef2c9e62", "Carried by the handles", "Top handle")],
+    14: [("3b8caff62cd733a304d424198c77f3bd8ffa56174085d73badb2dc4a14327099", "Carried by the handles", "Top handle")],
+    15: [("254551be87f41ccbcbe07af71f982daf16f66835e213cf0ab97dbb2b14c28b6f", "Carried by the handles", "Top handle")],
+    16: [("b060d0a8863cdcf35179abae4f3c75e76664d7a1c5eeeb657daedc54b6120158", "On the shoulder", "Shoulder")],
+    17: [("7bc811bc12ee5389283540899a76609ce6a612a595b80a95f4c838eee14e3b19", "Worn crossbody", "Crossbody")],
+    18: [("fcd1518307080cd9c69bc38dcb9f55db73e5b3f8b8f847011d22594194d08782", "On the shoulder", "Shoulder")],
+    19: [("99c3f55ef0ff407adf69bc21efa21fce89dcde59d1b1e0abb57f727a5f9e4d94", "Worn crossbody", "Crossbody")],
+    20: [("6bb15c2a07ef5fb3b7fd144ee96ef10cf1f0f3252cbdf4ff52e54cb5e71d9549", "Worn crossbody", "Crossbody")],
+    21: [("62b6acd7cafbbdb20e9c0facd20d9aa1f0acf85eada87b67d5be310fc2d092a9", "Worn crossbody", "Crossbody")],
+    22: [("ad3b9264621c40bcf079b33a78bdec256d4b30713a4eac5116ebecc10928759d", "Carried by the handle", "Top handle")],
+    23: [("aa49c1f704e93d90b07a394b9286f613a2abc3101c27b0c9d6df9d93d19e451c", "Carried by the handle", "Top handle")],
+    24: [("9410ab82460663035665fe576714f5f9c7cf15ab1e4fa0735341c1e82e444411", "Carried by the handle", "Top handle")],
 }
 SHOWCASE = {1, 3, 12}
 
@@ -69,6 +95,7 @@ FIT_OVERRIDE = {
     12: {"w": 9, "h": 10, "d": 7, "weight": 1.8, "carry": [("Shoulder", 11), ("Crook of arm", 6)], "fits": ["phone", "wallet", "sunglasses", "keys", "pouch", "earbuds"]},
     6: {"carry": [("Crossbody", 21), ("Top handle", 3)]},
     8: {"carry": [("Crossbody", 20), ("Top handle", 3)]},
+    17: {"carry": [("Crossbody", 20), ("Shoulder", 10)]},
 }
 
 
@@ -135,4 +162,16 @@ SAMPLE_LISTINGS = [
     item(10, "Gucci", "Mini Top-Handle", "Green", 2900, True, 50, None, "verified", "charlotte-r", "Excellent"),
     item(11, "Prada", "Nylon Flap Shoulder Bag", "Navy", 3300, False, 60, None, "pending", "eleanor-v", "Very good"),
     item(12, "Hermès", "Leather Bucket Bag", "Tan", 9800, True, 160, 7400, "verified", "isabelle-t", "Very good"),
+    item(13, "Louis Vuitton", "Structured Shopper Tote", "Black", 3600, True, 65, 2700, "verified", "eleanor-v", "Excellent"),
+    item(14, "Prada", "Leather Shopping Tote", "Ivory", 4100, False, 70, None, "pending", "sophia-m", "Very good"),
+    item(15, "Dior", "Embroidered Book Tote", "Navy", 3900, True, 65, 2900, "verified", "camilla-k", "Excellent"),
+    item(16, "Gucci", "Chain Shoulder Bag", "Red", 3200, False, 55, None, "pending", "isabelle-t", "Very good"),
+    item(17, "Hermès", "Saddle-Stitched Shoulder Bag", "Cognac", 8900, True, 135, 6900, "verified", "sophia-m", "Excellent"),
+    item(18, "Louis Vuitton", "Baguette Shoulder Bag", "Beige", 2800, False, 50, 2100, "pending", "charlotte-r", "Good"),
+    item(19, "Chanel", "Quilted Camera Bag", "Black", 5200, True, 90, 4300, "verified", "eleanor-v", "Excellent"),
+    item(20, "Burberry", "Leather Saddle Crossbody", "Tan", 2300, False, 45, None, "pending", "charlotte-r", "Very good"),
+    item(21, "Dior", "Compact Messenger", "Grey", 3600, False, 60, None, "pending", "camilla-k", "Very good", False),
+    item(22, "Hermès", "Mini Top-Handle 20", "Green", 11500, True, 190, None, "verified", "isabelle-t", "Excellent"),
+    item(23, "Prada", "Mini Bucket Bag", "Dove", 2600, False, 45, 1900, "pending", "isabelle-t", "Very good"),
+    item(24, "Louis Vuitton", "Mini Trunk Bag", "Ivory", 4800, True, 80, None, "verified", "eleanor-v", "Excellent"),
 ]

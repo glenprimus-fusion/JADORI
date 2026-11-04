@@ -8,7 +8,7 @@ import { nextLabel } from "./AvailabilityCalendar";
 import { usd } from "../../lib/api";
 
 export const ListingCard = ({ l, mode = "rent", onQuickView, compact = false, days = 0, search = "" }) => {
-  const worn = l.images.find((im) => im.view.startsWith("Worn"));
+  const worn = l.images.find((im) => im.on_model) || l.images.find((im) => im.view.startsWith("Worn"));
   const qv = (e) => { e.preventDefault(); e.stopPropagation(); onQuickView(l); };
   return (
     <Link to={`/bag/${l.id}${search}`} className="group block" data-testid={`listing-card-${l.id}`}>
